@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_bottom_menu"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_palette"
+    android:elevation="@dimen/_4sdp"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/_8sdp"
+    app:behavior_peekHeight="0dp"
+    app:layout_behavior="@string/bottom_sheet_behavior">
+
+    <RelativeLayout
+        android:id="@+id/rl_close_bottom_menu"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_15sdp">
+
+        <View
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_centerInParent="true"
+            android:background="?attr/color" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_40sdp">
+
+        <TextView
+            android:id="@+id/tv_include"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:gravity="center"
+            android:text="@string/hide_done"
+            android:textColor="?attr/color"
+            android:textSize="@dimen/_15ssp"
+            android:textStyle="normal"
+            tools:ignore="RelativeOverlap" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switch_done"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/_4sdp"
+            android:gravity="center" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/_6sdp"
+        android:layout_marginBottom="@dimen/_2sdp"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_all_colors"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:background="@drawable/background_all_colors"
+            android:gravity="center"
+            android:padding="@dimen/_5sdp"
+            android:textColor="?attr/color" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_color_palette"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:baselineAligned="false"
+            android:orientation="horizontal" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_40sdp">
+
+        <TextView
+            android:id="@+id/tv_settings"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:background="?android:selectableItemBackground"
+            android:gravity="center_vertical"
+            android:text="@string/settings"
+            android:textColor="?attr/color"
+            android:textSize="@dimen/_15ssp"
+            android:textStyle="normal" />
+
+    </RelativeLayout>
+
+</LinearLayout>

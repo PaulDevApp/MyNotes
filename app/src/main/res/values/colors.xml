@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimaryDay">#fafafa</color>
+    <color name="colorPrimaryNight">#282726</color>
+    <color name="colorTextDay">#0a1417</color>
+    <color name="colorTextNight">#eeeeee</color>
+    <color name="colorAccent">#604d9e</color>
+    <color name="colorAccentSecondary">#d28e5f</color>
+    <color name="colorSecondaryDay">#e0e0e0</color>
+    <color name="colorAppBarDay">#fafafa</color>
+    <color name="colorAppBarNight">#54504C</color>
+    <color name="colorSecondaryNight">#424242</color>
+    <color name="colorSweepDone">#82b21e</color>
+    <color name="colorYellow">#efad0a</color>
+    <color name="colorKarina">#b05a6e</color>
+    <color name="colorGrey">#798486</color>
+    <color name="colorOrange">#ba7338</color>
+    <color name="colorBlue">#4776b9</color>
+    <color name="colorRed">#cc4953</color>
+    <color name="colorGreen">#79860f</color>
+    <color name="colorLightYellow">#a69e70</color>
+    <color name="colorDefault">#bda58f</color>
+    <color name="colorTurquoise">#96aab7</color>
+    <color name="colorGreenGrey">#57898a</color>
+    <color name="colorLightPink">#bea6d0</color>
+    <color name="colorLightGreen">#579573</color>
+    <color name="colorLightBlue">#6d7bab</color>
+    <color name="colorDelete">#a24035</color>
+    <color name="colorImageMain">#9e9e9e</color>
+    <color name="colorPrimaryDayTransparent">#80fafafa</color>
+    <color name="colorPrimaryNightTransparent">#80282726</color>
+    <color name="colorBackgroundDoneDay">#A6fafafa</color>
+    <color name="colorBackgroundDoneNight">#A6282726</color>
+</resources>

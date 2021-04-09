@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_palette"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_palette"
+    android:elevation="@dimen/_10sdp"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/_4sdp"
+    app:behavior_peekHeight="@dimen/_40sdp"
+    app:layout_behavior="@string/bottom_sheet_behavior">
+
+    <LinearLayout
+        android:id="@+id/tv_change_note_color"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:orientation="horizontal"
+        android:padding="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_4sdp">
+
+        <ImageView
+            android:id="@+id/iv_color_indicator"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_color_note"
+            android:transitionName="color" />
+
+
+        <ImageView
+            android:id="@+id/iv_copy"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_copy"
+            android:visibility="gone" />
+
+
+        <ImageView
+            android:id="@+id/iv_add_web_create"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_link" />
+
+        <ImageView
+            android:id="@+id/iv_add_photo_create"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_add_image" />
+
+        <ImageView
+            android:id="@+id/iv_share"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_share" />
+
+        <ImageView
+            android:id="@+id/iv_favorite"
+            android:layout_width="0dp"
+            android:background="?attr/selectableItemBackground"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_lock_open" />
+
+        <ImageView
+            android:id="@+id/iv_done"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_unchecked"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_color_palette"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="@dimen/_4sdp"
+        android:baselineAligned="false"
+        android:orientation="horizontal" />
+
+
+</LinearLayout>

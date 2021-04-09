@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_dialog"
+    android:padding="@dimen/_2sdp">
+
+    <LinearLayout
+        android:id="@+id/ll_first_palette"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/_2sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:id="@+id/v_default"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_1sdp"
+            android:layout_marginEnd="@dimen/_1sdp"
+            android:layout_weight="1"
+            android:background="@drawable/back_color_default" />
+
+        <View
+            android:id="@+id/v_yellow"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_1sdp"
+            android:layout_marginEnd="@dimen/_1sdp"
+            android:layout_weight="1"
+            android:background="@drawable/back_color_yellow" />
+
+        <View
+            android:id="@+id/v_karina"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_1sdp"
+            android:layout_marginEnd="@dimen/_1sdp"
+            android:layout_weight="1"
+            android:background="@drawable/back_color_karina" />
+
+        <View
+            android:id="@+id/v_orange"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_1sdp"
+            android:layout_marginEnd="@dimen/_1sdp"
+            android:layout_weight="1"
+            android:background="@drawable/back_color_orange" />
+
+        <View
+            android:id="@+id/v_blue"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_1sdp"
+            android:layout_marginEnd="@dimen/_1sdp"
+            android:layout_weight="1"
+            android:background="@drawable/back_color_blue" />
+
+        <View
+            android:id="@+id/v_red"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_1sdp"
+            android:layout_marginEnd="@dimen/_1sdp"
+            android:layout_weight="1"
+            android:background="@drawable/back_color_red" />
+
+        <View
+            android:id="@+id/v_green"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_1sdp"
+            android:layout_marginEnd="@dimen/_1sdp"
+            android:layout_weight="1"
+            android:background="@drawable/back_color_green" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/_2sdp"
+        android:paddingEnd="@dimen/_2sdp"
+        android:paddingBottom="@dimen/_2sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_first_palette">
+
+        <View
+            android:id="@+id/v_turquoise"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_1sdp"
+            android:layout_marginEnd="@dimen/_1sdp"
+            android:layout_weight="1"
+            android:background="@drawable/back_color_turquoise" />
+
+        <View
+            android:id="@+id/v_green_grey"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_1sdp"
+            android:layout_marginEnd="@dimen/_1sdp"
+            android:layout_weight="1"
+            android:background="@drawable/back_color_green_grey" />
+
+        <View
+            android:id="@+id/v_light_pink"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_1sdp"
+            android:layout_marginEnd="@dimen/_1sdp"
+            android:layout_weight="1"
+            android:background="@drawable/back_color_light_pink" />
+
+        <View
+            android:id="@+id/v_light_green"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_1sdp"
+            android:layout_marginEnd="@dimen/_1sdp"
+            android:layout_weight="1"
+            android:background="@drawable/back_color_light_green" />
+
+        <View
+            android:id="@+id/v_light_blue"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_1sdp"
+            android:layout_marginEnd="@dimen/_1sdp"
+            android:layout_weight="1"
+            android:background="@drawable/back_color_light_blue" />
+
+        <View
+            android:id="@+id/v_grey"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_1sdp"
+            android:layout_marginEnd="@dimen/_1sdp"
+            android:layout_weight="1"
+            android:background="@drawable/back_color_grey" />
+
+        <View
+            android:id="@+id/v_light_yellow"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_1sdp"
+            android:layout_marginEnd="@dimen/_1sdp"
+            android:layout_weight="1"
+            android:background="@drawable/back_color_light_yellow" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

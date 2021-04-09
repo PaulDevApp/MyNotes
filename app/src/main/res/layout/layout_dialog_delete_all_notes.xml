@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cl_dialog_delete_all_notes"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/_12sdp"
+    android:background="@drawable/background_dialog_delete">
+
+    <TextView
+        android:id="@+id/tv_delete_all_notes_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:importantForAutofill="no"
+        android:includeFontPadding="false"
+        android:text="@string/delete_all_notes_accept"
+        android:textColor="?attr/color"
+        android:textSize="@dimen/_21ssp"
+        android:textStyle="normal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_goneMarginEnd="@dimen/_6sdp" />
+
+    <TextView
+        android:id="@+id/tv_dialog_message"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="@string/message"
+        android:textColor="@color/colorDelete"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintStart_toStartOf="@+id/tv_delete_all_notes_dialog"
+        app:layout_constraintTop_toBottomOf="@+id/tv_delete_all_notes_dialog" />
+
+    <TextView
+        android:id="@+id/tv_delete_all_notes_forever"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:text="@string/delete"
+        android:textColor="@color/colorDelete"
+        android:textSize="@dimen/_20ssp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_dialog_message" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

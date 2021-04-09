@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorPrimary"
+    tools:context=".activities.DetailNoteActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:transitionName="note">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+
+            <ImageView
+                android:id="@+id/iv_back_to_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_delete_note"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_delete_note"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/iv_back_to_main"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/iv_back_to_main"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_zoom_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:background="?attr/selectableItemBackground"
+                android:fontFamily="@font/text_note_font"
+                android:text="@string/a_a"
+                android:textSize="@dimen/_15ssp"
+                app:layout_constraintBottom_toBottomOf="@id/iv_back_to_main"
+                app:layout_constraintEnd_toStartOf="@+id/iv_delete_note"
+                app:layout_goneMarginEnd="@dimen/_8sdp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_46sdp"
+            android:layout_marginBottom="@dimen/_40sdp"
+            android:clipToPadding="false">
+
+            <RelativeLayout
+                android:id="@+id/rl_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_input_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    android:background="@null"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/title_note_font"
+                    android:hint="@string/title"
+                    android:importantForAutofill="no"
+                    android:includeFontPadding="false"
+                    android:inputType="text|textCapSentences"
+                    android:padding="@dimen/_6sdp"
+                    android:singleLine="true"
+                    android:textColor="?attr/color"
+                    android:textSize="@dimen/_18ssp"
+                    android:transitionName="title" />
+
+                <TextView
+                    android:id="@+id/tv_url"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/et_input_title"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    android:ellipsize="end"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_2sdp"
+                    android:singleLine="true"
+                    android:textColor="?attr/colorAccent"
+                    android:textSize="@dimen/_15ssp"
+                    android:textStyle="normal"
+                    android:transitionName="url"
+                    android:visibility="gone"
+                    tools:text="www.google.com"
+                    tools:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/et_input_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_url"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:layout_marginBottom="@dimen/_6sdp"
+                    android:autoLink="web"
+                    android:background="@null"
+                    android:fontFamily="@font/text_note_font"
+                    android:gravity="top"
+                    android:hint="@string/write_something"
+                    android:importantForAutofill="no"
+                    android:includeFontPadding="false"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:linksClickable="true"
+                    android:textSize="@dimen/_15ssp"
+                    android:transitionName="text" />
+
+                <ImageView
+                    android:id="@+id/iv_show_photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/et_input_text"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/app_name"
+                    android:paddingBottom="@dimen/_4sdp"
+                    android:transitionName="image" />
+
+                <ImageView
+                    android:id="@+id/iv_delete_image"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_below="@+id/et_input_text"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    android:background="?attr/selectableItemBackground"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_background_delete"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <io.github.ponnamkarthik.richlinkpreview.RichLinkViewTwitter
+                    android:id="@+id/linkPreview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/iv_show_photo"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:transitionName="link"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tv_text_date_time_created"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/linkPreview"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:fontFamily="@font/time_date_font"
+                    android:includeFontPadding="false"
+                    android:padding="@dimen/_1sdp"
+                    android:textColor="?attr/color"
+                    android:textSize="@dimen/_11ssp"
+                    android:transitionName="date"
+                    android:visibility="visible"
+                    tools:ignore="RelativeOverlap"
+                    tools:text="28 октября 2020" />
+
+                <TextView
+                    android:id="@+id/tv_date_info_created"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/linkPreview"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:layout_toStartOf="@+id/tv_text_date_time_created"
+                    android:fontFamily="@font/time_date_font"
+                    android:text="@string/created_date"
+                    android:textColor="?attr/color"
+                    android:textSize="@dimen/_11ssp"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tv_date_info_edited"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_text_date_time_created"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:layout_toStartOf="@+id/tv_text_date_time_edited"
+                    android:fontFamily="@font/time_date_font"
+                    android:text="@string/updated_date"
+                    android:textColor="?attr/color"
+                    android:textSize="@dimen/_11ssp"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tv_text_date_time_edited"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_text_date_time_created"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:layout_marginBottom="@dimen/_50sdp"
+                    android:fontFamily="@font/time_date_font"
+                    android:includeFontPadding="false"
+                    android:padding="@dimen/_1sdp"
+                    android:textColor="?attr/color"
+                    android:textSize="@dimen/_11ssp"
+                    android:visibility="gone"
+                    tools:ignore="RelativeOverlap"
+                    tools:text="30 октября 2020"
+                    tools:visibility="visible" />
+
+            </RelativeLayout>
+        </ScrollView>
+
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/palette"
+        layout="@layout/layout_palette" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

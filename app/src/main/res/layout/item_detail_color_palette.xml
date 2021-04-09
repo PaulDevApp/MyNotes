@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/v_item_detail_color"
+    android:layout_width="@dimen/_35sdp"
+    android:layout_margin="@dimen/_1sdp"
+    android:background="@drawable/background_selected_color"
+    android:layout_height="@dimen/_35sdp">
+
+    <ImageView
+        android:id="@+id/iv_item_detail_color"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:padding="@dimen/_8sdp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_paint"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+</FrameLayout>

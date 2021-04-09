@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_dialog_click_link"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/background_dialog">
+
+    <TextView
+        android:id="@+id/tv_dialog_show_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:singleLine="true"
+        android:textSize="@dimen/_19ssp"
+        android:textStyle="normal"
+        tools:text="www.rap.ru" />
+
+    <TextView
+        android:id="@+id/tv_dialog_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_dialog_show_link"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_3sdp"
+        android:background="?attr/selectableItemBackground"
+        android:text="@string/delete"
+        android:textColor="@color/colorDelete"
+        android:textSize="@dimen/_17ssp"
+        android:textStyle="normal" />
+
+    <TextView
+        android:id="@+id/tv_dialog_open"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_dialog_show_link"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_3sdp"
+        android:layout_toStartOf="@+id/tv_dialog_delete"
+        android:background="?attr/selectableItemBackground"
+        android:text="@string/open"
+        android:textColor="?attr/colorAccent"
+        android:textSize="@dimen/_17ssp"
+        android:textStyle="normal" />
+
+    <TextView
+        android:id="@+id/tv_dialog_copy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_dialog_show_link"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_3sdp"
+        android:layout_toStartOf="@+id/tv_dialog_open"
+        android:background="?attr/selectableItemBackground"
+        android:text="@string/copy"
+        android:textColor="?attr/colorAccent"
+        android:textSize="@dimen/_17ssp"
+        android:textStyle="normal" />
+
+    <TextView
+        android:id="@+id/tv_dialog_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_dialog_show_link"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginBottom="@dimen/_3sdp"
+        android:layout_toStartOf="@+id/tv_dialog_copy"
+        android:background="?attr/selectableItemBackground"
+        android:text="@string/share"
+        android:textColor="?attr/colorAccent"
+        android:textSize="@dimen/_17ssp"
+        android:textStyle="normal" />
+
+
+</RelativeLayout>

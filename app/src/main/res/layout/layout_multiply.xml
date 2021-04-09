@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_30sdp">
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/sv_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:iconifiedByDefault="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:queryBackground="@android:color/transparent"
+        app:queryHint="@string/search_notes" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_multi_select_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
+
+        <ImageView
+            android:id="@+id/iv_toolbar_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_close"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="?attr/colorAccent" />
+
+        <TextView
+            android:id="@+id/tv_toolbar_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:textColor="?attr/colorAccent"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="normal"
+            app:layout_constraintStart_toEndOf="@+id/iv_toolbar_close"
+            app:layout_constraintTop_toTopOf="@id/iv_toolbar_close"
+            tools:ignore="RelativeOverlap"
+            tools:text="10" />
+
+        <ImageView
+            android:id="@+id/iv_toolbar_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_delete_note"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_toolbar_close"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_toolbar_close" />
+
+        <ImageView
+            android:id="@+id/iv_selected_all"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="@dimen/_34sdp"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_select_all"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_toolbar_close"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_toolbar_close"
+            app:tint="?attr/colorAccent" />
+
+        <ImageView
+            android:id="@+id/iv_main_favorite_on"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="@dimen/_7sdp"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/app_name"
+            android:paddingTop="@dimen/_2sdp"
+            android:paddingBottom="@dimen/_2sdp"
+            android:src="@drawable/ic_lock_close"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_toolbar_close"
+            app:layout_constraintEnd_toStartOf="@+id/iv_selected_all"
+            app:layout_constraintTop_toTopOf="@+id/iv_toolbar_close"
+            app:tint="?attr/colorAccent" />
+
+        <ImageView
+            android:id="@+id/iv_main_favorite_off"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="@dimen/_7sdp"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/app_name"
+            android:paddingTop="@dimen/_2sdp"
+            android:paddingBottom="@dimen/_2sdp"
+            android:src="@drawable/ic_lock_open"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_toolbar_close"
+            app:layout_constraintEnd_toStartOf="@+id/iv_main_favorite_on"
+            app:layout_constraintTop_toTopOf="@+id/iv_toolbar_close"
+            app:tint="?attr/colorAccent" />
+
+        <ImageView
+            android:id="@+id/iv_palette_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="@dimen/_7sdp"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/app_name"
+            android:paddingTop="@dimen/_2sdp"
+            android:paddingBottom="@dimen/_2sdp"
+            android:src="@drawable/ic_color_note"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_toolbar_close"
+            app:layout_constraintEnd_toStartOf="@+id/iv_main_favorite_off"
+            app:layout_constraintTop_toTopOf="@+id/iv_toolbar_close"
+            app:tint="?attr/colorAccent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

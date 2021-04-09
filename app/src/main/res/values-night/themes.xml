@@ -1,0 +1,15 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.MyNotes" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimaryNight</item>
+        <item name="color">@color/colorTextNight</item>
+        <item name="colorAccent">@color/colorAccentSecondary</item>
+        <item name="colorOnBackground">@color/colorPrimaryNightTransparent</item>
+        <item name="colorControlHighlight">@color/colorBackgroundDoneNight</item>
+        <item name="android:navigationBarColor">@color/colorAppBarNight</item>
+        <item name="colorSecondary">@color/colorSecondaryNight</item>
+        <item name="colorSecondaryVariant">@color/colorAppBarNight</item>
+        <item name="android:windowAnimationStyle">@style/WindowsAnimationTransition</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/colorPrimaryNight</item>
+    </style>
+</resources>
