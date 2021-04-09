@@ -45,6 +45,9 @@
             android:id="@+id/switch_done"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="?android:attr/selectableItemBackground"
+            android:foreground="?android:attr/selectableItemBackground"
+            tools:ignore="UnusedAttribute"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/_4sdp"
             android:gravity="center" />
@@ -88,12 +91,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/_12sdp"
-            android:background="?android:selectableItemBackground"
+            android:background="?android:attr/selectableItemBackground"
+            android:foreground="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:text="@string/settings"
             android:textColor="?attr/color"
             android:textSize="@dimen/_15ssp"
-            android:textStyle="normal" />
+            android:textStyle="normal"
+            tools:ignore="UnusedAttribute" />
 
     </RelativeLayout>
 

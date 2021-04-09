@@ -23,24 +23,28 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_6sdp"
                 android:layout_marginTop="@dimen/_16sdp"
-                android:background="?attr/selectableItemBackground"
+                android:background="?android:attr/selectableItemBackground"
                 android:contentDescription="@string/app_name"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:src="@drawable/ic_back"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="UnusedAttribute" />
 
             <ImageView
                 android:id="@+id/iv_delete_note"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginEnd="@dimen/_8sdp"
-                android:background="?attr/selectableItemBackground"
+                android:background="?android:attr/selectableItemBackground"
                 android:contentDescription="@string/app_name"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:src="@drawable/ic_delete_note"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/iv_back_to_main"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/iv_back_to_main"
+                tools:ignore="UnusedAttribute"
                 tools:visibility="visible" />
 
             <TextView
@@ -48,13 +52,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_8sdp"
-                android:background="?attr/selectableItemBackground"
+                android:background="?android:attr/selectableItemBackground"
                 android:fontFamily="@font/text_note_font"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:text="@string/a_a"
                 android:textSize="@dimen/_15ssp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_back_to_main"
                 app:layout_constraintEnd_toStartOf="@+id/iv_delete_note"
-                app:layout_goneMarginEnd="@dimen/_8sdp" />
+                app:layout_goneMarginEnd="@dimen/_8sdp"
+                tools:ignore="UnusedAttribute" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -154,10 +160,12 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="@dimen/_4sdp"
                     android:layout_marginBottom="@dimen/_4sdp"
-                    android:background="?attr/selectableItemBackground"
+                    android:background="?android:attr/selectableItemBackground"
                     android:contentDescription="@string/app_name"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:src="@drawable/ic_background_delete"
                     android:visibility="gone"
+                    tools:ignore="UnusedAttribute"
                     tools:visibility="visible" />
 
                 <io.github.ponnamkarthik.richlinkpreview.RichLinkViewTwitter

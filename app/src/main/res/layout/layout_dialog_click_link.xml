@@ -17,69 +17,64 @@
         android:ellipsize="end"
         android:includeFontPadding="false"
         android:singleLine="true"
-        android:textSize="@dimen/_19ssp"
+        android:textSize="@dimen/_16ssp"
         android:textStyle="normal"
         tools:text="www.rap.ru" />
 
-    <TextView
-        android:id="@+id/tv_dialog_delete"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_dialog_show_link"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="@dimen/_4sdp"
-        android:layout_marginEnd="@dimen/_8sdp"
-        android:layout_marginBottom="@dimen/_3sdp"
-        android:background="?attr/selectableItemBackground"
-        android:text="@string/delete"
-        android:textColor="@color/colorDelete"
-        android:textSize="@dimen/_17ssp"
-        android:textStyle="normal" />
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/tv_dialog_open"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_dialog_show_link"
-        android:layout_marginTop="@dimen/_4sdp"
-        android:layout_marginEnd="@dimen/_8sdp"
-        android:layout_marginBottom="@dimen/_3sdp"
-        android:layout_toStartOf="@+id/tv_dialog_delete"
-        android:background="?attr/selectableItemBackground"
-        android:text="@string/open"
-        android:textColor="?attr/colorAccent"
-        android:textSize="@dimen/_17ssp"
-        android:textStyle="normal" />
+        <ImageView
+            android:id="@+id/iv_dialog_open"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="@string/app_name"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/ic_open_in_new"
+            tools:ignore="UnusedAttribute" />
 
-    <TextView
-        android:id="@+id/tv_dialog_copy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_dialog_show_link"
-        android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_4sdp"
-        android:layout_marginEnd="@dimen/_8sdp"
-        android:layout_marginBottom="@dimen/_3sdp"
-        android:layout_toStartOf="@+id/tv_dialog_open"
-        android:background="?attr/selectableItemBackground"
-        android:text="@string/copy"
-        android:textColor="?attr/colorAccent"
-        android:textSize="@dimen/_17ssp"
-        android:textStyle="normal" />
+        <ImageView
+            android:id="@+id/iv_dialog_copy"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_copy"
+            tools:ignore="UnusedAttribute" />
 
-    <TextView
-        android:id="@+id/tv_dialog_share"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_dialog_show_link"
-        android:layout_marginTop="@dimen/_4sdp"
-        android:layout_marginBottom="@dimen/_3sdp"
-        android:layout_toStartOf="@+id/tv_dialog_copy"
-        android:background="?attr/selectableItemBackground"
-        android:text="@string/share"
-        android:textColor="?attr/colorAccent"
-        android:textSize="@dimen/_17ssp"
-        android:textStyle="normal" />
+        <ImageView
+            android:id="@+id/iv_dialog_share"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:foreground="?android:attr/selectableItemBackground"
+            tools:ignore="UnusedAttribute"
+            android:src="@drawable/ic_share"
+            android:contentDescription="@string/app_name" />
+
+        <ImageView
+            android:id="@+id/iv_dialog_delete"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="?android:attr/selectableItemBackground"
+            android:foreground="?android:attr/selectableItemBackground"
+            tools:ignore="UnusedAttribute"
+            android:layout_weight="1"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_delete_note"
+            android:textColor="@color/colorDelete"
+            android:textStyle="normal" />
+    </LinearLayout>
 
 
 </RelativeLayout>

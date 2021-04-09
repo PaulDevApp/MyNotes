@@ -34,19 +34,21 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_6sdp"
-            android:background="?attr/selectableItemBackground"
+            android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/app_name"
+            android:foreground="?android:attr/selectableItemBackground"
             android:src="@drawable/ic_close"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="?attr/colorAccent" />
+            app:tint="?attr/colorAccent"
+            tools:ignore="UnusedAttribute" />
 
         <TextView
             android:id="@+id/tv_toolbar_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_4sdp"
-            android:textColor="?attr/colorAccent"
+            android:textColor="?attr/color"
             android:textSize="@dimen/_14ssp"
             android:textStyle="normal"
             app:layout_constraintStart_toEndOf="@+id/iv_toolbar_close"
@@ -59,70 +61,80 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginEnd="@dimen/_8sdp"
-            android:background="?attr/selectableItemBackground"
+            android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/app_name"
+            android:foreground="?android:attr/selectableItemBackground"
             android:src="@drawable/ic_delete_note"
             app:layout_constraintBottom_toBottomOf="@+id/iv_toolbar_close"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/iv_toolbar_close" />
+            app:layout_constraintTop_toTopOf="@+id/iv_toolbar_close"
+            tools:ignore="UnusedAttribute" />
 
         <ImageView
             android:id="@+id/iv_selected_all"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginEnd="@dimen/_34sdp"
-            android:background="?attr/selectableItemBackground"
+            android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/app_name"
+            android:foreground="?android:attr/selectableItemBackground"
             android:src="@drawable/ic_select_all"
             app:layout_constraintBottom_toBottomOf="@+id/iv_toolbar_close"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/iv_toolbar_close"
-            app:tint="?attr/colorAccent" />
+            app:tint="?attr/colorAccent"
+            tools:ignore="UnusedAttribute" />
 
         <ImageView
             android:id="@+id/iv_main_favorite_on"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginEnd="@dimen/_7sdp"
-            android:background="?attr/selectableItemBackground"
+            android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/app_name"
+            android:foreground="?android:attr/selectableItemBackground"
             android:paddingTop="@dimen/_2sdp"
             android:paddingBottom="@dimen/_2sdp"
             android:src="@drawable/ic_lock_close"
             app:layout_constraintBottom_toBottomOf="@+id/iv_toolbar_close"
             app:layout_constraintEnd_toStartOf="@+id/iv_selected_all"
             app:layout_constraintTop_toTopOf="@+id/iv_toolbar_close"
-            app:tint="?attr/colorAccent" />
+            app:tint="?attr/colorAccent"
+            tools:ignore="UnusedAttribute" />
 
         <ImageView
             android:id="@+id/iv_main_favorite_off"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginEnd="@dimen/_7sdp"
-            android:background="?attr/selectableItemBackground"
+            android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/app_name"
+            android:foreground="?android:attr/selectableItemBackground"
             android:paddingTop="@dimen/_2sdp"
             android:paddingBottom="@dimen/_2sdp"
             android:src="@drawable/ic_lock_open"
             app:layout_constraintBottom_toBottomOf="@+id/iv_toolbar_close"
             app:layout_constraintEnd_toStartOf="@+id/iv_main_favorite_on"
             app:layout_constraintTop_toTopOf="@+id/iv_toolbar_close"
-            app:tint="?attr/colorAccent" />
+            app:tint="?attr/colorAccent"
+            tools:ignore="UnusedAttribute" />
 
         <ImageView
             android:id="@+id/iv_palette_dialog"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginEnd="@dimen/_7sdp"
-            android:background="?attr/selectableItemBackground"
+            android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/app_name"
+            android:foreground="?android:attr/selectableItemBackground"
             android:paddingTop="@dimen/_2sdp"
             android:paddingBottom="@dimen/_2sdp"
             android:src="@drawable/ic_color_note"
             app:layout_constraintBottom_toBottomOf="@+id/iv_toolbar_close"
             app:layout_constraintEnd_toStartOf="@+id/iv_main_favorite_off"
             app:layout_constraintTop_toTopOf="@+id/iv_toolbar_close"
-            app:tint="?attr/colorAccent" />
+            app:tint="?attr/colorAccent"
+            tools:ignore="UnusedAttribute" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,8 +11,10 @@
         android:id="@+id/rl_note"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:foreground="?android:attr/selectableItemBackground"
         android:transitionName="note"
-        tools:ignore="UselessParent">
+        tools:ignore="UnusedAttribute">
 
         <TextView
             android:id="@+id/tv_item_text_title"

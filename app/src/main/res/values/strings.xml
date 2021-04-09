@@ -3,7 +3,6 @@
     <string name="my_notes">My notes</string>
     <string name="search_notes">Search notes</string>
     <string name="title">Title</string>
-    <string name="subtitle">Subtitle</string>
     <string name="write_something">Write something here…</string>
     <string name="enter_title">Enter title</string>
     <string name="enter_text">Enter text</string>
@@ -27,12 +26,11 @@
     <string name="link_copied">Link copied</string>
     <string name="menu">Menu</string>
     <string name="all">All</string>
-    <string name="choose_note_color">Choose note color</string>
     <string name="note_updated">Note updated</string>
     <string name="note_saved">Note saved</string>
     <string name="remove">Remove</string>
     <string name="to_return">To return</string>
-    <string name="hide_done">Hide done</string>
+    <string name="hide_done">Hide completed</string>
     <string name="settings">Settings</string>
     <string name="set_theme">Set theme</string>
     <string name="delete_all_notes">Delete all notes</string>
@@ -40,8 +38,8 @@
     <string name="message">All notes will be deleted irrevocably!</string>
     <string name="successfully">Successfully!</string>
     <string name="the_list_was_empty">The list was empty!</string>
-    <string name="light">light</string>
-    <string name="dark">dark</string>
+    <string name="light">day</string>
+    <string name="dark">night</string>
     <string name="auto">auto</string>
     <string name="disable_animation">Disable animation</string>
     <string name="delete_selected_notes">Delete selected notes?</string>
@@ -55,7 +53,7 @@
     <string name="camera">Camera</string>
     <string name="a_a">Aa</string>
     <string name="message_3">The saved image is also deleted!</string>
-    <string name="ask">Do not ask again</string>
+    <string name="ask">Don\'t ask again</string>
     <string name="replace_image">Replace image?</string>
     <string name="the_old_image_will_be_deleted">The old image will be deleted!</string>
     <string name="replace">Replace</string>

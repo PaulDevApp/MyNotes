@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_palette"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -45,7 +46,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
+            android:background="?android:attr/selectableItemBackground"
+            android:foreground="?android:attr/selectableItemBackground"
+            tools:ignore="UnusedAttribute"
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_link" />
 
@@ -54,7 +57,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
+            android:background="?android:attr/selectableItemBackground"
+            android:foreground="?android:attr/selectableItemBackground"
+            tools:ignore="UnusedAttribute"
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_add_image" />
 
@@ -63,14 +68,18 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
+            android:background="?android:attr/selectableItemBackground"
+            android:foreground="?android:attr/selectableItemBackground"
+            tools:ignore="UnusedAttribute"
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_share" />
 
         <ImageView
             android:id="@+id/iv_favorite"
             android:layout_width="0dp"
-            android:background="?attr/selectableItemBackground"
+            android:background="?android:attr/selectableItemBackground"
+            android:foreground="?android:attr/selectableItemBackground"
+            tools:ignore="UnusedAttribute"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:contentDescription="@string/app_name"

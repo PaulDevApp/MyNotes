@@ -37,7 +37,7 @@ public class ClickLinkDialog {
         if (dialogClick.getWindow() != null) {
             dialogClick.getWindow().setBackgroundDrawable(new ColorDrawable());
         }
-        view.findViewById(R.id.tv_dialog_open).setOnClickListener(v -> {
+        view.findViewById(R.id.iv_dialog_open).setOnClickListener(v -> {
             if (tvUrl.getText().toString().startsWith("www")) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://" + tvUrl.getText().toString().trim()));
                 activity.startActivity(intent);
@@ -47,7 +47,7 @@ public class ClickLinkDialog {
             }
         });
 
-        view.findViewById(R.id.tv_dialog_share).setOnClickListener(v -> {
+        view.findViewById(R.id.iv_dialog_share).setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("text/plain");
             intent.putExtra(Intent.EXTRA_TEXT, note.getWebLink());
@@ -55,7 +55,7 @@ public class ClickLinkDialog {
             activity.startActivity(chosenIntent);
         });
 
-        view.findViewById(R.id.tv_dialog_copy).setOnClickListener(v -> {
+        view.findViewById(R.id.iv_dialog_copy).setOnClickListener(v -> {
             ClipData clip = ClipData.newPlainText("", tvUrl.getText().toString().trim());
             clipboard.setPrimaryClip(clip);
             getToast(activity, R.string.link_copied);
@@ -64,7 +64,7 @@ public class ClickLinkDialog {
         final TextView textViewShowLink = view.findViewById(R.id.tv_dialog_show_link);
         textViewShowLink.setText(tvUrl.getText().toString());
 
-        view.findViewById(R.id.tv_dialog_delete).setOnClickListener(v -> {
+        view.findViewById(R.id.iv_dialog_delete).setOnClickListener(v -> {
             note.setWebLink("");
             tvUrl.setVisibility(View.GONE);
             linkPreview.setVisibility(View.GONE);
