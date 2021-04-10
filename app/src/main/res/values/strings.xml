@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Notes</string>
+    <string name="app_name">My notes</string>
     <string name="my_notes">My notes</string>
     <string name="search_notes">Search notes</string>
     <string name="title">Title</string>
@@ -35,7 +35,7 @@
     <string name="set_theme">Set theme</string>
     <string name="delete_all_notes">Delete all notes</string>
     <string name="delete_all_notes_accept">Delete all notes?</string>
-    <string name="message">All notes will be deleted irrevocably!</string>
+    <string name="message">Notes will be deleted irrevocably!</string>
     <string name="successfully">Successfully!</string>
     <string name="the_list_was_empty">The list was empty!</string>
     <string name="light">day</string>
@@ -43,7 +43,7 @@
     <string name="auto">auto</string>
     <string name="disable_animation">Disable animation</string>
     <string name="delete_selected_notes">Delete selected notes?</string>
-    <string name="message_2">All selected notes will be deleted irrevocably!</string>
+    <string name="message_2">Selected notes will be deleted irrevocably!</string>
     <string name="note_copied">Note copied</string>
     <string name="no_entries_to_copy">No entries to copy</string>
     <string name="share">Share</string>
@@ -57,4 +57,5 @@
     <string name="replace_image">Replace image?</string>
     <string name="the_old_image_will_be_deleted">The old image will be deleted!</string>
     <string name="replace">Replace</string>
+    <string name="rate_app">Rate app</string>
 </resources>

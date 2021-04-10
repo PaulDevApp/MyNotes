@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Notes</string>
+    <string name="app_name">我的笔记</string>
     <string name="my_notes">My notes</string>
     <string name="search_notes">搜索笔记</string>
     <string name="title">标题</string>
@@ -35,7 +35,7 @@
     <string name="set_theme">设定主题</string>
     <string name="delete_all_notes">删除所有笔记</string>
     <string name="delete_all_notes_accept">删除所有笔记？</string>
-    <string name="message">所有笔记将被不可撤销地删除！</string>
+    <string name="message">笔记将被永久删除！</string>
     <string name="successfully">成功地！</string>
     <string name="the_list_was_empty">清单是空的！</string>
     <string name="light">日</string>
@@ -43,7 +43,7 @@
     <string name="auto">汽车</string>
     <string name="disable_animation">禁用动画</string>
     <string name="delete_selected_notes">删除选定的笔记？</string>
-    <string name="message_2">所有选定的笔记将被不可删除地删除！</string>
+    <string name="message_2">所选笔记将被永久删除！</string>
     <string name="note_copied">笔记已复制</string>
     <string name="no_entries_to_copy">没有要复制的条目</string>
     <string name="share">分享</string>
@@ -57,4 +57,5 @@
     <string name="replace_image">替换图片？</string>
     <string name="the_old_image_will_be_deleted">旧图像将被删除！</string>
     <string name="replace">代替</string>
+    <string name="rate_app">评价应用</string>
 </resources>

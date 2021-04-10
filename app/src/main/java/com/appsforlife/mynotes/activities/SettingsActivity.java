@@ -82,6 +82,21 @@ public class SettingsActivity extends AppCompatActivity {
         settingsBinding.switchHidePreviewLink.setChecked(App.getInstance().isPreview());
         settingsBinding.switchHidePreviewLink.setOnCheckedChangeListener((buttonView, isChecked) -> App.getInstance().setPreviewLink(isChecked));
 
+        settingsBinding.tvRateApp.setOnClickListener(v -> {
+            try {
+                final String appPackageName = getApplication().getPackageName();
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, getApplication().getResources().
+                        getString(R.string.app_name) + "\n" + "https://play.google.com/store/apps/details?id=" +
+                        appPackageName);
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
     }
 
     @Override

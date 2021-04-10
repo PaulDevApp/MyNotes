@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Notes</string>
+    <string name="app_name">Мои заметки</string>
     <string name="my_notes">My notes</string>
     <string name="search_notes">Поиск заметок</string>
     <string name="title">Заголовок</string>
@@ -35,7 +35,7 @@
     <string name="set_theme">Установить тему</string>
     <string name="delete_all_notes">Удалить все заметки</string>
     <string name="delete_all_notes_accept">Удалить все заметки?</string>
-    <string name="message">Все заметки будут удалены безвозвратно!</string>
+    <string name="message">Заметки будут удалены безвозвратно!</string>
     <string name="successfully">Успешно!</string>
     <string name="the_list_was_empty">Список был пуст!</string>
     <string name="light">день</string>
@@ -43,7 +43,7 @@
     <string name="auto">авто</string>
     <string name="disable_animation">Отключить анимацию</string>
     <string name="delete_selected_notes">Удалить выбранные заметки?</string>
-    <string name="message_2">Все выбранные заметки будут удалены безвозвратно!</string>
+    <string name="message_2">Выбранные заметки будут удалены безвозвратно!</string>
     <string name="note_copied">Заметка скопирована</string>
     <string name="no_entries_to_copy">Нет записей для копирования</string>
     <string name="share">Поделиться</string>
@@ -57,4 +57,5 @@
     <string name="replace_image">Заменить изображение?</string>
     <string name="the_old_image_will_be_deleted">Старое изображение будет удалено!</string>
     <string name="replace">Заменить</string>
+    <string name="rate_app">Оценить приложение</string>
 </resources>

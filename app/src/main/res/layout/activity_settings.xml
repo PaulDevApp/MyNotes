@@ -11,15 +11,15 @@
         android:id="@+id/iv_close"
         android:layout_width="@dimen/_20sdp"
         android:layout_height="@dimen/_20sdp"
-        android:background="?android:attr/selectableItemBackground"
-        android:foreground="?android:attr/selectableItemBackground"
-        tools:ignore="UnusedAttribute"
         android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_16sdp"
+        android:background="?android:attr/selectableItemBackground"
         android:contentDescription="@string/app_name"
+        android:foreground="?android:attr/selectableItemBackground"
         android:src="@drawable/ic_back"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="UnusedAttribute" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -58,13 +58,13 @@
 
         <RadioButton
             android:id="@+id/rb_auto"
-            android:background="?android:attr/selectableItemBackground"
-            android:foreground="?android:attr/selectableItemBackground"
-            tools:ignore="UnusedAttribute"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:foreground="?android:attr/selectableItemBackground"
             android:text="@string/auto"
-            android:textSize="@dimen/_12ssp" />
+            android:textSize="@dimen/_12ssp"
+            tools:ignore="UnusedAttribute" />
 
         <RadioButton
             android:id="@+id/rb_light"
@@ -72,9 +72,9 @@
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
             android:foreground="?android:attr/selectableItemBackground"
-            tools:ignore="UnusedAttribute"
             android:text="@string/light"
-            android:textSize="@dimen/_12ssp" />
+            android:textSize="@dimen/_12ssp"
+            tools:ignore="UnusedAttribute" />
 
         <RadioButton
             android:id="@+id/rb_dark"
@@ -82,9 +82,9 @@
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
             android:foreground="?android:attr/selectableItemBackground"
-            tools:ignore="UnusedAttribute"
             android:text="@string/dark"
-            android:textSize="@dimen/_12ssp" />
+            android:textSize="@dimen/_12ssp"
+            tools:ignore="UnusedAttribute" />
     </RadioGroup>
 
     <TextView
@@ -96,56 +96,56 @@
         android:layout_marginEnd="@dimen/_16sdp"
         android:background="?android:attr/selectableItemBackground"
         android:foreground="?android:attr/selectableItemBackground"
-        tools:ignore="UnusedAttribute"
         android:text="@string/disable_animation"
         android:textColor="?attr/color"
         android:textSize="@dimen/_14ssp"
         android:textStyle="normal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_theme" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_theme"
+        tools:ignore="UnusedAttribute" />
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switch_anim"
         android:layout_width="match_parent"
-        android:background="?android:attr/selectableItemBackground"
-        android:foreground="?android:attr/selectableItemBackground"
-        tools:ignore="UnusedAttribute"
         android:layout_height="0dp"
         android:layout_marginEnd="@dimen/_6sdp"
+        android:background="?android:attr/selectableItemBackground"
+        android:foreground="?android:attr/selectableItemBackground"
         android:theme="@style/MySwitchStyle"
         app:layout_constraintBottom_toBottomOf="@+id/tv_switch_anim"
         app:layout_constraintStart_toEndOf="@+id/tv_switch_anim"
-        app:layout_constraintTop_toTopOf="@+id/tv_switch_anim" />
+        app:layout_constraintTop_toTopOf="@+id/tv_switch_anim"
+        tools:ignore="UnusedAttribute" />
 
     <TextView
         android:id="@+id/tv_image_visible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_10sdp"
-        android:background="?android:attr/selectableItemBackground"
-        android:foreground="?android:attr/selectableItemBackground"
-        tools:ignore="UnusedAttribute"
         android:layout_marginTop="@dimen/_18sdp"
         android:layout_marginEnd="@dimen/_16sdp"
+        android:background="?android:attr/selectableItemBackground"
+        android:foreground="?android:attr/selectableItemBackground"
         android:text="@string/hide_images"
         android:textColor="?attr/color"
         android:textSize="@dimen/_14ssp"
         android:textStyle="normal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_switch_anim" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_switch_anim"
+        tools:ignore="UnusedAttribute" />
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switch_image_visible"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginEnd="@dimen/_6sdp"
-        android:theme="@style/MySwitchStyle"
         android:background="?android:attr/selectableItemBackground"
         android:foreground="?android:attr/selectableItemBackground"
-        tools:ignore="UnusedAttribute"
+        android:theme="@style/MySwitchStyle"
         app:layout_constraintBottom_toBottomOf="@+id/tv_image_visible"
         app:layout_constraintStart_toEndOf="@+id/tv_image_visible"
-        app:layout_constraintTop_toTopOf="@+id/tv_image_visible" />
+        app:layout_constraintTop_toTopOf="@+id/tv_image_visible"
+        tools:ignore="UnusedAttribute" />
 
     <TextView
         android:id="@+id/tv_hide_preview_link"
@@ -156,26 +156,26 @@
         android:layout_marginEnd="@dimen/_16sdp"
         android:background="?android:attr/selectableItemBackground"
         android:foreground="?android:attr/selectableItemBackground"
-        tools:ignore="UnusedAttribute"
         android:text="@string/hide_preview_link"
         android:textColor="?attr/color"
         android:textSize="@dimen/_14ssp"
         android:textStyle="normal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_image_visible" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_image_visible"
+        tools:ignore="UnusedAttribute" />
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switch_hide_preview_link"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginEnd="@dimen/_6sdp"
-        android:theme="@style/MySwitchStyle"
         android:background="?android:attr/selectableItemBackground"
         android:foreground="?android:attr/selectableItemBackground"
-        tools:ignore="UnusedAttribute"
+        android:theme="@style/MySwitchStyle"
         app:layout_constraintBottom_toBottomOf="@+id/tv_hide_preview_link"
         app:layout_constraintStart_toEndOf="@+id/tv_hide_preview_link"
-        app:layout_constraintTop_toTopOf="@+id/tv_hide_preview_link" />
+        app:layout_constraintTop_toTopOf="@+id/tv_hide_preview_link"
+        tools:ignore="UnusedAttribute" />
 
     <TextView
         android:id="@+id/tv_delete_all_notes"
@@ -186,13 +186,13 @@
         android:layout_marginEnd="@dimen/_16sdp"
         android:background="?android:attr/selectableItemBackground"
         android:foreground="?android:attr/selectableItemBackground"
-        tools:ignore="UnusedAttribute"
         android:text="@string/delete_all_notes"
         android:textColor="?attr/color"
         android:textSize="@dimen/_14ssp"
         android:textStyle="normal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_hide_preview_link" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_hide_preview_link"
+        tools:ignore="UnusedAttribute" />
 
     <ImageView
         android:id="@+id/iv_delete_all_notes"
@@ -204,5 +204,34 @@
         app:layout_constraintBottom_toBottomOf="@+id/tv_delete_all_notes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/tv_delete_all_notes" />
+
+    <TextView
+        android:id="@+id/tv_rate_app"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_18sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:background="?android:attr/selectableItemBackground"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:text="@string/rate_app"
+        android:textColor="?attr/color"
+        android:textSize="@dimen/_14ssp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="UnusedAttribute" />
+
+    <ImageView
+        android:id="@+id/iv_share_app"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_6sdp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_rate"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_rate_app"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_rate_app" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
