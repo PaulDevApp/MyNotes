@@ -58,4 +58,5 @@
     <string name="the_old_image_will_be_deleted">Старое изображение будет удалено!</string>
     <string name="replace">Заменить</string>
     <string name="rate_app">Оценить приложение</string>
+    <string name="privacy_policy">Политика конфиденциальности</string>
 </resources>

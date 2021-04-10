@@ -2,6 +2,7 @@ package com.appsforlife.mynotes.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -96,6 +97,13 @@ public class SettingsActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         });
+
+        settingsBinding.tvPrivacy.setOnClickListener(v -> {
+            Intent policy = new Intent(Intent.ACTION_VIEW, Uri.parse("https://docs.google.com/document/d/1hoo4ymHYNdTLd2iSfj31_4aZzJiDKbwxilBa-qAhAG4/edit?usp=sharing"));
+            startActivity(policy);
+        });
+
+
 
     }
 
