@@ -22,7 +22,7 @@ import static com.appsforlife.mynotes.constants.Constants.*;
 
 import java.util.ArrayList;
 
-public class PaletteDialog {
+public class PaletteDialog  {
 
     private final Activity activity;
 

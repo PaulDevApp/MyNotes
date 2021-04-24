@@ -36,6 +36,7 @@ public class UrlDialog {
         }
         final EditText editTextAddUrl = view.findViewById(R.id.et_add_url);
         editTextAddUrl.requestFocus();
+        editTextAddUrl.setText(tvUrl.getText());
 
         view.findViewById(R.id.tv_add_url).setOnClickListener(v -> {
             if (editTextAddUrl.getText().toString().trim().isEmpty()) {

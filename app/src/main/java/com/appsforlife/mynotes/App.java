@@ -25,10 +25,11 @@ public class App extends Application {
     private boolean isPreview;
     private boolean isConfirmed;
     private boolean isReplace;
+    private boolean isDelete;
+
     private String themeMode;
     private String selectedColor;
 
-    public static int newId;
     public static String colorPicker;
 
 
@@ -54,11 +55,12 @@ public class App extends Application {
         this.isPreview = mPrefs.getBoolean(PREVIEW_LINK, false);
         this.isConfirmed = mPrefs.getBoolean(CONFIRM_DELETE, false);
         this.isReplace = mPrefs.getBoolean(CONFIRM_REPLACE, false);
+        this.isDelete = mPrefs.getBoolean(CONFIRM_DELETE_IMAGE, false);
 
         instance = this;
 
         NoteDataBase noteDataBase = Room.databaseBuilder(getApplicationContext(),
-                NoteDataBase.class, "note_db")
+                NoteDataBase.class, NOTES_DATA_BASE)
                 .allowMainThreadQueries()
                 .build();
 
@@ -124,7 +126,7 @@ public class App extends Application {
         editor.apply();
     }
 
-    public void setCheckConfirmed(boolean isConfirmed){
+    public void setCheckConfirmed(boolean isConfirmed) {
         this.isConfirmed = isConfirmed;
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();
@@ -132,7 +134,7 @@ public class App extends Application {
         editor.apply();
     }
 
-    public void setCheckReplace(boolean isReplace){
+    public void setCheckReplace(boolean isReplace) {
         this.isReplace = isReplace;
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();
@@ -140,8 +142,21 @@ public class App extends Application {
         editor.apply();
     }
 
+    public void setCheckDeleteImage(boolean isDelete) {
+        this.isDelete = isDelete;
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = preferences.edit();
+        editor.putBoolean(CONFIRM_DELETE_IMAGE, isDelete);
+        editor.apply();
+    }
 
-    public boolean isConfirmed() { return isConfirmed; }
+    public boolean isDelete() {
+        return isDelete;
+    }
+
+    public boolean isConfirmed() {
+        return isConfirmed;
+    }
 
     public String getSelectedColor() {
         return selectedColor;

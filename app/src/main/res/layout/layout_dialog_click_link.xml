@@ -9,12 +9,13 @@
 
     <TextView
         android:id="@+id/tv_dialog_show_link"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_4sdp"
         android:layout_marginTop="@dimen/_16sdp"
         android:layout_marginEnd="@dimen/_4sdp"
         android:ellipsize="end"
+        android:gravity="center"
         android:includeFontPadding="false"
         android:singleLine="true"
         android:textSize="@dimen/_16ssp"
@@ -46,8 +47,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
-            android:foreground="?android:attr/selectableItemBackground"
             android:contentDescription="@string/app_name"
+            android:foreground="?android:attr/selectableItemBackground"
             android:src="@drawable/ic_link_copy"
             tools:ignore="UnusedAttribute" />
 
@@ -57,23 +58,32 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="@string/app_name"
             android:foreground="?android:attr/selectableItemBackground"
-            tools:ignore="UnusedAttribute"
             android:src="@drawable/ic_share"
-            android:contentDescription="@string/app_name" />
+            tools:ignore="UnusedAttribute" />
+
+        <ImageView
+            android:id="@+id/iv_dialog_edit_url"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="@string/app_name"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/ic_edit_url"
+            tools:ignore="UnusedAttribute" />
 
         <ImageView
             android:id="@+id/iv_dialog_delete"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="?android:attr/selectableItemBackground"
-            android:foreground="?android:attr/selectableItemBackground"
-            tools:ignore="UnusedAttribute"
             android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/app_name"
+            android:foreground="?android:attr/selectableItemBackground"
             android:src="@drawable/ic_delete_note"
-            android:textColor="@color/colorDelete"
-            android:textStyle="normal" />
+            tools:ignore="UnusedAttribute" />
     </LinearLayout>
 
 

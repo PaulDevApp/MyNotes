@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appsforlife.mynotes.R;
+import com.appsforlife.mynotes.Support;
 import com.appsforlife.mynotes.entities.PaletteColor;
 import com.appsforlife.mynotes.listeners.ColorPaletteListener;
 

@@ -37,7 +37,7 @@
     <string name="delete_all_notes_accept">Удалить все заметки?</string>
     <string name="message">Заметки будут удалены безвозвратно!</string>
     <string name="successfully">Успешно!</string>
-    <string name="the_list_was_empty">Список был пуст!</string>
+    <string name="the_list_is_empty">Список пуст!</string>
     <string name="light">день</string>
     <string name="dark">ночь</string>
     <string name="auto">авто</string>
@@ -59,4 +59,6 @@
     <string name="replace">Заменить</string>
     <string name="rate_app">Оценить приложение</string>
     <string name="privacy_policy">Политика конфиденциальности</string>
+    <string name="ui">Интерфейс</string>
+    <string name="other">Другое</string>
 </resources>

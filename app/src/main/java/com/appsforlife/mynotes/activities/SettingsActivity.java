@@ -1,6 +1,7 @@
 package com.appsforlife.mynotes.activities;
 
 import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,8 +12,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.appsforlife.mynotes.App;
 import com.appsforlife.mynotes.R;
 import com.appsforlife.mynotes.databinding.ActivitySettingsBinding;
-import com.appsforlife.mynotes.dialogs.DeleteNoteDialog;
+import com.appsforlife.mynotes.dialogs.DeleteDialog;
 import com.appsforlife.mynotes.entities.Note;
+import com.appsforlife.mynotes.listeners.DialogDeleteNoteListener;
 import com.appsforlife.mynotes.model.MainViewModel;
 
 import java.util.ArrayList;
@@ -21,9 +23,9 @@ import static com.appsforlife.mynotes.Support.*;
 import static com.appsforlife.mynotes.App.*;
 import static com.appsforlife.mynotes.constants.Constants.*;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity implements DialogDeleteNoteListener {
 
-    private DeleteNoteDialog deleteNoteDialog;
+    private DeleteDialog deleteDialog;
     private ArrayList<Note> notesFromDB;
 
     @SuppressLint("NonConstantResourceId")
@@ -39,7 +41,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         viewModel.getNotes().observe(this, notes -> notesFromDB = new ArrayList<>(notes));
 
-        deleteNoteDialog = new DeleteNoteDialog(this);
+        deleteDialog = new DeleteDialog(this, this);
 
         settingsBinding.ivClose.setOnClickListener(v -> onBackPressed());
 
@@ -72,7 +74,13 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        settingsBinding.tvDeleteAllNotes.setOnClickListener(v -> deleteNoteDialog.createDeleteAllNotesDialog(notesFromDB));
+        settingsBinding.tvDeleteAllNotes.setOnClickListener(v -> {
+            if (notesFromDB.size() == 0) {
+                getToast(this, R.string.the_list_is_empty);
+            } else {
+                deleteDialog.createDeleteAllNotesDialog();
+            }
+        });
 
         settingsBinding.switchAnim.setChecked(App.getInstance().isSwitchAnim());
         settingsBinding.switchAnim.setOnCheckedChangeListener((buttonView, isChecked) -> App.getInstance().setAnim(isChecked));
@@ -84,17 +92,11 @@ public class SettingsActivity extends AppCompatActivity {
         settingsBinding.switchHidePreviewLink.setOnCheckedChangeListener((buttonView, isChecked) -> App.getInstance().setPreviewLink(isChecked));
 
         settingsBinding.tvRateApp.setOnClickListener(v -> {
+            final String appPackageName = getApplication().getPackageName();
             try {
-                final String appPackageName = getApplication().getPackageName();
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, getApplication().getResources().
-                        getString(R.string.app_name) + "\n" + "https://play.google.com/store/apps/details?id=" +
-                        appPackageName);
-                sendIntent.setType("text/plain");
-                startActivity(sendIntent);
-            } catch (Exception e) {
-                e.printStackTrace();
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+            } catch (ActivityNotFoundException e) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
             }
         });
 
@@ -103,6 +105,12 @@ public class SettingsActivity extends AppCompatActivity {
             startActivity(policy);
         });
 
+        settingsBinding.tvFeedBack.setOnClickListener(v -> {
+            Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+            emailIntent.setData(Uri.parse("mailto:paul.dev.app@gmail.com"));
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "My Notes");
+            startActivity(emailIntent);
+        });
 
 
     }
@@ -111,5 +119,13 @@ public class SettingsActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.activity_slide_from_top, R.anim.activity_slide_to_bottom);
+    }
+
+    @Override
+    public void dialogDeleteCallback(boolean confirm) {
+        if (confirm) {
+            getInstance().getNoteDao().deleteAllNotes();
+            getToast(this, R.string.successfully);
+        }
     }
 }

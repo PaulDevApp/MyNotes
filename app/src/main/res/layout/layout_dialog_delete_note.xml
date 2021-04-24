@@ -22,22 +22,10 @@
         android:includeFontPadding="false"
         android:text="@string/delete_note"
         android:textColor="?attr/color"
-        android:textSize="@dimen/_21ssp"
+        android:textSize="@dimen/_17ssp"
         android:textStyle="normal"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_goneMarginEnd="@dimen/_6sdp" />
-
-    <TextView
-        android:id="@+id/tv_dialog_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/message_3"
-        android:textColor="@color/colorDelete"
-        android:textSize="@dimen/_12ssp"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="@id/tv_delete_text"
-        app:layout_constraintTop_toBottomOf="@+id/tv_delete_text"
-        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/tv_delete_note"
@@ -48,27 +36,27 @@
         android:layout_marginBottom="@dimen/_8sdp"
         android:background="?android:attr/selectableItemBackground"
         android:foreground="?android:attr/selectableItemBackground"
-        tools:ignore="UnusedAttribute"
         android:text="@string/delete"
         android:textColor="@color/colorDelete"
-        android:textSize="@dimen/_20ssp"
+        android:textSize="@dimen/_17ssp"
         android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_dialog_message" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_delete_text"
+        tools:ignore="UnusedAttribute" />
 
     <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/checkbox_detail_delete_note"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:foreground="?android:attr/selectableItemBackground"
         android:text="@string/ask"
         android:textSize="@dimen/_11sdp"
         android:textStyle="normal"
-        android:background="?android:attr/selectableItemBackground"
-        android:foreground="?android:attr/selectableItemBackground"
-        tools:ignore="UnusedAttribute"
         app:layout_constraintBottom_toBottomOf="@id/tv_delete_note"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_delete_note" />
+        app:layout_constraintTop_toTopOf="@id/tv_delete_note"
+        tools:ignore="UnusedAttribute" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

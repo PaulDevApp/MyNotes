@@ -22,7 +22,7 @@
         android:includeFontPadding="false"
         android:text="@string/delete_all_notes_accept"
         android:textColor="?attr/color"
-        android:textSize="@dimen/_21ssp"
+        android:textSize="@dimen/_17ssp"
         android:textStyle="normal"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_goneMarginEnd="@dimen/_6sdp" />
@@ -33,7 +33,7 @@
         android:layout_height="match_parent"
         android:text="@string/message"
         android:textColor="@color/colorDelete"
-        android:textSize="@dimen/_12ssp"
+        android:textSize="@dimen/_9ssp"
         app:layout_constraintStart_toStartOf="@+id/tv_delete_all_notes_dialog"
         app:layout_constraintTop_toBottomOf="@+id/tv_delete_all_notes_dialog" />
 
@@ -48,7 +48,7 @@
         android:background="?android:attr/selectableItemBackground"
         android:foreground="?android:attr/selectableItemBackground"
         tools:ignore="UnusedAttribute"
-        android:textSize="@dimen/_20ssp"
+        android:textSize="@dimen/_17ssp"
         android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

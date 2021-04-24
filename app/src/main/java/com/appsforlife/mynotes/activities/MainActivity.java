@@ -37,13 +37,14 @@ import com.appsforlife.mynotes.constants.Constants;
 import com.appsforlife.mynotes.databinding.ActivityMainBinding;
 import com.appsforlife.mynotes.databinding.LayoutBottomMenuBinding;
 import com.appsforlife.mynotes.databinding.LayoutMultiplyBinding;
-import com.appsforlife.mynotes.dialogs.DeleteNoteDialog;
+import com.appsforlife.mynotes.dialogs.DeleteDialog;
 import com.appsforlife.mynotes.dialogs.ImagePickerDialog;
 import com.appsforlife.mynotes.dialogs.PaletteDialog;
 import com.appsforlife.mynotes.dialogs.UrlDialog;
 import com.appsforlife.mynotes.entities.Note;
 import com.appsforlife.mynotes.entities.PaletteColor;
 import com.appsforlife.mynotes.listeners.ColorPaletteListener;
+import com.appsforlife.mynotes.listeners.DialogDeleteNoteListener;
 import com.appsforlife.mynotes.listeners.NoteListener;
 import com.appsforlife.mynotes.listeners.NoteLongListener;
 import com.appsforlife.mynotes.listeners.NoteSelectListener;
@@ -60,17 +61,27 @@ import static com.appsforlife.mynotes.Support.setDarkTheme;
 import static com.appsforlife.mynotes.Support.startItemAnimation;
 import static com.appsforlife.mynotes.Support.startViewAnimation;
 import static com.appsforlife.mynotes.Support.*;
-import static com.appsforlife.mynotes.App.*;
 import static com.appsforlife.mynotes.constants.Constants.*;
 
+/*
+ * 1. Исправить логику копирования заметки при пустой заметки выкидывает на главное активити
+ *  при этом не копируя но файлы удаляет. Кнопку копирования сделать в методе getPreviousNote() +
+ * 2. Предупреждать при удалении фото. +
+ * 3. Сделать одинаковый шрифт при все диалогах  +
+ * 4. Копировать текст заметки +
+ * 5. Голосовой ввод
+ * 6. "О приложении" в настройках
+ * 7. добавить tooltips
+ * 8. добавить переводы + Хинди и Испанский
+ * */
+
 public class MainActivity extends AppCompatActivity implements NoteListener, NoteSelectListener,
-        NoteLongListener, ColorPaletteListener {
+        NoteLongListener, ColorPaletteListener, DialogDeleteNoteListener {
 
     private NotesAdapter notesAdapter;
     private ArrayList<Note> notesFromDB;
     private Menu menu;
     private BottomSheetBehavior<LinearLayout> bottomSheetBehavior;
-    private Note note;
 
     private ActivityMainBinding mainBinding;
     private LayoutBottomMenuBinding menuBinding;
@@ -82,12 +93,13 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
 
     private ImagePickerDialog imagePickerDialog;
     private UrlDialog urlDialog;
-    private DeleteNoteDialog deleteNoteDialog;
+    private DeleteDialog deleteDialog;
     private PaletteDialog paletteDialog;
 
     private boolean isFind;
     private boolean isClick;
     private boolean isAnim;
+    private boolean isSelectedAll;
 
     @SuppressLint("SupportAnnotationUsage")
     @AnimRes
@@ -110,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
 
         imagePickerDialog = new ImagePickerDialog(this, getPackageManager(), getExternalFilesDir(Environment.DIRECTORY_PICTURES));
         urlDialog = new UrlDialog(this);
-        deleteNoteDialog = new DeleteNoteDialog(this);
+        deleteDialog = new DeleteDialog(this, this);
         paletteDialog = new PaletteDialog(this);
 
         int spanCount;
@@ -144,10 +156,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
         MainViewModel viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         viewModel.getNotes().observe(this, notes -> {
             notesFromDB = new ArrayList<>(notes);
-            isEmpty = notes.size() > 0;
-            if (isEmpty) {
-                note = notes.get(notes.size() - 1);
-                newId = note.getId() + 1;
+            if (notes.size() > 0) {
                 mainBinding.lottieEmptyList.setVisibility(View.GONE);
             } else {
                 mainBinding.lottieEmptyList.setVisibility(View.VISIBLE);
@@ -279,10 +288,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
         mainBinding.ivScrollToTop.setOnClickListener(view -> mainBinding.rvNotes.smoothScrollToPosition(0));
 
 
-        multiplyBinding.ivToolbarDelete.setOnClickListener(v -> deleteNoteDialog.createDeleteAllSelectedNotesDialog(
-                multiplyBinding.svSearch, multiplyBinding.clMultiSelectLayout, multiplyBinding.ivSelectedAll,
-                multiplyBinding.ivMainFavoriteOn, multiplyBinding.ivMainFavoriteOff, multiplyBinding.tvToolbarCount,
-                multiplyBinding.ivToolbarDelete, multiplyBinding.ivToolbarClose, multiplyBinding.ivPaletteDialog, notesFromDB));
+        multiplyBinding.ivToolbarDelete.setOnClickListener(v -> deleteDialog.createDeleteAllSelectedNotesDialog());
 
         initBottomMenu();
 
@@ -500,9 +506,9 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
                         multiplyBinding.tvToolbarCount.setText("");
                         countSelected = 0;
                     }
-                    Note note = notesAdapter.getNoteAt(viewHolder.getAdapterPosition());
+                    Note note = notesAdapter.getNoteAt(viewHolder.getAbsoluteAdapterPosition());
                     note.setSelected(false);
-                    int position = viewHolder.getAdapterPosition();
+                    int position = viewHolder.getAbsoluteAdapterPosition();
                     switch (direction) {
                         case ItemTouchHelper.LEFT:
                             App.getInstance().getNoteDao().deleteNote(notesAdapter.getNoteAt(position));
@@ -651,4 +657,19 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
         sorting();
     }
 
+    @Override
+    public void dialogDeleteCallback(boolean confirm) {
+        if (confirm) {
+            for (Note note : notesFromDB) {
+                if (note.isSelected()) {
+                    App.getInstance().getNoteDao().deleteNote(note);
+                }
+            }
+            isSelect = false;
+            discharge(this, multiplyBinding.svSearch, multiplyBinding.clMultiSelectLayout,
+                    multiplyBinding.ivSelectedAll, multiplyBinding.ivMainFavoriteOn, multiplyBinding.ivMainFavoriteOff,
+                    multiplyBinding.tvToolbarCount, multiplyBinding.ivToolbarDelete, multiplyBinding.ivToolbarClose,
+                    multiplyBinding.tvToolbarCount, multiplyBinding.ivPaletteDialog, notesFromDB);
+        }
+    }
 }

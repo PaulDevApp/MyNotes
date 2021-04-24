@@ -32,28 +32,65 @@
         app:layout_constraintBottom_toBottomOf="@+id/iv_close"
         app:layout_constraintStart_toEndOf="@+id/iv_close" />
 
+    <View
+        android:id="@+id/support_line_ui"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:background="?attr/colorAccent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_close" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_9sdp"
+        android:background="?attr/colorPrimary"
+        android:paddingStart="@dimen/_2sdp"
+        android:paddingEnd="@dimen/_2sdp"
+        android:text="@string/ui"
+        android:textColor="?attr/colorAccent"
+        android:textSize="@dimen/_9ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_close" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_start"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/_10sdp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_end"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/_10sdp" />
 
     <TextView
         android:id="@+id/tv_theme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_22sdp"
+        android:layout_marginTop="@dimen/_16sdp"
         android:text="@string/set_theme"
         android:textColor="?attr/color"
         android:textSize="@dimen/_14ssp"
         android:textStyle="normal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_close" />
+        app:layout_constraintStart_toEndOf="@id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/support_line_ui" />
 
     <RadioGroup
         android:id="@+id/switch_theme"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginEnd="@dimen/_6sdp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="@+id/tv_theme"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guideline_end"
         app:layout_constraintTop_toTopOf="@+id/tv_theme">
 
         <RadioButton
@@ -63,7 +100,7 @@
             android:background="?android:attr/selectableItemBackground"
             android:foreground="?android:attr/selectableItemBackground"
             android:text="@string/auto"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_11ssp"
             tools:ignore="UnusedAttribute" />
 
         <RadioButton
@@ -73,7 +110,7 @@
             android:background="?android:attr/selectableItemBackground"
             android:foreground="?android:attr/selectableItemBackground"
             android:text="@string/light"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_11ssp"
             tools:ignore="UnusedAttribute" />
 
         <RadioButton
@@ -83,182 +120,153 @@
             android:background="?android:attr/selectableItemBackground"
             android:foreground="?android:attr/selectableItemBackground"
             android:text="@string/dark"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_11ssp"
             tools:ignore="UnusedAttribute" />
     </RadioGroup>
 
-    <TextView
-        android:id="@+id/tv_switch_anim"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switch_anim"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_18sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:background="?android:attr/selectableItemBackground"
         android:foreground="?android:attr/selectableItemBackground"
         android:text="@string/disable_animation"
         android:textColor="?attr/color"
         android:textSize="@dimen/_14ssp"
         android:textStyle="normal"
-        app:layout_constraintStart_toStartOf="parent"
+        android:theme="@style/MySwitchStyle"
+        app:layout_constraintEnd_toStartOf="@id/guideline_end"
+        app:layout_constraintStart_toEndOf="@id/guideline_start"
         app:layout_constraintTop_toBottomOf="@+id/tv_theme"
         tools:ignore="UnusedAttribute" />
 
     <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/switch_anim"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginEnd="@dimen/_6sdp"
-        android:background="?android:attr/selectableItemBackground"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:theme="@style/MySwitchStyle"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_switch_anim"
-        app:layout_constraintStart_toEndOf="@+id/tv_switch_anim"
-        app:layout_constraintTop_toTopOf="@+id/tv_switch_anim"
-        tools:ignore="UnusedAttribute" />
-
-    <TextView
-        android:id="@+id/tv_image_visible"
-        android:layout_width="wrap_content"
+        android:id="@+id/switch_image_visible"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_18sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_6sdp"
         android:background="?android:attr/selectableItemBackground"
         android:foreground="?android:attr/selectableItemBackground"
         android:text="@string/hide_images"
         android:textColor="?attr/color"
         android:textSize="@dimen/_14ssp"
         android:textStyle="normal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_switch_anim"
+        android:theme="@style/MySwitchStyle"
+        app:layout_constraintEnd_toStartOf="@id/guideline_end"
+        app:layout_constraintStart_toEndOf="@id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/switch_anim"
         tools:ignore="UnusedAttribute" />
 
     <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/switch_image_visible"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginEnd="@dimen/_6sdp"
-        android:background="?android:attr/selectableItemBackground"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:theme="@style/MySwitchStyle"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_image_visible"
-        app:layout_constraintStart_toEndOf="@+id/tv_image_visible"
-        app:layout_constraintTop_toTopOf="@+id/tv_image_visible"
-        tools:ignore="UnusedAttribute" />
-
-    <TextView
-        android:id="@+id/tv_hide_preview_link"
-        android:layout_width="wrap_content"
+        android:id="@+id/switch_hide_preview_link"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_18sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_6sdp"
         android:background="?android:attr/selectableItemBackground"
         android:foreground="?android:attr/selectableItemBackground"
         android:text="@string/hide_preview_link"
         android:textColor="?attr/color"
         android:textSize="@dimen/_14ssp"
         android:textStyle="normal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_image_visible"
+        android:theme="@style/MySwitchStyle"
+        app:layout_constraintEnd_toStartOf="@id/guideline_end"
+        app:layout_constraintStart_toEndOf="@id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/switch_image_visible"
         tools:ignore="UnusedAttribute" />
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/switch_hide_preview_link"
+    <View
+        android:id="@+id/support_line_other"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginEnd="@dimen/_6sdp"
-        android:background="?android:attr/selectableItemBackground"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:theme="@style/MySwitchStyle"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_hide_preview_link"
-        app:layout_constraintStart_toEndOf="@+id/tv_hide_preview_link"
-        app:layout_constraintTop_toTopOf="@+id/tv_hide_preview_link"
-        tools:ignore="UnusedAttribute" />
+        android:layout_height="0.1dp"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:background="?attr/colorAccent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switch_hide_preview_link" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_9sdp"
+        android:background="?attr/colorPrimary"
+        android:paddingStart="@dimen/_2sdp"
+        android:paddingEnd="@dimen/_2sdp"
+        android:text="@string/other"
+        android:textColor="?attr/colorAccent"
+        android:textSize="@dimen/_9ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switch_hide_preview_link" />
 
     <TextView
         android:id="@+id/tv_delete_all_notes"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_18sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
         android:background="?android:attr/selectableItemBackground"
         android:foreground="?android:attr/selectableItemBackground"
         android:text="@string/delete_all_notes"
         android:textColor="?attr/color"
         android:textSize="@dimen/_14ssp"
         android:textStyle="normal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_hide_preview_link"
+        app:drawableEndCompat="@drawable/ic_delete_note"
+        app:layout_constraintEnd_toStartOf="@id/guideline_end"
+        app:layout_constraintStart_toEndOf="@id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/support_line_other"
         tools:ignore="UnusedAttribute" />
-
-    <ImageView
-        android:id="@+id/iv_delete_all_notes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_6sdp"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_delete_forever"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_delete_all_notes"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_delete_all_notes" />
 
     <TextView
         android:id="@+id/tv_rate_app"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
         android:background="?android:attr/selectableItemBackground"
         android:foreground="?android:attr/selectableItemBackground"
         android:text="@string/rate_app"
         android:textColor="?attr/color"
-        android:layout_marginBottom="@dimen/_10sdp"
         android:textSize="@dimen/_14ssp"
         android:textStyle="normal"
-        app:layout_constraintBottom_toTopOf="@+id/tv_privacy"
+        app:drawableEndCompat="@drawable/ic_rate"
+        app:layout_constraintEnd_toStartOf="@id/guideline_end"
+        app:layout_constraintStart_toEndOf="@id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/tv_delete_all_notes"
         tools:ignore="UnusedAttribute" />
-
-    <ImageView
-        android:id="@+id/iv_share_app"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_6sdp"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_rate"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_rate_app"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_rate_app" />
 
     <TextView
         android:id="@+id/tv_privacy"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_18sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
-        android:layout_marginBottom="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_16sdp"
         android:background="?android:attr/selectableItemBackground"
         android:foreground="?android:attr/selectableItemBackground"
         android:text="@string/privacy_policy"
         android:textColor="?attr/color"
         android:textSize="@dimen/_14ssp"
         android:textStyle="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:drawableEndCompat="@drawable/ic_privacy_policy"
+        app:layout_constraintEnd_toStartOf="@id/guideline_end"
+        app:layout_constraintStart_toEndOf="@id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/tv_rate_app"
         tools:ignore="UnusedAttribute" />
 
-    <ImageView
-        android:id="@+id/iv_privacy"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/tv_feed_back"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_6sdp"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_privacy_policy"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_privacy"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_privacy" />
+        android:layout_marginTop="@dimen/_16sdp"
+        android:background="?android:attr/selectableItemBackground"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:text="@string/feedBack"
+        android:textColor="?attr/color"
+        android:textSize="@dimen/_14ssp"
+        android:textStyle="normal"
+        app:drawableEndCompat="@drawable/ic_feed_back"
+        app:layout_constraintEnd_toStartOf="@id/guideline_end"
+        app:layout_constraintStart_toEndOf="@id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/tv_privacy"
+        tools:ignore="UnusedAttribute" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

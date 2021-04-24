@@ -37,7 +37,7 @@
     <string name="delete_all_notes_accept">Delete all notes?</string>
     <string name="message">Notes will be deleted irrevocably!</string>
     <string name="successfully">Successfully!</string>
-    <string name="the_list_was_empty">The list was empty!</string>
+    <string name="the_list_is_empty">The list is empty!</string>
     <string name="light">day</string>
     <string name="dark">night</string>
     <string name="auto">auto</string>
@@ -59,4 +59,23 @@
     <string name="replace">Replace</string>
     <string name="rate_app">Rate app</string>
     <string name="privacy_policy">Privacy Policy</string>
+    <string name="ui">UI</string>
+    <string name="other">Other</string>
+    <string name="delete_image">Delete image?</string>
+    <string name="toast_helper_favorite">Pin a note</string>
+    <string name="toast_helper_share">Share note</string>
+    <string name="toast_helper_add_picture">Add image</string>
+    <string name="toast_helper_add_url">Add link</string>
+    <string name="toast_helper_add_complete">Mark as done</string>
+    <string name="feedBack">Feedback</string>
+    <string name="toast_helper_copy_ulr">Copy link</string>
+    <string name="toast_helper_delete_ulr">Remove link</string>
+    <string name="toast_helper_share_ulr">Share link</string>
+    <string name="toast_helper_open_ulr">Open link</string>
+    <string name="toast_helper_edit_ulr">Edit link</string>
+    <string name="note_added">Note add</string>
+    <string name="note_is_empty">Note is empty!</string>
+    <string name="toast_helper_make_a_copy">Make a copy</string>
+    <string name="copy_text_note">Note text copied</string>
+    <string name="toast_helper_copy_text_note">Copy note text</string>
 </resources>

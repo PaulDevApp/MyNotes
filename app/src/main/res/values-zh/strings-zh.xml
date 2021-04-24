@@ -37,7 +37,7 @@
     <string name="delete_all_notes_accept">删除所有笔记？</string>
     <string name="message">笔记将被永久删除！</string>
     <string name="successfully">成功地！</string>
-    <string name="the_list_was_empty">清单是空的！</string>
+    <string name="the_list_is_empty">清单是空的！</string>
     <string name="light">日</string>
     <string name="dark">夜晚</string>
     <string name="auto">汽车</string>
@@ -59,4 +59,6 @@
     <string name="replace">代替</string>
     <string name="rate_app">评价应用</string>
     <string name="privacy_policy">隱私政策</string>
+    <string name="ui">界面</string>
+    <string name="other">其他</string>
 </resources>

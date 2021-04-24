@@ -151,14 +151,14 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
 
             itemView.setOnClickListener(v -> {
                 if (isSelect) {
-                    noteSelectListener.onNoteSelectListener(sortedList.get(getAdapterPosition()), selectedView);
+                    noteSelectListener.onNoteSelectListener(sortedList.get(getAbsoluteAdapterPosition()), selectedView);
                 } else {
-                    noteListener.onNoteClicked(sortedList.get(getAdapterPosition()), relativeLayoutNote);
+                    noteListener.onNoteClicked(sortedList.get(getAbsoluteAdapterPosition()), relativeLayoutNote);
                 }
             });
 
             itemView.setOnLongClickListener(v -> {
-                noteLongListener.onNoteLongListener(sortedList.get(getAdapterPosition()), selectedView);
+                noteLongListener.onNoteLongListener(sortedList.get(getAbsoluteAdapterPosition()), selectedView);
                 return true;
             });
 

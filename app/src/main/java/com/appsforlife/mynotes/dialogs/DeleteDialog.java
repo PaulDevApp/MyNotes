@@ -14,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.appsforlife.mynotes.App;
 import com.appsforlife.mynotes.R;
 import com.appsforlife.mynotes.entities.Note;
+import com.appsforlife.mynotes.listeners.DialogDeleteNoteListener;
 import com.google.android.material.checkbox.MaterialCheckBox;
 
 import static com.appsforlife.mynotes.Support.*;
@@ -21,17 +22,17 @@ import static com.appsforlife.mynotes.App.*;
 
 import java.util.ArrayList;
 
-public class DeleteNoteDialog {
+public class DeleteDialog {
 
     private final Activity activity;
+    private final DialogDeleteNoteListener dialogDeleteNoteListener;
 
-    public DeleteNoteDialog(Activity activity) {
+    public DeleteDialog(Activity activity, DialogDeleteNoteListener dialogDeleteNoteListener) {
         this.activity = activity;
+        this.dialogDeleteNoteListener = dialogDeleteNoteListener;
     }
 
-    public void createDeleteAllSelectedNotesDialog(SearchView svSearch, ConstraintLayout rlMultiSelectLayout,
-                                                   ImageView ivSelectedAll, ImageView ivFavorite, ImageView ivFavoriteOff, TextView tvToolbarCount,
-                                                   ImageView ivDelete, ImageView ivClose, ImageView ivPickColor, ArrayList<Note> notesFromDB) {
+    public void createDeleteAllSelectedNotesDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         View view = LayoutInflater.from(activity).inflate(R.layout.layout_dialog_delet_select_notes, null);
         builder.setView(view);
@@ -40,21 +41,13 @@ public class DeleteNoteDialog {
             dialogDelete.getWindow().setBackgroundDrawable(new ColorDrawable());
         }
         view.findViewById(R.id.tv_delete_all_selected_notes).setOnClickListener(v -> {
-            for (Note note : notesFromDB) {
-                if (note.isSelected()) {
-                    deleteImage(note.getImagePath(), activity);
-                    App.getInstance().getNoteDao().deleteNote(note);
-                }
-            }
-            isSelect = false;
-            discharge(activity, svSearch, rlMultiSelectLayout,
-                    ivSelectedAll, ivFavorite, ivFavoriteOff, tvToolbarCount, ivDelete, ivClose, tvToolbarCount, ivPickColor, notesFromDB);
+            dialogDeleteNoteListener.dialogDeleteCallback(true);
             dialogDelete.cancel();
         });
         dialogDelete.show();
     }
 
-    public void createDeleteNoteDialog(Note note) {
+    public void createDeleteNoteDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         View view = LayoutInflater.from(activity).inflate(R.layout.layout_dialog_delete_note, null);
         builder.setView(view);
@@ -62,16 +55,10 @@ public class DeleteNoteDialog {
         if (dialogDelete.getWindow() != null) {
             dialogDelete.getWindow().setBackgroundDrawable(new ColorDrawable());
         }
-        if (note.getImagePath() != null && !note.getImagePath().trim().isEmpty()) {
-            view.findViewById(R.id.tv_dialog_message).setVisibility(View.VISIBLE);
-        } else {
-            view.findViewById(R.id.tv_dialog_message).setVisibility(View.GONE);
-        }
+
         view.findViewById(R.id.tv_delete_note).setOnClickListener(v -> {
-            deleteImage(note.getImagePath(), activity);
-            App.getInstance().getNoteDao().deleteNote(note);
+            dialogDeleteNoteListener.dialogDeleteCallback(true);
             dialogDelete.cancel();
-            activity.finish();
         });
 
         MaterialCheckBox checkBox = view.findViewById(R.id.checkbox_detail_delete_note);
@@ -80,8 +67,7 @@ public class DeleteNoteDialog {
         dialogDelete.show();
     }
 
-
-    public void createDeleteAllNotesDialog(ArrayList<Note> notesFromDB) {
+    public void createDeleteAllNotesDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         View view = LayoutInflater.from(activity).inflate(R.layout.layout_dialog_delete_all_notes, null);
         builder.setView(view);
@@ -90,16 +76,8 @@ public class DeleteNoteDialog {
             dialogDelete.getWindow().setBackgroundDrawable(new ColorDrawable());
         }
         view.findViewById(R.id.tv_delete_all_notes_forever).setOnClickListener(v -> {
-            if (isEmpty) {
-                for (Note note : notesFromDB) {
-                    deleteImage(note.getImagePath(), activity);
-                }
-                getInstance().getNoteDao().deleteAllNotes();
-                getToast(activity, R.string.successfully);
-            } else {
-                getToast(activity, R.string.the_list_was_empty);
-            }
-            dialogDelete.dismiss();
+            dialogDeleteNoteListener.dialogDeleteCallback(true);
+            dialogDelete.cancel();
         });
         dialogDelete.show();
     }

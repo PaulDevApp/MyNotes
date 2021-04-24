@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
@@ -33,13 +34,17 @@ import com.appsforlife.mynotes.adapters.ColorDetailPaletteAdapter;
 import com.appsforlife.mynotes.databinding.ActivityDetailBinding;
 import com.appsforlife.mynotes.databinding.LayoutPaletteBinding;
 import com.appsforlife.mynotes.dialogs.ClickLinkDialog;
-import com.appsforlife.mynotes.dialogs.DeleteNoteDialog;
+import com.appsforlife.mynotes.dialogs.DeleteDialog;
+import com.appsforlife.mynotes.dialogs.DeleteImageDialog;
 import com.appsforlife.mynotes.dialogs.ImagePickerDialog;
 import com.appsforlife.mynotes.dialogs.ReplaceImageDialog;
 import com.appsforlife.mynotes.dialogs.UrlDialog;
 import com.appsforlife.mynotes.entities.Note;
 import com.appsforlife.mynotes.entities.PaletteColor;
 import com.appsforlife.mynotes.listeners.ColorPaletteListener;
+import com.appsforlife.mynotes.listeners.DialogDeleteImageListener;
+import com.appsforlife.mynotes.listeners.DialogDeleteNoteListener;
+import com.appsforlife.mynotes.listeners.DialogReplaceImageListener;
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
@@ -56,7 +61,8 @@ import static com.appsforlife.mynotes.constants.Constants.*;
 import io.github.ponnamkarthik.richlinkpreview.ViewListener;
 
 @SuppressLint("ResourceAsColor")
-public class DetailNoteActivity extends AppCompatActivity implements ColorPaletteListener {
+public class DetailNoteActivity extends AppCompatActivity implements ColorPaletteListener,
+        DialogDeleteImageListener, DialogReplaceImageListener, DialogDeleteNoteListener {
 
     private ActivityDetailBinding detailBinding;
     private LayoutPaletteBinding paletteBinding;
@@ -75,10 +81,13 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
     private ImagePickerDialog imagePickerDialog;
     private UrlDialog urlDialog;
     private ClickLinkDialog clickLinkDialog;
-    private DeleteNoteDialog deleteNoteDialog;
+    private DeleteDialog deleteDialog;
     private ReplaceImageDialog replaceImageDialog;
+    private DeleteImageDialog deleteImageDialog;
 
     private boolean isFromGallery;
+    private boolean isCheck;
+    private boolean isFavorite;
 
     private int zoom;
 
@@ -112,8 +121,9 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
         imagePickerDialog = new ImagePickerDialog(this, getPackageManager(), getExternalFilesDir(Environment.DIRECTORY_PICTURES));
         urlDialog = new UrlDialog(this);
         clickLinkDialog = new ClickLinkDialog(this, (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE));
-        deleteNoteDialog = new DeleteNoteDialog(this);
-        replaceImageDialog = new ReplaceImageDialog(this);
+        deleteDialog = new DeleteDialog(this, this);
+        replaceImageDialog = new ReplaceImageDialog(this, this);
+        deleteImageDialog = new DeleteImageDialog(this, this);
 
         bottomSheetBehavior = BottomSheetBehavior.from(paletteBinding.llPalette);
         if (getIntent().hasExtra(NOTE)) {
@@ -206,6 +216,11 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
             App.getInstance().getNoteDao().update(note);
         });
 
+        paletteBinding.ivFavorite.setOnLongClickListener(v -> {
+            getToast(this, R.string.toast_helper_favorite);
+            return true;
+        });
+
         paletteBinding.ivShare.setOnClickListener(v -> {
             if (imagePath != null && !imagePath.trim().isEmpty()) {
                 shareNote(this, detailBinding.etInputTitle.getText().toString(),
@@ -217,18 +232,16 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
             }
         });
 
-        paletteBinding.ivCopy.setOnClickListener(v -> {
-            if (getIntent().hasExtra(NOTE)) {
-                if (checkSomeText()) {
-                    note.setId(newId);
-                    note.setDateTime(getDate());
-                    App.getInstance().getNoteDao().insertNote(note);
-                    getToast(this, R.string.note_copied);
-                } else {
-                    getToast(this, R.string.no_entries_to_copy);
-                }
-            }
-            finish();
+        paletteBinding.ivShare.setOnLongClickListener(v -> {
+            getToast(this, R.string.toast_helper_share);
+            return true;
+        });
+
+        paletteBinding.ivAddNote.setOnClickListener(v -> copy());
+
+        paletteBinding.ivAddNote.setOnLongClickListener(v -> {
+            getToast(this, R.string.toast_helper_make_a_copy);
+            return true;
         });
 
         paletteBinding.ivAddPhotoCreate.setOnClickListener(v -> {
@@ -237,41 +250,53 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
                     if (checkFile(imagePath)) {
                         imagePickerDialog.createImagePickerDialog();
                     } else {
-                        replaceImageDialog.createReplaceImageDialog(note, imagePickerDialog);
+                        replaceImageDialog.createReplaceImageDialog();
                     }
                 } else {
                     imagePickerDialog.createImagePickerDialog();
                 }
             } else {
-                deleteImage(imagePath, this);
                 imagePickerDialog.createImagePickerDialog();
             }
         });
 
+        detailBinding.ivDeleteImage.setOnClickListener(v -> {
+                    if (!App.getInstance().isDelete()) {
+                        if (!checkFile(imagePath)) {
+                            deleteImageDialog.createDeleteImageDialog();
+                        } else {
+                            clearImage();
+                        }
+                    } else {
+                        clearImage();
+                    }
+                }
+        );
+
+        paletteBinding.ivAddPhotoCreate.setOnLongClickListener(v -> {
+            getToast(this, R.string.toast_helper_add_picture);
+            return true;
+        });
+
         paletteBinding.ivAddWebCreate.setOnClickListener(v -> urlDialog.createDetailUrlDialog(detailBinding.tvUrl));
+        paletteBinding.ivAddWebCreate.setOnLongClickListener(v -> {
+            getToast(this, R.string.toast_helper_add_url);
+            return true;
+        });
+
         detailBinding.ivBackToMain.setOnClickListener(v -> onBackPressed());
 
         detailBinding.ivDeleteNote.setOnClickListener(v -> {
             if (!App.getInstance().isConfirmed()) {
-                deleteNoteDialog.createDeleteNoteDialog(note);
+                deleteDialog.createDeleteNoteDialog();
             } else {
-                deleteImage(note.getImagePath(), this);
                 App.getInstance().getNoteDao().deleteNote(note);
                 finish();
             }
         });
 
-        detailBinding.ivDeleteImage.setOnClickListener(v -> {
-                    deleteImage(note.getImagePath(), this);
-                    detailBinding.ivShowPhoto.setImageBitmap(null);
-                    detailBinding.ivShowPhoto.setVisibility(View.GONE);
-                    detailBinding.ivDeleteImage.setVisibility(View.GONE);
-                    imagePath = "";
-                    note.setImagePath(imagePath);
-                }
-        );
-
-        detailBinding.tvUrl.setOnClickListener(v -> clickLinkDialog.createClickLinkDialog(note, detailBinding.tvUrl, detailBinding.linkPreview));
+        detailBinding.tvUrl.setOnClickListener(v -> clickLinkDialog.createClickLinkDialog(note, detailBinding.tvUrl,
+                detailBinding.linkPreview, urlDialog));
 
         paletteBinding.ivDone.setOnClickListener(v -> {
             if (!note.isDone()) {
@@ -284,6 +309,23 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
             setCheckImageDone();
             App.getInstance().getNoteDao().update(note);
             updateStrokeOut(note, detailBinding.etInputTitle, detailBinding.etInputText);
+        });
+        paletteBinding.ivDone.setOnLongClickListener(v -> {
+            getToast(this, R.string.toast_helper_add_complete);
+            return true;
+        });
+
+        paletteBinding.ivCopyTextNote.setOnClickListener(v -> {
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("", detailBinding.etInputTitle.getText().toString().trim()
+                    + "\n" + detailBinding.etInputText.getText().toString().trim() + "\n" + detailBinding.tvUrl.getText().toString().trim());
+            clipboard.setPrimaryClip(clip);
+            getToast(this, R.string.copy_text_note);
+        });
+
+        paletteBinding.ivCopyTextNote.setOnLongClickListener(v -> {
+            getToast(this, R.string.toast_helper_copy_text_note);
+            return true;
         });
 
         KeyboardVisibilityEvent.setEventListener(this, isOpen -> {
@@ -302,6 +344,37 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
 
     }
 
+    private void copy() {
+        Note note = new Note();
+        note.setTitle(detailBinding.etInputTitle.getText().toString());
+        note.setText(detailBinding.etInputText.getText().toString());
+        note.setWebLink(detailBinding.tvUrl.getText().toString());
+        note.setDone(isCheck);
+        note.setFavorite(isFavorite);
+        note.setDateTime(getDate());
+        note.setColor(colorPicker);
+        note.setImagePath(imagePath);
+
+        if (imagePath != null && !imagePath.trim().isEmpty()) {
+            saveImage(note);
+        }
+
+        if (checkSomeText(note)) {
+            App.getInstance().getNoteDao().insertNote(note);
+            getToast(this, R.string.note_added);
+        } else {
+            getToast(this, R.string.note_is_empty);
+        }
+    }
+
+    private void clearImage() {
+        detailBinding.ivShowPhoto.setImageBitmap(null);
+        detailBinding.ivShowPhoto.setVisibility(View.GONE);
+        detailBinding.ivDeleteImage.setVisibility(View.GONE);
+        imagePath = "";
+        note.setImagePath(imagePath);
+    }
+
     private void handleSendImage(Intent intent) {
         isFromGallery = true;
         Uri imageUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
@@ -312,12 +385,17 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
     private void handleSendText(Intent intent) {
         String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
         if (sharedText != null) {
-            detailBinding.etInputText.setText(sharedText);
+            if (sharedText.startsWith("www") || sharedText.startsWith("https://")) {
+                detailBinding.tvUrl.setVisibility(View.VISIBLE);
+                detailBinding.tvUrl.setText(sharedText);
+            } else {
+                detailBinding.etInputText.setText(sharedText);
+            }
         }
     }
 
     private void setFavoriteImage() {
-        if (!note.isFavorite()) {
+        if (!isFavorite) {
             paletteBinding.ivFavorite.setImageResource(R.drawable.ic_lock_open);
         } else {
             paletteBinding.ivFavorite.setImageResource(R.drawable.ic_lock_close);
@@ -338,7 +416,7 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
         }
     }
 
-    private boolean checkSomeText() {
+    private boolean checkSomeText(Note note) {
         return !detailBinding.etInputTitle.getText().toString().trim().isEmpty() ||
                 !detailBinding.etInputText.getText().toString().trim().isEmpty()
                 || (note.getImagePath() != null && !note.getImagePath().trim().isEmpty()) || (note.getWebLink() != null &&
@@ -357,7 +435,7 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
         detailBinding.ivDeleteNote.setVisibility(View.VISIBLE);
 
         paletteBinding.ivDone.setVisibility(View.VISIBLE);
-        paletteBinding.ivCopy.setVisibility(View.VISIBLE);
+        paletteBinding.ivAddNote.setVisibility(View.VISIBLE);
 
         startViewAnimation(detailBinding.tvDateInfoCreated, this, R.anim.appearance);
         startViewAnimation(detailBinding.ivDeleteNote, this, R.anim.appearance);
@@ -481,19 +559,21 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
         }
     }
 
-    private void saveImage() {
-        Bitmap finalBitmap = ((BitmapDrawable) detailBinding.ivShowPhoto.getDrawable()).getBitmap();
-        File imageFile = imagePickerDialog.createPhotoFile();
-        try {
-            FileOutputStream out = new FileOutputStream(imageFile);
-            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-            out.flush();
-            out.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+    private void saveImage(Note note) {
+        if (isFromGallery) {
+            Bitmap finalBitmap = ((BitmapDrawable) detailBinding.ivShowPhoto.getDrawable()).getBitmap();
+            File imageFile = imagePickerDialog.createPhotoFile();
+            try {
+                FileOutputStream out = new FileOutputStream(imageFile);
+                finalBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                out.flush();
+                out.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            imagePath = imageFile.getAbsolutePath();
+            note.setImagePath(imageFile.getAbsolutePath());
         }
-        imagePath = imageFile.getAbsolutePath();
-        note.setImagePath(imageFile.getAbsolutePath());
     }
 
     @Override
@@ -540,10 +620,8 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
         initialNote();
         if (getIntent().hasExtra(NOTE)) {
             if (isUpdate()) {
-                if (isFromGallery) {
-                    saveImage();
-                }
-                if (checkSomeText()) {
+                if (checkSomeText(note)) {
+                    saveImage(note);
                     note.setDateTimeEdited(getDate());
                     App.getInstance().getNoteDao().update(note);
                     getToast(this, R.string.note_updated);
@@ -552,10 +630,8 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
                 }
             }
         } else {
-            if (isFromGallery) {
-                saveImage();
-            }
-            if (checkSomeText()) {
+            if (checkSomeText(note)) {
+                saveImage(note);
                 App.getInstance().getNoteDao().insertNote(note);
                 getToast(this, R.string.note_saved);
             }
@@ -616,6 +692,28 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
                 detailBinding.tvDateInfoEdited.setTextSize(13);
                 zoom = 1;
                 break;
+        }
+    }
+
+    @Override
+    public void dialogDeleteImageCallback(boolean confirm) {
+        if (confirm) {
+            clearImage();
+        }
+    }
+
+    @Override
+    public void dialogReplaceCallback(boolean confirm) {
+        if (confirm) {
+            imagePickerDialog.createImagePickerDialog();
+        }
+    }
+
+    @Override
+    public void dialogDeleteCallback(boolean confirm) {
+        if (confirm) {
+            App.getInstance().getNoteDao().deleteNote(note);
+            finish();
         }
     }
 }

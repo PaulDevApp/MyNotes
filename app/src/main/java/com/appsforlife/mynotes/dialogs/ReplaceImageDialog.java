@@ -9,20 +9,20 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.appsforlife.mynotes.App;
 import com.appsforlife.mynotes.R;
-import com.appsforlife.mynotes.entities.Note;
+import com.appsforlife.mynotes.listeners.DialogReplaceImageListener;
 import com.google.android.material.checkbox.MaterialCheckBox;
-
-import static com.appsforlife.mynotes.Support.deleteImage;
 
 public class ReplaceImageDialog {
 
     private final Activity activity;
+    private final DialogReplaceImageListener dialogReplaceImageListener;
 
-    public ReplaceImageDialog(Activity activity) {
+    public ReplaceImageDialog(Activity activity, DialogReplaceImageListener dialogReplaceImageListener) {
         this.activity = activity;
+        this.dialogReplaceImageListener = dialogReplaceImageListener;
     }
 
-    public void createReplaceImageDialog(Note note, ImagePickerDialog imagePickerDialog) {
+    public void createReplaceImageDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         View view = LayoutInflater.from(activity).inflate(R.layout.layout_dialog_replace_image, null);
         builder.setView(view);
@@ -31,9 +31,8 @@ public class ReplaceImageDialog {
             dialogReplace.getWindow().setBackgroundDrawable(new ColorDrawable());
         }
         view.findViewById(R.id.tv_replace).setOnClickListener(v -> {
-            deleteImage(note.getImagePath(), activity);
+            dialogReplaceImageListener.dialogReplaceCallback(true);
             dialogReplace.cancel();
-            imagePickerDialog.createImagePickerDialog();
         });
 
         MaterialCheckBox checkBox = view.findViewById(R.id.checkbox_detail_replace_image);
@@ -41,4 +40,5 @@ public class ReplaceImageDialog {
         checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> App.getInstance().setCheckReplace(isChecked));
         dialogReplace.show();
     }
+
 }

@@ -43,12 +43,8 @@ import static com.appsforlife.mynotes.constants.Constants.*;
 
 public final class Support {
 
-    public static boolean isCheck;
-    public static boolean isFavorite;
-    public static boolean isEmpty;
     public static boolean isSelect;
     public static int countSelected;
-    public static boolean isSelectedAll;
 
     public static void startViewAnimation(View view, Context context, int anim) {
         if (!App.getInstance().isSwitchAnim()) {

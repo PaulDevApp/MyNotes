@@ -29,28 +29,16 @@
             android:src="@drawable/ic_color_note"
             android:transitionName="color" />
 
-
-        <ImageView
-            android:id="@+id/iv_copy"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_copy"
-            android:visibility="gone" />
-
-
         <ImageView
             android:id="@+id/iv_add_web_create"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
-            android:foreground="?android:attr/selectableItemBackground"
-            tools:ignore="UnusedAttribute"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_link" />
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/ic_link"
+            tools:ignore="UnusedAttribute" />
 
         <ImageView
             android:id="@+id/iv_add_photo_create"
@@ -58,10 +46,10 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
-            android:foreground="?android:attr/selectableItemBackground"
-            tools:ignore="UnusedAttribute"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_add_image" />
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/ic_add_image"
+            tools:ignore="UnusedAttribute" />
 
         <ImageView
             android:id="@+id/iv_share"
@@ -69,21 +57,21 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
-            android:foreground="?android:attr/selectableItemBackground"
-            tools:ignore="UnusedAttribute"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_share" />
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/ic_share"
+            tools:ignore="UnusedAttribute" />
 
         <ImageView
             android:id="@+id/iv_favorite"
             android:layout_width="0dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:foreground="?android:attr/selectableItemBackground"
-            tools:ignore="UnusedAttribute"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_lock_open" />
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/ic_lock_open"
+            tools:ignore="UnusedAttribute" />
 
         <ImageView
             android:id="@+id/iv_done"
@@ -93,7 +81,31 @@
             android:background="?attr/selectableItemBackground"
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_unchecked"
-            android:visibility="gone" />
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/iv_copy_text_note"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="@string/app_name"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/ic_copy_text"
+            tools:ignore="UnusedAttribute" />
+
+        <ImageView
+            android:id="@+id/iv_add_note"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="@string/app_name"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/ic_copy_note"
+            tools:ignore="UnusedAttribute" />
+
 
     </LinearLayout>
 

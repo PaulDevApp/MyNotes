@@ -10,7 +10,7 @@
     android:background="@drawable/background_dialog_delete">
 
     <TextView
-        android:id="@+id/tv_replace_text"
+        android:id="@+id/tv_delete_image_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="@dimen/_8sdp"
@@ -20,33 +20,17 @@
         android:gravity="center_vertical"
         android:importantForAutofill="no"
         android:includeFontPadding="false"
-        android:text="@string/replace_image"
+        android:text="@string/delete_image"
         android:textColor="?attr/color"
         android:textSize="@dimen/_17ssp"
         android:textStyle="normal"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_goneMarginEnd="@dimen/_6sdp" />
-
-    <TextView
-        android:id="@+id/tv_replace"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_4sdp"
-        android:layout_marginEnd="@dimen/_12sdp"
-        android:layout_marginBottom="@dimen/_8sdp"
-        android:background="?android:attr/selectableItemBackground"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:text="@string/replace"
-        android:textColor="@color/colorDelete"
-        android:textSize="@dimen/_17ssp"
-        android:textStyle="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_replace_text"
-        tools:ignore="UnusedAttribute" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/checkbox_detail_replace_image"
+        android:id="@+id/checkbox_detail_delete_image"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:background="?android:attr/selectableItemBackground"
@@ -54,9 +38,27 @@
         android:text="@string/ask"
         android:textSize="@dimen/_11sdp"
         android:textStyle="normal"
-        app:layout_constraintBottom_toBottomOf="@id/tv_replace"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_replace"
+        app:layout_constraintTop_toBottomOf="@+id/tv_delete_image_text"
         tools:ignore="UnusedAttribute" />
+
+    <TextView
+        android:id="@+id/tv_delete_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:background="?android:attr/selectableItemBackground"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:text="@string/delete"
+        android:textColor="@color/colorDelete"
+        android:textSize="@dimen/_17ssp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_delete_image_text"
+        tools:ignore="UnusedAttribute" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

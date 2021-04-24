@@ -11,6 +11,8 @@ public final class Constants {
 
     public static final String PICTURE_PATH = "picture_path";
 
+    public static final String NOTES_DATA_BASE = "note_db";
+
     public static final String NIGHT_MODE = "night_mode";
     public static final String LIGHT_MODE = "light_mode";
     public static final String AUTO_MODE = "auto_mode";
@@ -23,6 +25,7 @@ public final class Constants {
     public static final String THEME_MODE = "theme_mode";
     public static final String CONFIRM_DELETE = "confirmed";
     public static final String CONFIRM_REPLACE = "replace";
+    public static final String CONFIRM_DELETE_IMAGE = "delete";
 
     public static final String NOTE = "note";
     public static final String IS_FROM_QUICK_ACTIONS = "isFromQuickActions";
