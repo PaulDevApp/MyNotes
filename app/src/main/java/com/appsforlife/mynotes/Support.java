@@ -11,10 +11,13 @@ import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
@@ -31,6 +34,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.appsforlife.mynotes.entities.Note;
 import com.appsforlife.mynotes.entities.PaletteColor;
+import com.tomergoldst.tooltips.ToolTip;
+import com.tomergoldst.tooltips.ToolTipsManager;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -257,5 +262,16 @@ public final class Support {
             Log.e("ExternalStorage", "Scanned " + path + ":");
             Log.e("ExternalStorage", "-> uri=" + uri);
         });
+    }
+
+    public static void getToolTipsDetail(Activity activity, View button, ViewGroup layout, int message, ToolTipsManager toolTipsManager) {
+        ToolTip.Builder builder = new ToolTip.Builder(activity, button, layout,
+                activity.getResources().getString(message), ToolTip.POSITION_ABOVE);
+        builder.setAlign(ToolTip.ALIGN_CENTER);
+        builder.setBackgroundColor(activity.getResources().getColor(R.color.colorTransparent));
+        builder.setGravity(ToolTip.GRAVITY_CENTER);
+        builder.setTextAppearance(R.style.TooltipTextAppearance);
+        toolTipsManager.show(builder.build());
+        new Handler(Looper.getMainLooper()).postDelayed(toolTipsManager::dismissAll, 1500);
     }
 }

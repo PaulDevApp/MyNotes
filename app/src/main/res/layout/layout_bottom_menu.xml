@@ -29,28 +29,21 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_40sdp">
 
-        <TextView
-            android:id="@+id/tv_include"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:gravity="center"
-            android:text="@string/hide_done"
-            android:textColor="?attr/color"
-            android:textSize="@dimen/_15ssp"
-            android:textStyle="normal"
-            tools:ignore="RelativeOverlap" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/switch_done"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_4sdp"
             android:background="?android:attr/selectableItemBackground"
             android:foreground="?android:attr/selectableItemBackground"
-            tools:ignore="UnusedAttribute"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/_4sdp"
-            android:gravity="center" />
+            android:text="@string/hide_done"
+            android:textColor="?attr/color"
+            android:textSize="@dimen/_15ssp"
+            android:textStyle="normal"
+            tools:ignore="UnusedAttribute" />
 
     </RelativeLayout>
 

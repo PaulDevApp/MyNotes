@@ -30,7 +30,7 @@
     <string name="note_saved">Заметка сохранена</string>
     <string name="remove">Удалить</string>
     <string name="to_return">Вернуть</string>
-    <string name="hide_done">Скрыть выполненные</string>
+    <string name="hide_done">Скрыть отмеченные заметки</string>
     <string name="settings">Настройки</string>
     <string name="set_theme">Установить тему</string>
     <string name="delete_all_notes">Удалить все заметки</string>

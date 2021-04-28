@@ -30,7 +30,7 @@
     <string name="note_saved">Note saved</string>
     <string name="remove">Remove</string>
     <string name="to_return">To return</string>
-    <string name="hide_done">Hide completed</string>
+    <string name="hide_done">Hide marked notes</string>
     <string name="settings">Settings</string>
     <string name="set_theme">Set theme</string>
     <string name="delete_all_notes">Delete all notes</string>
@@ -62,11 +62,11 @@
     <string name="ui">UI</string>
     <string name="other">Other</string>
     <string name="delete_image">Delete image?</string>
-    <string name="toast_helper_favorite">Pin a note</string>
-    <string name="toast_helper_share">Share note</string>
-    <string name="toast_helper_add_picture">Add image</string>
-    <string name="toast_helper_add_url">Add link</string>
-    <string name="toast_helper_add_complete">Mark as done</string>
+    <string name="tooltips_favorite">Pin a note</string>
+    <string name="tooltips_share">Share note</string>
+    <string name="tooltips_add_picture">Add image</string>
+    <string name="tooltips_add_url">Add link</string>
+    <string name="tooltips_add_complete">Mark as done</string>
     <string name="feedBack">Feedback</string>
     <string name="toast_helper_copy_ulr">Copy link</string>
     <string name="toast_helper_delete_ulr">Remove link</string>
@@ -75,7 +75,7 @@
     <string name="toast_helper_edit_ulr">Edit link</string>
     <string name="note_added">Note add</string>
     <string name="note_is_empty">Note is empty!</string>
-    <string name="toast_helper_make_a_copy">Make a copy</string>
+    <string name="tooltips_make_a_copy">Make a copy</string>
     <string name="copy_text_note">Note text copied</string>
-    <string name="toast_helper_copy_text_note">Copy note text</string>
+    <string name="tooltips_copy_text_note">Copy note text</string>
 </resources>

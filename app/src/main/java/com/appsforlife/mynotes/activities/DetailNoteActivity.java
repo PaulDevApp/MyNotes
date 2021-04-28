@@ -15,6 +15,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -47,6 +49,7 @@ import com.appsforlife.mynotes.listeners.DialogDeleteNoteListener;
 import com.appsforlife.mynotes.listeners.DialogReplaceImageListener;
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.tomergoldst.tooltips.ToolTipsManager;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 
@@ -91,6 +94,8 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
 
     private int zoom;
 
+    private ToolTipsManager toolTipsManager;
+
     public static void start(Activity caller, Note note, RelativeLayout noteLayout) {
         Intent intent = new Intent(caller, DetailNoteActivity.class);
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(caller, noteLayout, "note");
@@ -117,6 +122,8 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
         detailBinding = ActivityDetailBinding.inflate(getLayoutInflater());
         paletteBinding = detailBinding.palette;
         setContentView(detailBinding.getRoot());
+
+        toolTipsManager = new ToolTipsManager();
 
         imagePickerDialog = new ImagePickerDialog(this, getPackageManager(), getExternalFilesDir(Environment.DIRECTORY_PICTURES));
         urlDialog = new UrlDialog(this);
@@ -217,9 +224,11 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
         });
 
         paletteBinding.ivFavorite.setOnLongClickListener(v -> {
-            getToast(this, R.string.toast_helper_favorite);
+            getToolTipsDetail(this, paletteBinding.ivFavorite, detailBinding.rlDetail,
+                    R.string.tooltips_favorite, toolTipsManager);
             return true;
         });
+
 
         paletteBinding.ivShare.setOnClickListener(v -> {
             if (imagePath != null && !imagePath.trim().isEmpty()) {
@@ -233,14 +242,16 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
         });
 
         paletteBinding.ivShare.setOnLongClickListener(v -> {
-            getToast(this, R.string.toast_helper_share);
+            getToolTipsDetail(this, paletteBinding.ivShare, detailBinding.rlDetail,
+                    R.string.tooltips_share, toolTipsManager);
             return true;
         });
 
         paletteBinding.ivAddNote.setOnClickListener(v -> copy());
 
         paletteBinding.ivAddNote.setOnLongClickListener(v -> {
-            getToast(this, R.string.toast_helper_make_a_copy);
+            getToolTipsDetail(this, paletteBinding.ivAddNote, detailBinding.rlDetail,
+                    R.string.tooltips_make_a_copy, toolTipsManager);
             return true;
         });
 
@@ -274,13 +285,15 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
         );
 
         paletteBinding.ivAddPhotoCreate.setOnLongClickListener(v -> {
-            getToast(this, R.string.toast_helper_add_picture);
+            getToolTipsDetail(this, paletteBinding.ivAddPhotoCreate, detailBinding.rlDetail,
+                    R.string.tooltips_add_picture, toolTipsManager);
             return true;
         });
 
         paletteBinding.ivAddWebCreate.setOnClickListener(v -> urlDialog.createDetailUrlDialog(detailBinding.tvUrl));
         paletteBinding.ivAddWebCreate.setOnLongClickListener(v -> {
-            getToast(this, R.string.toast_helper_add_url);
+            getToolTipsDetail(this, paletteBinding.ivAddWebCreate, detailBinding.rlDetail,
+                    R.string.tooltips_add_url, toolTipsManager);
             return true;
         });
 
@@ -311,7 +324,8 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
             updateStrokeOut(note, detailBinding.etInputTitle, detailBinding.etInputText);
         });
         paletteBinding.ivDone.setOnLongClickListener(v -> {
-            getToast(this, R.string.toast_helper_add_complete);
+            getToolTipsDetail(this, paletteBinding.ivDone, detailBinding.rlDetail,
+                    R.string.tooltips_add_complete, toolTipsManager);
             return true;
         });
 
@@ -324,7 +338,8 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
         });
 
         paletteBinding.ivCopyTextNote.setOnLongClickListener(v -> {
-            getToast(this, R.string.toast_helper_copy_text_note);
+            getToolTipsDetail(this, paletteBinding.ivCopyTextNote, detailBinding.rlDetail,
+                    R.string.tooltips_copy_text_note, toolTipsManager);
             return true;
         });
 
@@ -611,7 +626,6 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
         } else {
             addNote();
             super.onBackPressed();
-            finish();
             overridePendingTransition(R.anim.activity_static_animation, R.anim.activity_zoom_out);
         }
     }
@@ -623,8 +637,10 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
                 if (checkSomeText(note)) {
                     saveImage(note);
                     note.setDateTimeEdited(getDate());
-                    App.getInstance().getNoteDao().update(note);
-                    getToast(this, R.string.note_updated);
+                    new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                        App.getInstance().getNoteDao().update(note);
+                        getToast(this, R.string.note_updated);
+                    }, 600);
                 } else {
                     App.getInstance().getNoteDao().deleteNote(note);
                 }

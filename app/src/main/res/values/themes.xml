@@ -52,4 +52,9 @@
         <item name="android:padding">@dimen/_5sdp</item>
     </style>
 
+    <style name="TooltipTextAppearance">
+        <item name="android:textColor">?attr/colorAccent</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
 </resources>

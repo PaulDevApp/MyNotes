@@ -31,4 +31,5 @@
     <color name="colorPrimaryNightTransparent">#80282726</color>
     <color name="colorBackgroundDoneDay">#A6fafafa</color>
     <color name="colorBackgroundDoneNight">#A6282726</color>
+    <color name="colorTransparent">#0000ffff</color>
 </resources>

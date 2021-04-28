@@ -30,7 +30,7 @@
     <string name="note_saved">笔记已保存</string>
     <string name="remove">去掉</string>
     <string name="to_return">返回</string>
-    <string name="hide_done">隐藏完成</string>
+    <string name="hide_done">隐藏标记的笔记</string>
     <string name="settings">设定值</string>
     <string name="set_theme">设定主题</string>
     <string name="delete_all_notes">删除所有笔记</string>
