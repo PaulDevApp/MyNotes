@@ -48,20 +48,34 @@
                 tools:ignore="UnusedAttribute"
                 tools:visibility="visible" />
 
-            <TextView
-                android:id="@+id/tv_zoom_text"
+            <ImageView
+                android:id="@+id/iv_speech"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_8sdp"
                 android:background="?android:attr/selectableItemBackground"
-                android:fontFamily="@font/text_note_font"
                 android:foreground="?android:attr/selectableItemBackground"
-                android:text="@string/a_a"
-                android:textSize="@dimen/_15ssp"
+                android:src="@drawable/ic_speech"
                 app:layout_constraintBottom_toBottomOf="@id/iv_back_to_main"
                 app:layout_constraintEnd_toStartOf="@+id/iv_delete_note"
                 app:layout_goneMarginEnd="@dimen/_8sdp"
+                android:contentDescription="@string/app_name"
                 tools:ignore="UnusedAttribute" />
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/tv_zoom_text"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginEnd="@dimen/_8sdp"-->
+            <!--                android:background="?android:attr/selectableItemBackground"-->
+            <!--                android:fontFamily="@font/text_note_font"-->
+            <!--                android:foreground="?android:attr/selectableItemBackground"-->
+            <!--                android:text="@string/a_a"-->
+            <!--                android:textSize="@dimen/_15ssp"-->
+            <!--                app:layout_constraintBottom_toBottomOf="@id/iv_back_to_main"-->
+            <!--                app:layout_constraintEnd_toStartOf="@+id/iv_delete_note"-->
+            <!--                app:layout_goneMarginEnd="@dimen/_8sdp"-->
+            <!--                tools:ignore="UnusedAttribute" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

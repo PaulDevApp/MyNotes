@@ -8,6 +8,7 @@ public final class Constants {
     public static final int REQUEST_CAMERA = 4;
     public static final int REQUEST_CODE_SHARE_CREATE_STORAGE_PERMISSION = 5;
     public static final int REQUEST_CODE_SELECT_IMAGE = 6;
+    public static final int REQUEST_CODE_SPEECH = 7;
 
     public static final String PICTURE_PATH = "picture_path";
 
