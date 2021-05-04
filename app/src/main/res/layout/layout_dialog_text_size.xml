@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_dialog_text_size"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/_12sdp"
+    android:background="@drawable/background_dialog"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_set_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_6sdp"
+        android:text="@string/select_text_size"
+        android:textColor="?attr/color"
+        android:textSize="@dimen/_17ssp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_text_size_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_6sdp"
+        android:fontFamily="@font/text_note_font"
+        android:text="@string/sample_text_size"
+        android:textColor="?attr/color"
+        android:textSize="19sp" />
+
+    <TextView
+        android:id="@+id/tv_text_size_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_6sdp"
+        android:layout_marginEnd="@dimen/_6sdp"
+        android:layout_marginBottom="@dimen/_6sdp"
+        android:fontFamily="@font/text_note_font"
+        android:text="@string/sample_text_size"
+        android:textColor="?attr/color"
+        android:textSize="23sp" />
+
+    <TextView
+        android:id="@+id/tv_text_size_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_6sdp"
+        android:layout_marginEnd="@dimen/_6sdp"
+        android:layout_marginBottom="@dimen/_6sdp"
+        android:ellipsize="end"
+        android:fontFamily="@font/text_note_font"
+        android:lines="1"
+        android:singleLine="true"
+        android:text="@string/sample_text_size"
+        android:textColor="?attr/color"
+        android:textSize="27sp" />
+
+    <TextView
+        android:id="@+id/tv_text_size_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_6sdp"
+        android:layout_marginEnd="@dimen/_6sdp"
+        android:layout_marginBottom="@dimen/_6sdp"
+        android:ellipsize="end"
+        android:fontFamily="@font/text_note_font"
+        android:lines="1"
+        android:singleLine="true"
+        android:text="@string/sample_text_size"
+        android:textColor="?attr/color"
+        android:textSize="31sp" />
+</LinearLayout>

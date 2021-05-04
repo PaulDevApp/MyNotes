@@ -39,11 +39,11 @@ public class Note implements Parcelable {
     @ColumnInfo(name = "done")
     private boolean done;
 
-    @ColumnInfo(name = "selected")
-    private boolean selected = false;
 
     @ColumnInfo(name = "favorite")
     private boolean favorite;
+
+    private boolean selected = false;
 
     public Note() {
     }

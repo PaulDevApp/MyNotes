@@ -49,6 +49,7 @@ import com.appsforlife.mynotes.listeners.NoteListener;
 import com.appsforlife.mynotes.listeners.NoteLongListener;
 import com.appsforlife.mynotes.listeners.NoteSelectListener;
 import com.appsforlife.mynotes.model.MainViewModel;
+import com.google.android.material.behavior.HideBottomViewOnScrollBehavior;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -69,9 +70,9 @@ import static com.appsforlife.mynotes.constants.Constants.*;
  * 2. Предупреждать при удалении фото. +
  * 3. Сделать одинаковый шрифт при все диалогах  +
  * 4. Копировать текст заметки +
- * 5. Голосовой ввод
- * 6. "О приложении" в настройках
- * 7. добавить tooltips
+ * 5. Голосовой ввод +
+ * 6. "О приложении" в настройках +
+ * 7. добавить tooltips +
  * 8. добавить переводы + Хинди и Испанский
  * */
 
@@ -171,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
         mainBinding.fab.setOnClickListener(v -> {
             if (!isClick) {
                 DetailNoteActivity.start(MainActivity.this, null);
-                overridePendingTransition(R.anim.activity_zoom_in, R.anim.activity_static_animation);
+                overridePendingTransition(R.anim.zoom_in, R.anim.activity_static_animation);
                 isClick = true;
                 throwOff(400);
 
@@ -209,7 +210,11 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
                     }
                 }
             }
-            throwOff(0);
+            isSelect = false;
+            discharge(this, multiplyBinding.svSearch, multiplyBinding.clMultiSelectLayout,
+                    multiplyBinding.ivSelectedAll, multiplyBinding.ivMainFavoriteOn, multiplyBinding.ivMainFavoriteOff,
+                    multiplyBinding.tvToolbarCount, multiplyBinding.ivToolbarDelete, multiplyBinding.ivToolbarClose,
+                    multiplyBinding.tvToolbarCount, multiplyBinding.ivPaletteDialog, notesFromDB);
         });
 
         multiplyBinding.ivMainFavoriteOff.setOnClickListener(v -> {
@@ -285,7 +290,10 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
             }
         });
 
-        mainBinding.ivScrollToTop.setOnClickListener(view -> mainBinding.rvNotes.smoothScrollToPosition(0));
+        mainBinding.ivScrollToTop.setOnClickListener(view -> {
+            mainBinding.rvNotes.smoothScrollToPosition(0);
+            mainBinding.bottomAppbar.performShow();
+        });
 
 
         multiplyBinding.ivToolbarDelete.setOnClickListener(v -> deleteDialog.createDeleteAllSelectedNotesDialog());
@@ -398,7 +406,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
                         intent.putExtra(QUICK_ACTIONS_TYPE, ACTION_IMAGE);
                         intent.putExtra(IMAGE_PATH, selectedImageUri.toString());
                         startActivityForResult(intent, REQUEST_CODE_ADD_NOTE);
-                        overridePendingTransition(R.anim.activity_zoom_in, R.anim.activity_static_animation);
+                        overridePendingTransition(R.anim.zoom_in, R.anim.activity_static_animation);
                         throwOff(400);
                     } catch (Exception e) {
                         Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -411,7 +419,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
             intent.putExtra(QUICK_ACTIONS_TYPE, ACTION_CAMERA);
             intent.putExtra(CAMERA_PATH, imagePickerDialog.getPhotoPath());
             startActivityForResult(intent, REQUEST_CODE_ADD_NOTE);
-            overridePendingTransition(R.anim.activity_zoom_in, R.anim.activity_static_animation);
+            overridePendingTransition(R.anim.zoom_in, R.anim.activity_static_animation);
             throwOff(400);
         }
     }
@@ -513,10 +521,10 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
                         case ItemTouchHelper.LEFT:
                             App.getInstance().getNoteDao().deleteNote(notesAdapter.getNoteAt(position));
                             Snackbar.make(findViewById(R.id.main), getResources().getString(R.string.remove), Snackbar.LENGTH_SHORT)
-                                    .setActionTextColor(getResources().getColor(R.color.colorSweepDone))
-                                    .setTextColor(getResources().getColor(R.color.colorPrimaryDay))
+                                    .setActionTextColor(getColor(R.color.colorSweepDone))
+                                    .setTextColor(getColor(R.color.colorPrimaryDay))
                                     .setAnchorView(R.id.fab)
-                                    .setBackgroundTint(getResources().getColor(R.color.colorAppBarNight))
+                                    .setBackgroundTint(getColor(R.color.colorAppBarNight))
                                     .setAction(getResources().getString(R.string.to_return), v -> App.getInstance().getNoteDao().insertNote(note)).show();
                             break;
                         case ItemTouchHelper.RIGHT:

@@ -62,21 +62,6 @@
                 android:contentDescription="@string/app_name"
                 tools:ignore="UnusedAttribute" />
 
-            <!--            <TextView-->
-            <!--                android:id="@+id/tv_zoom_text"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginEnd="@dimen/_8sdp"-->
-            <!--                android:background="?android:attr/selectableItemBackground"-->
-            <!--                android:fontFamily="@font/text_note_font"-->
-            <!--                android:foreground="?android:attr/selectableItemBackground"-->
-            <!--                android:text="@string/a_a"-->
-            <!--                android:textSize="@dimen/_15ssp"-->
-            <!--                app:layout_constraintBottom_toBottomOf="@id/iv_back_to_main"-->
-            <!--                app:layout_constraintEnd_toStartOf="@+id/iv_delete_note"-->
-            <!--                app:layout_goneMarginEnd="@dimen/_8sdp"-->
-            <!--                tools:ignore="UnusedAttribute" />-->
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
@@ -111,7 +96,7 @@
                     android:padding="@dimen/_6sdp"
                     android:singleLine="true"
                     android:textColor="?attr/color"
-                    android:textSize="@dimen/_18ssp"
+                    android:textSize="23sp"
                     android:transitionName="title" />
 
                 <TextView
@@ -129,7 +114,7 @@
                     android:paddingBottom="@dimen/_2sdp"
                     android:singleLine="true"
                     android:textColor="?attr/colorAccent"
-                    android:textSize="@dimen/_15ssp"
+                    android:textSize="17sp"
                     android:textStyle="normal"
                     android:transitionName="url"
                     android:visibility="gone"
@@ -154,7 +139,7 @@
                     android:includeFontPadding="false"
                     android:inputType="textMultiLine|textCapSentences"
                     android:linksClickable="true"
-                    android:textSize="@dimen/_15ssp"
+                    android:textSize="19sp"
                     android:transitionName="text" />
 
                 <ImageView
@@ -210,7 +195,7 @@
                     android:includeFontPadding="false"
                     android:padding="@dimen/_1sdp"
                     android:textColor="?attr/color"
-                    android:textSize="@dimen/_11ssp"
+                    android:textSize="12sp"
                     android:transitionName="date"
                     android:visibility="visible"
                     tools:ignore="RelativeOverlap"
@@ -227,7 +212,7 @@
                     android:fontFamily="@font/time_date_font"
                     android:text="@string/created_date"
                     android:textColor="?attr/color"
-                    android:textSize="@dimen/_11ssp"
+                    android:textSize="12sp"
                     android:visibility="gone"
                     tools:visibility="visible" />
 
@@ -242,7 +227,7 @@
                     android:fontFamily="@font/time_date_font"
                     android:text="@string/updated_date"
                     android:textColor="?attr/color"
-                    android:textSize="@dimen/_11ssp"
+                    android:textSize="12sp"
                     android:visibility="gone"
                     tools:visibility="visible" />
 
@@ -259,7 +244,7 @@
                     android:includeFontPadding="false"
                     android:padding="@dimen/_1sdp"
                     android:textColor="?attr/color"
-                    android:textSize="@dimen/_11ssp"
+                    android:textSize="12sp"
                     android:visibility="gone"
                     tools:ignore="RelativeOverlap"
                     tools:text="30 октября 2020"

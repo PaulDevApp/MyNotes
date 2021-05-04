@@ -9,6 +9,21 @@
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <queries>
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+
+        <intent>
+            <action android:name="android.intent.action.PICK" />
+            <data android:mimeType="image/jpeg" />
+        </intent>
+    </queries>
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -23,8 +38,7 @@
         tools:targetApi="q">
         <activity
             android:name=".activities.PictureActivity"
-            android:parentActivityName=".activities.DetailNoteActivity">
-        </activity>
+            android:parentActivityName=".activities.DetailNoteActivity" />
         <activity
             android:name=".activities.SettingsActivity"
             android:parentActivityName=".activities.MainActivity"

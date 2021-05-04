@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -148,7 +149,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
             itemImageView = itemView.findViewById(R.id.iv_item_image);
             doneView = itemView.findViewById(R.id.v_color_done);
 
-
             itemView.setOnClickListener(v -> {
                 if (isSelect) {
                     noteSelectListener.onNoteSelectListener(sortedList.get(getAbsoluteAdapterPosition()), selectedView);
@@ -167,6 +167,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
         @SuppressLint("ResourceAsColor")
         void setNote(Note note) {
             this.note = note;
+
+            text.setMaxLines((int) App.getInstance().getCountLines());
 
             if (note.isSelected()) {
                 selectedView.setVisibility(View.VISIBLE);

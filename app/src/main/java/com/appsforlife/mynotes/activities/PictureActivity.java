@@ -70,6 +70,6 @@ public class PictureActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.activity_static_animation, R.anim.activity_zoom_out);
+        overridePendingTransition(R.anim.activity_static_animation, R.anim.zoom_out);
     }
 }

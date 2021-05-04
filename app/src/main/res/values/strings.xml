@@ -78,4 +78,28 @@
     <string name="tooltips_make_a_copy">Make a copy</string>
     <string name="copy_text_note">Note text copied</string>
     <string name="tooltips_copy_text_note">Copy note text</string>
+    <string name="set_text_size">Set text size</string>
+    <string name="speech_message">Your device does not support speech recognizer!</string>
+    <string name="sample_text_size">Sample text size</string>
+    <string name="select_text_size">Select text size</string>
+    <string name="preview_count">Number of lines in preview</string>
+    <string name="select_count_lines">Select the number of lines</string>
+    <string name="_1">1 line…</string>
+    <string name="_3">3 lines…</string>
+    <string name="_5">5 lines…</string>
+    <string name="_7">7 lines…</string>
+    <string name="_10">10 lines…</string>
+    <string name="open_source_libraries">Open source libraries</string>
+    <string name="resources_used">Resources used:</string>
+    <string name="icon_icons_com" translatable="false">icon-icons.com</string>
+    <string name="android_asset_studio" translatable="false">Android Asset Studio</string>
+    <string name="flaticon" translatable="false">Flaticon</string>
+    <string name="in_color_balance" translatable="false">IN COLOR BALANCE</string>
+    <string name="color_tool" translatable="false">Color tool</string>
+    <string name="lottiefiles" translatable="false">LottieFiles</string>
+    <string name="richlinkpreview" translatable="false">RichLinkPreview</string>
+    <string name="ok" translatable="false">OK</string>
+    <string name="tooltips" translatable="false">Tooltips</string>
+    <string name="recommendation">It is not recommended to delete files from this folder</string>
+    <string name="share_app">Share app</string>
 </resources>

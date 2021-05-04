@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
@@ -18,6 +19,7 @@ import androidx.core.content.FileProvider;
 
 import com.appsforlife.mynotes.R;
 import com.appsforlife.mynotes.constants.Constants;
+
 import static com.appsforlife.mynotes.constants.Constants.*;
 
 import java.io.File;
@@ -52,6 +54,7 @@ public class ImagePickerDialog {
             addPhoto();
             dialogAddImage.cancel();
         });
+
         dialogAddImage.show();
     }
 
@@ -79,7 +82,8 @@ public class ImagePickerDialog {
 
     @SuppressLint("QueryPermissionsNeeded")
     public void createImage() {
-        Intent takePictureIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent takePictureIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        takePictureIntent.setType("image/*");
         if (takePictureIntent.resolveActivity(packageManager) != null) {
             activity.startActivityForResult(takePictureIntent, REQUEST_CODE_SELECT_IMAGE);
         }

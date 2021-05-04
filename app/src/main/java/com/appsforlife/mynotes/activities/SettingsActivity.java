@@ -5,6 +5,10 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.StrictMode;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -13,10 +17,14 @@ import com.appsforlife.mynotes.App;
 import com.appsforlife.mynotes.R;
 import com.appsforlife.mynotes.databinding.ActivitySettingsBinding;
 import com.appsforlife.mynotes.dialogs.DeleteDialog;
+import com.appsforlife.mynotes.dialogs.NoteTextSizeDialog;
+import com.appsforlife.mynotes.dialogs.OpenSourceDialog;
+import com.appsforlife.mynotes.dialogs.PreviewNumberLinesDialog;
 import com.appsforlife.mynotes.entities.Note;
 import com.appsforlife.mynotes.listeners.DialogDeleteNoteListener;
 import com.appsforlife.mynotes.model.MainViewModel;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import static com.appsforlife.mynotes.Support.*;
@@ -26,6 +34,9 @@ import static com.appsforlife.mynotes.constants.Constants.*;
 public class SettingsActivity extends AppCompatActivity implements DialogDeleteNoteListener {
 
     private DeleteDialog deleteDialog;
+    private NoteTextSizeDialog noteTextSizeDialog;
+    private PreviewNumberLinesDialog previewNumberLinesDialog;
+    private OpenSourceDialog openSourceDialog;
     private ArrayList<Note> notesFromDB;
 
     @SuppressLint("NonConstantResourceId")
@@ -42,6 +53,9 @@ public class SettingsActivity extends AppCompatActivity implements DialogDeleteN
         viewModel.getNotes().observe(this, notes -> notesFromDB = new ArrayList<>(notes));
 
         deleteDialog = new DeleteDialog(this, this);
+        noteTextSizeDialog = new NoteTextSizeDialog(this);
+        previewNumberLinesDialog = new PreviewNumberLinesDialog(this);
+        openSourceDialog = new OpenSourceDialog(this);
 
         settingsBinding.ivClose.setOnClickListener(v -> onBackPressed());
 
@@ -91,6 +105,8 @@ public class SettingsActivity extends AppCompatActivity implements DialogDeleteN
         settingsBinding.switchHidePreviewLink.setChecked(App.getInstance().isPreview());
         settingsBinding.switchHidePreviewLink.setOnCheckedChangeListener((buttonView, isChecked) -> App.getInstance().setPreviewLink(isChecked));
 
+        settingsBinding.tvOpenSource.setOnClickListener(v -> openSourceDialog.createOpenSourceDialog());
+
         settingsBinding.tvRateApp.setOnClickListener(v -> {
             final String appPackageName = getApplication().getPackageName();
             try {
@@ -100,10 +116,8 @@ public class SettingsActivity extends AppCompatActivity implements DialogDeleteN
             }
         });
 
-        settingsBinding.tvPrivacy.setOnClickListener(v -> {
-            Intent policy = new Intent(Intent.ACTION_VIEW, Uri.parse("https://docs.google.com/document/d/1hoo4ymHYNdTLd2iSfj31_4aZzJiDKbwxilBa-qAhAG4/edit?usp=sharing"));
-            startActivity(policy);
-        });
+        settingsBinding.tvPrivacy.setOnClickListener(v -> startActivity(
+                new Intent(Intent.ACTION_VIEW, Uri.parse("https://docs.google.com/document/d/1hoo4ymHYNdTLd2iSfj31_4aZzJiDKbwxilBa-qAhAG4/edit?usp=sharing"))));
 
         settingsBinding.tvFeedBack.setOnClickListener(v -> {
             Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
@@ -111,6 +125,12 @@ public class SettingsActivity extends AppCompatActivity implements DialogDeleteN
             emailIntent.putExtra(Intent.EXTRA_SUBJECT, "My Notes");
             startActivity(emailIntent);
         });
+
+        settingsBinding.tvIncreaseFont.setOnClickListener(v -> noteTextSizeDialog.createNoteTextSizeDialog());
+
+        settingsBinding.tvPreviewCountLine.setOnClickListener(v -> previewNumberLinesDialog.createPreviewNumberLinesDialog());
+
+        settingsBinding.tvShareApp.setOnClickListener(v -> shareApp());
 
 
     }
@@ -126,6 +146,20 @@ public class SettingsActivity extends AppCompatActivity implements DialogDeleteN
         if (confirm) {
             getInstance().getNoteDao().deleteAllNotes();
             getToast(this, R.string.successfully);
+        }
+    }
+
+    private void shareApp() {
+        try {
+            final String appPackageName = getApplication().getPackageName();
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT,
+                    "https://play.google.com/store/apps/details?id=" + appPackageName);
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

@@ -78,7 +78,7 @@ public class UrlDialog {
                 intent.putExtra(QUICK_ACTIONS_TYPE, ACTION_URL);
                 intent.putExtra(ACTION_URL, editTextAddUrl.getText().toString());
                 activity.startActivityForResult(intent, REQUEST_CODE_ADD_NOTE);
-                activity.overridePendingTransition(R.anim.activity_zoom_in, R.anim.activity_static_animation);
+                activity.overridePendingTransition(R.anim.zoom_in, R.anim.activity_static_animation);
             }
         });
         dialogUrl.show();

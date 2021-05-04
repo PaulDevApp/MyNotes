@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_dialog_open_source"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/_12sdp"
+    android:background="@drawable/background_dialog"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_resources"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_6sdp"
+        android:text="@string/resources_used"
+        android:textColor="?attr/color"
+        android:textSize="@dimen/_17ssp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_icon_com"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_marginEnd="@dimen/_6sdp"
+        android:layout_marginBottom="@dimen/_6sdp"
+        android:background="?android:attr/selectableItemBackground"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:text="@string/icon_icons_com"
+        android:textColor="?attr/colorAccent"
+        android:textSize="@dimen/_15ssp"
+        android:textStyle="normal"
+        tools:ignore="UnusedAttribute" />
+
+    <TextView
+        android:id="@+id/tv_android_asset"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_6sdp"
+        android:layout_marginBottom="@dimen/_6sdp"
+        android:background="?android:attr/selectableItemBackground"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:text="@string/android_asset_studio"
+        android:textColor="?attr/colorAccent"
+        android:textSize="@dimen/_15ssp"
+        android:textStyle="normal"
+        tools:ignore="UnusedAttribute" />
+
+    <TextView
+        android:id="@+id/tv_flaticon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_6sdp"
+        android:layout_marginBottom="@dimen/_6sdp"
+        android:background="?android:attr/selectableItemBackground"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:text="@string/flaticon"
+        android:textColor="?attr/colorAccent"
+        android:textSize="@dimen/_15ssp"
+        android:textStyle="normal"
+        tools:ignore="UnusedAttribute" />
+
+    <TextView
+        android:id="@+id/tv_in_color_balance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_6sdp"
+        android:layout_marginBottom="@dimen/_6sdp"
+        android:background="?android:attr/selectableItemBackground"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:text="@string/in_color_balance"
+        android:textColor="?attr/colorAccent"
+        android:textSize="@dimen/_15ssp"
+        android:textStyle="normal"
+        tools:ignore="UnusedAttribute" />
+
+    <TextView
+        android:id="@+id/tv_color_tool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_6sdp"
+        android:layout_marginBottom="@dimen/_6sdp"
+        android:background="?android:attr/selectableItemBackground"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:text="@string/color_tool"
+        android:textColor="?attr/colorAccent"
+        android:textSize="@dimen/_15ssp"
+        android:textStyle="normal"
+        tools:ignore="UnusedAttribute" />
+
+    <TextView
+        android:id="@+id/tv_lottie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_6sdp"
+        android:layout_marginBottom="@dimen/_6sdp"
+        android:background="?android:attr/selectableItemBackground"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:text="@string/lottiefiles"
+        android:textColor="?attr/colorAccent"
+        android:textSize="@dimen/_15ssp"
+        android:textStyle="normal"
+        tools:ignore="UnusedAttribute" />
+
+    <TextView
+        android:id="@+id/tv_preview_link"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_6sdp"
+        android:layout_marginBottom="@dimen/_6sdp"
+        android:background="?android:attr/selectableItemBackground"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:text="@string/richlinkpreview"
+        android:textColor="?attr/colorAccent"
+        android:textSize="@dimen/_15ssp"
+        android:textStyle="normal"
+        tools:ignore="UnusedAttribute" />
+
+    <TextView
+        android:id="@+id/tv_tooltips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_6sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:background="?android:attr/selectableItemBackground"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:text="@string/tooltips"
+        android:textColor="?attr/colorAccent"
+        android:textSize="@dimen/_15ssp"
+        android:textStyle="normal"
+        tools:ignore="UnusedAttribute" />
+</LinearLayout>

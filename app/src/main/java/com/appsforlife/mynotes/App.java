@@ -29,6 +29,8 @@ public class App extends Application {
 
     private String themeMode;
     private String selectedColor;
+    private int textSize;
+    private int countLines;
 
     public static String colorPicker;
 
@@ -56,6 +58,8 @@ public class App extends Application {
         this.isConfirmed = mPrefs.getBoolean(CONFIRM_DELETE, false);
         this.isReplace = mPrefs.getBoolean(CONFIRM_REPLACE, false);
         this.isDelete = mPrefs.getBoolean(CONFIRM_DELETE_IMAGE, false);
+        this.textSize = mPrefs.getInt(TEXT_SIZE_MODE, TEXT_SIZE_1);
+        this.countLines = mPrefs.getInt(COUNT_LINES, COUNT_10);
 
         instance = this;
 
@@ -80,6 +84,22 @@ public class App extends Application {
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();
         editor.putString(THEME_MODE, themeMode);
+        editor.apply();
+    }
+
+    public void setTextSize(int textSize){
+        this.textSize = textSize;
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = preferences.edit();
+        editor.putInt(TEXT_SIZE_MODE, textSize);
+        editor.apply();
+    }
+
+    public void setCountLines(int countLines){
+        this.countLines = countLines;
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = preferences.edit();
+        editor.putInt(COUNT_LINES, countLines);
         editor.apply();
     }
 
@@ -160,6 +180,14 @@ public class App extends Application {
 
     public String getSelectedColor() {
         return selectedColor;
+    }
+
+    public int getTextSize() {
+        return textSize;
+    }
+
+    public int getCountLines() {
+        return countLines;
     }
 
     public boolean isIncludeDone() {

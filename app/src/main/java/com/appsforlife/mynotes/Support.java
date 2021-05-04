@@ -267,8 +267,7 @@ public final class Support {
     public static void getToolTipsDetail(Activity activity, View button, ViewGroup layout, int message, ToolTipsManager toolTipsManager) {
         ToolTip.Builder builder = new ToolTip.Builder(activity, button, layout,
                 activity.getResources().getString(message), ToolTip.POSITION_ABOVE);
-        builder.setAlign(ToolTip.ALIGN_CENTER);
-        builder.setBackgroundColor(activity.getResources().getColor(R.color.colorTransparent));
+        builder.setBackgroundColor(activity.getColor(R.color.colorTransparent));
         builder.setGravity(ToolTip.GRAVITY_CENTER);
         builder.setTextAppearance(R.style.TooltipTextAppearance);
         toolTipsManager.show(builder.build());

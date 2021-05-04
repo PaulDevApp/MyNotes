@@ -18,6 +18,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.speech.RecognizerIntent;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -94,8 +95,6 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
     private boolean isCheck;
     private boolean isFavorite;
 
-    private int zoom;
-
     private ToolTipsManager toolTipsManager;
 
     public static void start(Activity caller, Note note, RelativeLayout noteLayout) {
@@ -124,6 +123,8 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
         detailBinding = ActivityDetailBinding.inflate(getLayoutInflater());
         paletteBinding = detailBinding.palette;
         setContentView(detailBinding.getRoot());
+
+        setNoteTextSize();
 
         toolTipsManager = new ToolTipsManager();
 
@@ -310,8 +311,8 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
             }
         });
 
-        detailBinding.tvUrl.setOnClickListener(v -> clickLinkDialog.createClickLinkDialog(note, detailBinding.tvUrl,
-                detailBinding.linkPreview, urlDialog));
+        detailBinding.tvUrl.setOnClickListener(v -> clickLinkDialog.createClickLinkDialog(
+                note, detailBinding.tvUrl, detailBinding.linkPreview, urlDialog));
 
         paletteBinding.ivDone.setOnClickListener(v -> {
             if (!note.isDone()) {
@@ -355,12 +356,14 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
 
         detailBinding.tvUrl.setPaintFlags(detailBinding.tvUrl.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
-        zoom = 1;
         detailBinding.ivSpeech.setOnClickListener(v -> {
-//            getZoom();
             Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
             intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, Locale.getDefault().getLanguage());
-            startActivityForResult(intent, REQUEST_CODE_SPEECH);
+            try {
+                startActivityForResult(intent, REQUEST_CODE_SPEECH);
+            } catch (Exception e) {
+                getToast(this, R.string.speech_message);
+            }
         });
 
 
@@ -486,7 +489,7 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
                     ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, detailBinding.ivShowPhoto, "image");
                     detailPicture.putExtra(PICTURE_PATH, imagePath);
                     startActivity(detailPicture, options.toBundle());
-                    overridePendingTransition(R.anim.activity_zoom_in, R.anim.activity_static_animation);
+                    overridePendingTransition(R.anim.zoom_in, R.anim.activity_static_animation);
                 });
             }
             oldImagePath = imagePath;
@@ -498,18 +501,22 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
             oldWebLink = note.getWebLink();
 
             if (!detailBinding.tvUrl.getText().toString().startsWith("www")) {
-                detailBinding.linkPreview.setVisibility(View.VISIBLE);
-                detailBinding.linkPreview.setLink(detailBinding.tvUrl.getText().toString(), new ViewListener() {
-                    @Override
-                    public void onSuccess(boolean status) {
+                try {
+                    detailBinding.linkPreview.setVisibility(View.VISIBLE);
+                    detailBinding.linkPreview.setLink(detailBinding.tvUrl.getText().toString(), new ViewListener() {
+                        @Override
+                        public void onSuccess(boolean status) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onError(Exception e) {
+                        @Override
+                        public void onError(Exception e) {
 
-                    }
-                });
+                        }
+                    });
+                }catch (IllegalArgumentException e){
+                    detailBinding.linkPreview.setVisibility(View.GONE);
+                }
             }
         } else {
             note.setWebLink("");
@@ -640,7 +647,7 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
         } else {
             addNote();
             super.onBackPressed();
-            overridePendingTransition(R.anim.activity_static_animation, R.anim.activity_zoom_out);
+            overridePendingTransition(R.anim.activity_static_animation, R.anim.zoom_out);
         }
     }
 
@@ -676,54 +683,46 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
         colorDetailPaletteAdapter.notifyDataSetChanged();
     }
 
-//    private void getZoom() {
-//        switch (zoom) {
-//            case 1:
-//                detailBinding.tvZoomText.setTextSize(24);
-//                detailBinding.etInputText.setTextSize(24);
-//                detailBinding.tvUrl.setTextSize(24);
-//                detailBinding.etInputTitle.setTextSize(28);
-//                detailBinding.tvTextDateTimeCreated.setTextSize(15);
-//                detailBinding.tvTextDateTimeEdited.setTextSize(15);
-//                detailBinding.tvDateInfoCreated.setTextSize(15);
-//                detailBinding.tvDateInfoEdited.setTextSize(15);
-//                zoom = 2;
-//                break;
-//            case 2:
-//                detailBinding.tvZoomText.setTextSize(29);
-//                detailBinding.etInputText.setTextSize(29);
-//                detailBinding.tvUrl.setTextSize(29);
-//                detailBinding.etInputTitle.setTextSize(33);
-//                detailBinding.tvTextDateTimeCreated.setTextSize(17);
-//                detailBinding.tvTextDateTimeEdited.setTextSize(17);
-//                detailBinding.tvDateInfoCreated.setTextSize(17);
-//                detailBinding.tvDateInfoEdited.setTextSize(17);
-//                zoom = 3;
-//                break;
-//            case 3:
-//                detailBinding.tvZoomText.setTextSize(34);
-//                detailBinding.etInputText.setTextSize(34);
-//                detailBinding.tvUrl.setTextSize(34);
-//                detailBinding.etInputTitle.setTextSize(38);
-//                detailBinding.tvTextDateTimeCreated.setTextSize(19);
-//                detailBinding.tvTextDateTimeEdited.setTextSize(19);
-//                detailBinding.tvDateInfoCreated.setTextSize(19);
-//                detailBinding.tvDateInfoEdited.setTextSize(19);
-//                zoom = 4;
-//                break;
-//            case 4:
-//                detailBinding.tvZoomText.setTextSize(19);
-//                detailBinding.etInputText.setTextSize(19);
-//                detailBinding.tvUrl.setTextSize(19);
-//                detailBinding.etInputTitle.setTextSize(23);
-//                detailBinding.tvTextDateTimeCreated.setTextSize(13);
-//                detailBinding.tvTextDateTimeEdited.setTextSize(13);
-//                detailBinding.tvDateInfoCreated.setTextSize(13);
-//                detailBinding.tvDateInfoEdited.setTextSize(13);
-//                zoom = 1;
-//                break;
-//        }
-//    }
+    private void setNoteTextSize() {
+        switch ((int) App.getInstance().getTextSize()) {
+            case 1:
+                detailBinding.etInputTitle.setTextSize(23);
+                detailBinding.tvUrl.setTextSize(17);
+                detailBinding.etInputText.setTextSize(19);
+                detailBinding.tvTextDateTimeCreated.setTextSize(12);
+                detailBinding.tvTextDateTimeEdited.setTextSize(12);
+                detailBinding.tvDateInfoCreated.setTextSize(12);
+                detailBinding.tvDateInfoEdited.setTextSize(12);
+                break;
+            case 2:
+                detailBinding.etInputTitle.setTextSize(27);
+                detailBinding.tvUrl.setTextSize(21);
+                detailBinding.etInputText.setTextSize(23);
+                detailBinding.tvTextDateTimeCreated.setTextSize(14);
+                detailBinding.tvTextDateTimeEdited.setTextSize(14);
+                detailBinding.tvDateInfoCreated.setTextSize(14);
+                detailBinding.tvDateInfoEdited.setTextSize(14);
+                break;
+            case 3:
+                detailBinding.etInputTitle.setTextSize(31);
+                detailBinding.tvUrl.setTextSize(25);
+                detailBinding.etInputText.setTextSize(27);
+                detailBinding.tvTextDateTimeCreated.setTextSize(16);
+                detailBinding.tvTextDateTimeEdited.setTextSize(16);
+                detailBinding.tvDateInfoCreated.setTextSize(16);
+                detailBinding.tvDateInfoEdited.setTextSize(16);
+                break;
+            case 4:
+                detailBinding.etInputTitle.setTextSize(35);
+                detailBinding.tvUrl.setTextSize(29);
+                detailBinding.etInputText.setTextSize(31);
+                detailBinding.tvTextDateTimeCreated.setTextSize(18);
+                detailBinding.tvTextDateTimeEdited.setTextSize(18);
+                detailBinding.tvDateInfoCreated.setTextSize(18);
+                detailBinding.tvDateInfoEdited.setTextSize(18);
+                break;
+        }
+    }
 
     @Override
     public void dialogDeleteImageCallback(boolean confirm) {

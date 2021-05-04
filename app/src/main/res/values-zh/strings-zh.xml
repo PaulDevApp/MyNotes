@@ -61,4 +61,37 @@
     <string name="privacy_policy">隱私政策</string>
     <string name="ui">界面</string>
     <string name="other">其他</string>
+
+    <string name="delete_image">删除图片？</string>
+    <string name="tooltips_favorite">固定便条</string>
+    <string name="tooltips_share">分享笔记</string>
+    <string name="tooltips_add_picture">添加图片</string>
+    <string name="tooltips_add_url">新增连结</string>
+    <string name="tooltips_add_complete">标为已完成</string>
+    <string name="feedBack">反馈</string>
+    <string name="toast_helper_copy_ulr">复制链接</string>
+    <string name="toast_helper_delete_ulr">删除链接</string>
+    <string name="toast_helper_share_ulr">分享链接</string>
+    <string name="toast_helper_open_ulr">打开链接</string>
+    <string name="toast_helper_edit_ulr">编辑连结</string>
+    <string name="note_added">注意添加</string>
+    <string name="note_is_empty">注意为空！</string>
+    <string name="tooltips_make_a_copy">制作副本</string>
+    <string name="copy_text_note">注意文字已复制</string>
+    <string name="tooltips_copy_text_note">复制笔记文字</string>
+    <string name="set_text_size">设定文字大小</string>
+    <string name="speech_message">您的设备不支持语音识别器！</string>
+    <string name="sample_text_size">样本文字大小</string>
+    <string name="select_text_size">选择文字大小</string>
+    <string name="preview_count">预览中的行数</string>
+    <string name="select_count_lines">选择行数</string>
+    <string name="_1">1行…</string>
+    <string name="_3">3行…</string>
+    <string name="_5">5行…</string>
+    <string name="_7">7行…</string>
+    <string name="_10">10行…</string>
+    <string name="open_source_libraries">开源库</string>
+    <string name="resources_used">使用的资源：</string>
+    <string name="recommendation">不建议从此文件夹中删除文件</string>
+    <string name="share_app">分享应用</string>
 </resources>

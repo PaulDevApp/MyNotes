@@ -14,6 +14,17 @@ public final class Constants {
 
     public static final String NOTES_DATA_BASE = "note_db";
 
+    public static final int TEXT_SIZE_1 = 1;
+    public static final int TEXT_SIZE_2 = 2;
+    public static final int TEXT_SIZE_3 = 3;
+    public static final int TEXT_SIZE_4 = 4;
+
+    public static final int COUNT_1 = 1;
+    public static final int COUNT_3 = 3;
+    public static final int COUNT_5 = 5;
+    public static final int COUNT_7 = 7;
+    public static final int COUNT_10 = 10;
+
     public static final String NIGHT_MODE = "night_mode";
     public static final String LIGHT_MODE = "light_mode";
     public static final String AUTO_MODE = "auto_mode";
@@ -24,6 +35,8 @@ public final class Constants {
     public static final String PREVIEW_LINK = "preview_link";
     public static final String VIEW = "view";
     public static final String THEME_MODE = "theme_mode";
+    public static final String TEXT_SIZE_MODE = "text_size";
+    public static final String COUNT_LINES = "count_lines";
     public static final String CONFIRM_DELETE = "confirmed";
     public static final String CONFIRM_REPLACE = "replace";
     public static final String CONFIRM_DELETE_IMAGE = "delete";
