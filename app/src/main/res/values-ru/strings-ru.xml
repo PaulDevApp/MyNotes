@@ -6,14 +6,12 @@
     <string name="write_something">Напишите что-нибудь здесь…</string>
     <string name="enter_title">Введите название</string>
     <string name="enter_text">Введите текст</string>
-    <string name="change_note_color">Изменить цвет заметки</string>
     <string name="permission_denied">В доступе отказано</string>
     <string name="add_link">Добавить ссылку</string>
     <string name="add_image">Добавить изображение</string>
     <string name="add_note">Добавить заметку</string>
     <string name="add_url">Введите URL</string>
     <string name="add">Добавить</string>
-    <string name="cancel">Отмена</string>
     <string name="toast_enter_url">Введите URL</string>
     <string name="toast_valid_url">Ссылка успешно добавлена</string>
     <string name="toast_enter_valid_url">Введен неверный URL</string>
@@ -21,10 +19,7 @@
     <string name="delete_note">Удалить заметку?</string>
     <string name="created_date">Создано:</string>
     <string name="updated_date">Обновлено:</string>
-    <string name="copy">Копировать</string>
-    <string name="open">Открыть</string>
     <string name="link_copied">Ссылка скопирована</string>
-    <string name="menu">Меню</string>
     <string name="all">Все</string>
     <string name="note_updated">Заметка обновлена</string>
     <string name="note_saved">Заметка сохранена</string>
@@ -45,17 +40,12 @@
     <string name="delete_selected_notes">Удалить выбранные заметки?</string>
     <string name="message_2">Выбранные заметки будут удалены безвозвратно!</string>
     <string name="note_copied">Заметка скопирована</string>
-    <string name="no_entries_to_copy">Нет записей для копирования</string>
-    <string name="share">Поделиться</string>
     <string name="hide_images">Скрыть изображения</string>
     <string name="hide_preview_link">Скрыть ссылку предварительного просмотра</string>
     <string name="gallery">Галерея</string>
     <string name="camera">Камера</string>
-    <string name="a_a">Aa</string>
-    <string name="message_3">Сохраненное изображение также удаляется!</string>
     <string name="ask">Не спрашивать снова</string>
     <string name="replace_image">Заменить изображение?</string>
-    <string name="the_old_image_will_be_deleted">Старое изображение будет удалено!</string>
     <string name="replace">Заменить</string>
     <string name="rate_app">Оценить приложение</string>
     <string name="privacy_policy">Политика конфиденциальности</string>
@@ -73,12 +63,11 @@
     <string name="toast_helper_share_ulr">Поделиться ссылкой</string>
     <string name="toast_helper_open_ulr">Открыть ссылку в браузере</string>
     <string name="toast_helper_edit_ulr">Редактировать ссылку</string>
-    <string name="note_added">Добавить заметку</string>
     <string name="note_is_empty">Заметка пустая!</string>
     <string name="tooltips_make_a_copy">Сделать копию</string>
     <string name="copy_text_note">Текст заметки скопирован</string>
     <string name="tooltips_copy_text_note">Копировать текст заметки</string>
-    <string name="set_text_size">Установать размер текста</string>
+    <string name="set_text_size">Установить размер текста</string>
     <string name="speech_message">Ваше устройство не поддерживает распознавание речи!</string>
     <string name="sample_text_size">Размер образца текста</string>
     <string name="select_text_size">Выберите размер текста</string>
@@ -91,6 +80,7 @@
     <string name="_10">10 строк…</string>
     <string name="open_source_libraries">Библиотеки с открытым исходным кодом</string>
     <string name="resources_used">Используемые ресурсы:</string>
-    <string name="recommendation">Не рекомендуется удалять файлы из этой папки</string>
     <string name="share_app">Поделиться приложением</string>
+    <string name="no_text_to_copy">Нет текста для копирования!</string>
+    <string name="change_the_view_of_notes">Изменить представление заметок</string>
 </resources>

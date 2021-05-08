@@ -25,36 +25,15 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_40sdp">
-
-
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/switch_done"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:layout_marginEnd="@dimen/_4sdp"
-            android:background="?android:attr/selectableItemBackground"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:text="@string/hide_done"
-            android:textColor="?attr/color"
-            android:textSize="@dimen/_15ssp"
-            android:textStyle="normal"
-            tools:ignore="UnusedAttribute" />
-
-    </RelativeLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
-        android:layout_marginStart="@dimen/_6sdp"
-        android:layout_marginBottom="@dimen/_2sdp"
         android:baselineAligned="false"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/_4sdp"
+        android:paddingEnd="@dimen/_2sdp"
+        android:paddingBottom="@dimen/_2sdp">
 
         <TextView
             android:id="@+id/tv_all_colors"
@@ -75,24 +54,50 @@
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_40sdp">
 
-        <TextView
-            android:id="@+id/tv_settings"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:background="?android:attr/selectableItemBackground"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:gravity="center_vertical"
-            android:text="@string/settings"
-            android:textColor="?attr/color"
-            android:textSize="@dimen/_15ssp"
-            android:textStyle="normal"
-            tools:ignore="UnusedAttribute" />
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switch_done"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:paddingStart="@dimen/_6sdp"
+        android:paddingEnd="@dimen/_6sdp"
+        android:text="@string/hide_done"
+        android:textColor="?attr/color"
+        android:textSize="@dimen/_15ssp"
+        android:textStyle="normal" />
 
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/tv_change_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:paddingStart="@dimen/_6sdp"
+        android:paddingEnd="@dimen/_6sdp"
+        android:paddingBottom="@dimen/_6sdp"
+        android:text="@string/change_the_view_of_notes"
+        android:textColor="?attr/color"
+        android:textSize="@dimen/_15ssp"
+        android:textStyle="normal"
+        app:drawableEndCompat="@drawable/ic_view_module" />
+
+    <TextView
+        android:id="@+id/tv_settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/_6sdp"
+        android:paddingTop="@dimen/_6sdp"
+        android:paddingEnd="@dimen/_6sdp"
+        android:text="@string/settings"
+        android:textColor="?attr/color"
+        android:textSize="@dimen/_15ssp"
+        android:textStyle="normal"
+        app:drawableEndCompat="@drawable/ic_settings"
+        tools:ignore="UnusedAttribute" />
 
 </LinearLayout>

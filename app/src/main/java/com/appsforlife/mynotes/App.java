@@ -199,7 +199,7 @@ public class App extends Application {
     }
 
     public boolean isSwitchAnim() {
-        return switchAnim;
+        return !switchAnim;
     }
 
     public boolean isVisible() {

@@ -17,11 +17,10 @@
     <style name="WindowsAnimationTransition">
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+        <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
+        <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
     </style>
 
-    <style name="PopupMenuStyle" parent="@style/Widget.AppCompat.PopupMenu">
-        <item name="showAsAction">always</item>
-    </style>
 
     <style name="FABStyleMain" parent="Widget.MaterialComponents.FloatingActionButton">
         <item name="android:src">@drawable/ic_create_note</item>
@@ -29,27 +28,10 @@
         <item name="tint">@null</item>
     </style>
 
-    <style name="FABStyleCreate" parent="Widget.MaterialComponents.FloatingActionButton">
-        <item name="android:src">@drawable/ic_delete_note</item>
-        <item name="backgroundTint">@color/colorDelete</item>
-        <item name="tint">@null</item>
-    </style>
 
     <style name="MySwitchStyle" parent="Theme.MyNotes">
         <item name="colorControlActivated">?attr/colorAccent</item>
         <item name="colorSwitchThumbNormal">@android:color/darker_gray</item>
-    </style>
-
-    <style name="paletteViewStyleDetail">
-        <item name="android:layout_height">@dimen/_40sdp</item>
-        <item name="android:layout_width">@dimen/_40sdp</item>
-        <item name="android:padding">@dimen/_10sdp</item>
-    </style>
-
-    <style name="paletteViewStyleMain">
-        <item name="android:layout_height">@dimen/_35sdp</item>
-        <item name="android:layout_width">@dimen/_35sdp</item>
-        <item name="android:padding">@dimen/_5sdp</item>
     </style>
 
     <style name="TextDialogAppearance">

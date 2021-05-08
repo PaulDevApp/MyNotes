@@ -6,14 +6,12 @@
     <string name="write_something">Write something here…</string>
     <string name="enter_title">Enter title</string>
     <string name="enter_text">Enter text</string>
-    <string name="change_note_color">Change note color</string>
     <string name="permission_denied">Permission Denied</string>
     <string name="add_link">Add link</string>
     <string name="add_image">Add image</string>
     <string name="add_note">Add note</string>
     <string name="add_url">Enter url</string>
     <string name="add">Add</string>
-    <string name="cancel">Cancel</string>
     <string name="toast_enter_url">Enter URL</string>
     <string name="toast_valid_url">Link added successfully</string>
     <string name="toast_enter_valid_url">Incorrect url entered</string>
@@ -21,10 +19,7 @@
     <string name="delete_note">Delete note?</string>
     <string name="created_date">Created:</string>
     <string name="updated_date">Updated:</string>
-    <string name="copy">Copy</string>
-    <string name="open">Open</string>
     <string name="link_copied">Link copied</string>
-    <string name="menu">Menu</string>
     <string name="all">All</string>
     <string name="note_updated">Note updated</string>
     <string name="note_saved">Note saved</string>
@@ -45,17 +40,12 @@
     <string name="delete_selected_notes">Delete selected notes?</string>
     <string name="message_2">Selected notes will be deleted irrevocably!</string>
     <string name="note_copied">Note copied</string>
-    <string name="no_entries_to_copy">No entries to copy</string>
-    <string name="share">Share</string>
     <string name="hide_images">Hide images</string>
     <string name="hide_preview_link">Hide preview link</string>
     <string name="gallery">Gallery</string>
     <string name="camera">Camera</string>
-    <string name="a_a">Aa</string>
-    <string name="message_3">The saved image is also deleted!</string>
     <string name="ask">Don\'t ask again</string>
     <string name="replace_image">Replace image?</string>
-    <string name="the_old_image_will_be_deleted">The old image will be deleted!</string>
     <string name="replace">Replace</string>
     <string name="rate_app">Rate app</string>
     <string name="privacy_policy">Privacy Policy</string>
@@ -73,7 +63,6 @@
     <string name="toast_helper_share_ulr">Share link</string>
     <string name="toast_helper_open_ulr">Open link</string>
     <string name="toast_helper_edit_ulr">Edit link</string>
-    <string name="note_added">Note add</string>
     <string name="note_is_empty">Note is empty!</string>
     <string name="tooltips_make_a_copy">Make a copy</string>
     <string name="copy_text_note">Note text copied</string>
@@ -97,9 +86,9 @@
     <string name="in_color_balance" translatable="false">IN COLOR BALANCE</string>
     <string name="color_tool" translatable="false">Color tool</string>
     <string name="lottiefiles" translatable="false">LottieFiles</string>
-    <string name="richlinkpreview" translatable="false">RichLinkPreview</string>
     <string name="ok" translatable="false">OK</string>
     <string name="tooltips" translatable="false">Tooltips</string>
-    <string name="recommendation">It is not recommended to delete files from this folder</string>
     <string name="share_app">Share app</string>
+    <string name="no_text_to_copy">No text to copy!</string>
+    <string name="change_the_view_of_notes">Сhange the view of notes</string>
 </resources>

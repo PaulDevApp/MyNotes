@@ -52,7 +52,7 @@ public final class Support {
     public static int countSelected;
 
     public static void startViewAnimation(View view, Context context, int anim) {
-        if (!App.getInstance().isSwitchAnim()) {
+        if (App.getInstance().isSwitchAnim()) {
             Animation animation = AnimationUtils.loadAnimation(context, anim);
             view.startAnimation(animation);
         }
@@ -61,7 +61,7 @@ public final class Support {
     @SuppressLint("SupportAnnotationUsage")
     @AnimRes
     public static void startItemAnimation(Context context, RecyclerView recyclerView, int resAnim) {
-        if (!App.getInstance().isSwitchAnim()) {
+        if (App.getInstance().isSwitchAnim()) {
             LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(context, resAnim);
             recyclerView.setLayoutAnimation(animation);
         }
@@ -77,13 +77,13 @@ public final class Support {
         }
     }
 
-    public static void changeItemIcon(Menu menu) {
-        if (App.getInstance().isChangeView()) {
-            menu.getItem(2).setIcon(R.drawable.ic_view_headline);
-        } else {
-            menu.getItem(2).setIcon(R.drawable.ic_view_module);
-        }
-    }
+//    public static void changeItemIcon(Menu menu) {
+//        if (App.getInstance().isChangeView()) {
+//            menu.getItem(2).setIcon(R.drawable.ic_view_headline);
+//        } else {
+//            menu.getItem(2).setIcon(R.drawable.ic_view_module);
+//        }
+//    }
 
     public static void setVisibleMenuItems(Menu menu, boolean open) {
         if (!open) {

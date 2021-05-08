@@ -5,10 +5,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.StrictMode;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -24,7 +20,6 @@ import com.appsforlife.mynotes.entities.Note;
 import com.appsforlife.mynotes.listeners.DialogDeleteNoteListener;
 import com.appsforlife.mynotes.model.MainViewModel;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import static com.appsforlife.mynotes.Support.*;
@@ -96,7 +91,7 @@ public class SettingsActivity extends AppCompatActivity implements DialogDeleteN
             }
         });
 
-        settingsBinding.switchAnim.setChecked(App.getInstance().isSwitchAnim());
+        settingsBinding.switchAnim.setChecked(!App.getInstance().isSwitchAnim());
         settingsBinding.switchAnim.setOnCheckedChangeListener((buttonView, isChecked) -> App.getInstance().setAnim(isChecked));
 
         settingsBinding.switchImageVisible.setChecked(App.getInstance().isVisible());

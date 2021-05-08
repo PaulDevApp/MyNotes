@@ -47,12 +47,14 @@ dependencies {
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
     implementation 'com.intuit.ssp:ssp-android:1.0.6'
 
-    implementation 'com.makeramen:roundedimageview:2.3.0'
-
     implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC2'
-    implementation 'io.github.ponnamkarthik:richlinkpreview:1.0.9'
-    implementation 'org.jsoup:jsoup:1.11.3'
-    implementation 'com.squareup.picasso:picasso:2.71828'
+
+
+    implementation 'org.jsoup:jsoup:1.13.1'
+
+
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
 
     implementation 'it.xabaras.android:recyclerview-swipedecorator:1.2.3'
 

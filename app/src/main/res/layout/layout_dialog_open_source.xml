@@ -112,21 +112,6 @@
         tools:ignore="UnusedAttribute" />
 
     <TextView
-        android:id="@+id/tv_preview_link"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginEnd="@dimen/_6sdp"
-        android:layout_marginBottom="@dimen/_6sdp"
-        android:background="?android:attr/selectableItemBackground"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:text="@string/richlinkpreview"
-        android:textColor="?attr/colorAccent"
-        android:textSize="@dimen/_15ssp"
-        android:textStyle="normal"
-        tools:ignore="UnusedAttribute" />
-
-    <TextView
         android:id="@+id/tv_tooltips"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

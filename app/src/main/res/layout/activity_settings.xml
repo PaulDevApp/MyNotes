@@ -251,7 +251,7 @@
             android:textColor="?attr/color"
             android:textSize="@dimen/_14ssp"
             android:textStyle="normal"
-            app:drawableEndCompat="@drawable/ic_delete_note"
+            app:drawableEndCompat="@drawable/ic_delete_forever"
             app:layout_constraintEnd_toStartOf="@id/guideline_end"
             app:layout_constraintStart_toEndOf="@id/guideline_start"
             app:layout_constraintTop_toBottomOf="@+id/support_line_other"

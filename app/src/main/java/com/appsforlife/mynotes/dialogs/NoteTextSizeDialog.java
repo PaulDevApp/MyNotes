@@ -38,7 +38,7 @@ public class NoteTextSizeDialog {
         TextView textSize3 = view.findViewById(R.id.tv_text_size_3);
         TextView textSize4 = view.findViewById(R.id.tv_text_size_4);
 
-        switch ((int) App.getInstance().getTextSize()) {
+        switch (App.getInstance().getTextSize()) {
             case (int) TEXT_SIZE_1:
                 textSize1.setTextAppearance(R.style.TextDialogAppearance);
                 break;
@@ -54,22 +54,22 @@ public class NoteTextSizeDialog {
         }
 
         textSize1.setOnClickListener(v -> {
-            App.getInstance().setTextSize((int) TEXT_SIZE_1);
+            App.getInstance().setTextSize(TEXT_SIZE_1);
             getToast(activity, R.string.ok);
             dialog.dismiss();
         });
         textSize2.setOnClickListener(v -> {
-            App.getInstance().setTextSize((int) TEXT_SIZE_2);
+            App.getInstance().setTextSize(TEXT_SIZE_2);
             getToast(activity, R.string.ok);
             dialog.dismiss();
         });
         textSize3.setOnClickListener(v -> {
-            App.getInstance().setTextSize((int) TEXT_SIZE_3);
+            App.getInstance().setTextSize( TEXT_SIZE_3);
             getToast(activity, R.string.ok);
             dialog.dismiss();
         });
         textSize4.setOnClickListener(v -> {
-            App.getInstance().setTextSize((int) TEXT_SIZE_4);
+            App.getInstance().setTextSize( TEXT_SIZE_4);
             getToast(activity, R.string.ok);
             dialog.dismiss();
         });

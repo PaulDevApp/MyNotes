@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -16,8 +17,6 @@ import com.appsforlife.mynotes.R;
 import com.appsforlife.mynotes.entities.Note;
 
 import static com.appsforlife.mynotes.Support.*;
-
-import io.github.ponnamkarthik.richlinkpreview.RichLinkViewTwitter;
 
 public class ClickLinkDialog {
 
@@ -29,7 +28,7 @@ public class ClickLinkDialog {
         this.clipboard = clipboard;
     }
 
-    public void createClickLinkDialog(Note note, TextView tvUrl, RichLinkViewTwitter linkPreview,
+    public void createClickLinkDialog(Note note, TextView tvUrl, FrameLayout linkPreviewDetail,
                                       UrlDialog urlDialog) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         View view = LayoutInflater.from(activity).inflate(R.layout.layout_dialog_click_link, null);
@@ -95,7 +94,7 @@ public class ClickLinkDialog {
             note.setWebLink("");
             tvUrl.setText("");
             tvUrl.setVisibility(View.GONE);
-            linkPreview.setVisibility(View.GONE);
+            linkPreviewDetail.setVisibility(View.GONE);
             dialogClick.cancel();
         });
 

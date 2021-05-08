@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SortedList;
 
 import com.appsforlife.mynotes.App;
+import com.appsforlife.mynotes.LinkPreviewUtil;
 import com.appsforlife.mynotes.R;
 import com.appsforlife.mynotes.entities.Note;
 import com.appsforlife.mynotes.listeners.NoteListener;
@@ -25,10 +25,13 @@ import com.appsforlife.mynotes.listeners.NoteLongListener;
 import com.appsforlife.mynotes.listeners.NoteSelectListener;
 import com.bumptech.glide.Glide;
 
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import java.util.List;
 
-import io.github.ponnamkarthik.richlinkpreview.RichLinkViewTwitter;
-import io.github.ponnamkarthik.richlinkpreview.ViewListener;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 import static com.appsforlife.mynotes.Support.*;
 import static com.appsforlife.mynotes.constants.Constants.*;
@@ -124,14 +127,24 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
 
     class NoteViewHolder extends RecyclerView.ViewHolder {
 
-        TextView title, text, dateTime, webLink;
-        RelativeLayout relativeLayoutNote;
-        RichLinkViewTwitter richLinkView;
-        ImageView checkImage, checkLink, imageViewFavorite, itemImageView;
+        final FrameLayout linkPreviewItem;
+        final RelativeLayout relativeLayoutNote;
+        final TextView title;
+        final TextView text;
+        final TextView dateTime;
+        final TextView webLink;
+        final TextView tvPreviewUrl;
+        final TextView tvPreviewLinkTitle;
+        final TextView tvDescriptionPreview;
+        final ImageView checkImage;
+        final ImageView checkLink;
+        final ImageView imageViewFavorite;
+        final ImageView itemImageView;
+        final ImageView ivPreviewImageLink;
         Note note;
-        FrameLayout itemBackground;
-        View selectedView;
-        View doneView;
+        final FrameLayout itemBackground;
+        final View selectedView;
+        final View doneView;
 
         NoteViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -139,7 +152,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
             title = itemView.findViewById(R.id.tv_item_text_title);
             dateTime = itemView.findViewById(R.id.tv_item_date_time);
             relativeLayoutNote = itemView.findViewById(R.id.rl_note);
-            richLinkView = itemView.findViewById(R.id.linkPreviewItem);
             webLink = itemView.findViewById(R.id.tv_web_item);
             checkImage = itemView.findViewById(R.id.iv_check_image);
             checkLink = itemView.findViewById(R.id.iv_check_link);
@@ -148,6 +160,12 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
             imageViewFavorite = itemView.findViewById(R.id.iv_item_favorite);
             itemImageView = itemView.findViewById(R.id.iv_item_image);
             doneView = itemView.findViewById(R.id.v_color_done);
+            linkPreviewItem = itemView.findViewById(R.id.linkPreviewItem);
+            tvPreviewLinkTitle = itemView.findViewById(R.id.tv_preview_title_link);
+            tvDescriptionPreview = itemView.findViewById(R.id.tv_preview_description_link);
+            ivPreviewImageLink = itemView.findViewById(R.id.iv_preview_image_link);
+            tvPreviewUrl = itemView.findViewById(R.id.tv_preview_url);
+
 
             itemView.setOnClickListener(v -> {
                 if (isSelect) {
@@ -168,7 +186,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
         void setNote(Note note) {
             this.note = note;
 
-            text.setMaxLines((int) App.getInstance().getCountLines());
+            text.setMaxLines(App.getInstance().getCountLines());
 
             if (note.isSelected()) {
                 selectedView.setVisibility(View.VISIBLE);
@@ -176,9 +194,9 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
                 selectedView.setVisibility(View.GONE);
             }
 
-            if (note.isDone()){
+            if (note.isDone()) {
                 doneView.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 doneView.setVisibility(View.GONE);
             }
 
@@ -223,25 +241,15 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
             if (webLink.getText().toString().trim().isEmpty()) {
                 webLink.setVisibility(View.GONE);
                 checkLink.setVisibility(View.GONE);
-                richLinkView.setVisibility(View.GONE);
+                linkPreviewItem.setVisibility(View.GONE);
             } else {
                 webLink.setVisibility(View.VISIBLE);
                 checkLink.setVisibility(View.VISIBLE);
-                richLinkView.setVisibility(View.GONE);
-                if (!webLink.getText().toString().startsWith("www") && !App.getInstance().isPreview()) {
-                    richLinkView.setVisibility(View.VISIBLE);
-                    richLinkView.setLink(note.getWebLink(), new ViewListener() {
-                        @Override
-                        public void onSuccess(boolean status) {
+                if (webLink.getText().toString().startsWith("https://") && !App.getInstance().isPreview()) {
 
-                        }
-
-                        @Override
-                        public void onError(Exception e) {
-
-                        }
-                    });
-
+                    setPreviewLink();
+                } else {
+                    linkPreviewItem.setVisibility(View.GONE);
                 }
             }
 
@@ -251,6 +259,40 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
             } else {
                 gradientDrawable.setColor(Color.parseColor(COLOR_DEFAULT));
             }
+        }
+
+        private void setPreviewLink() {
+            LinkPreviewUtil.getJSOUPContent(webLink.getText().toString())
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(result -> {
+                                if (result != null) {
+                                    Elements metaTags = result.getElementsByTag("meta");
+                                    for (Element element : metaTags) {
+                                        if (element.attr("property").equals("og:image")) {
+                                            Glide.with(context).load(element.attr("content"))
+                                                    .into(ivPreviewImageLink);
+                                        } else if (element.attr("name").equals("title")) {
+                                            tvPreviewLinkTitle.setText(element.attr("content"));
+                                            tvPreviewLinkTitle.setVisibility(View.VISIBLE);
+                                        } else if (element.attr("name").equals("description")) {
+                                            tvDescriptionPreview.setText(element.attr("content"));
+                                            tvDescriptionPreview.setVisibility(View.VISIBLE);
+                                            if (tvPreviewLinkTitle.getVisibility() == View.GONE) {
+                                                tvDescriptionPreview.setMaxLines(3);
+                                            }
+                                        } else if (element.attr("property").equals("og:url")) {
+                                            tvPreviewUrl.setText(element.attr("content"));
+                                            tvPreviewUrl.setVisibility(View.VISIBLE);
+                                        }
+                                        startViewAnimation(linkPreviewItem, context, R.anim.appearance);
+                                        linkPreviewItem.setVisibility(View.VISIBLE);
+                                    }
+                                } else {
+                                    linkPreviewItem.setVisibility(View.GONE);
+                                }
+                            },
+                            throwable -> linkPreviewItem.setVisibility(View.GONE));
         }
     }
 }

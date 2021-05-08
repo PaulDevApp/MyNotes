@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_item_text_title"
-            android:layout_marginStart="@dimen/_3sdp"
+            android:layout_marginStart="@dimen/_4sdp"
             android:layout_marginTop="@dimen/_4sdp"
             android:layout_marginEnd="@dimen/_5sdp"
             android:ellipsize="end"
@@ -83,21 +83,27 @@
             android:transitionName="image"
             android:visibility="gone" />
 
-        <io.github.ponnamkarthik.richlinkpreview.RichLinkViewTwitter
+        <FrameLayout
             android:id="@+id/linkPreviewItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/iv_item_image"
-            android:transitionName="linkPreview"
+            android:layout_below="@+id/iv_item_image"
             android:visibility="gone"
-            tools:visibility="visible" />
+            android:transitionName="preview"
+            android:layout_marginEnd="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginStart="@dimen/_4sdp"
+            tools:visibility="visible">
+
+            <include layout="@layout/layout_link_preview" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/tv_item_date_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/linkPreviewItem"
-            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_2sdp"
             android:layout_marginEnd="@dimen/_4sdp"
             android:layout_marginBottom="@dimen/_2sdp"
             android:fontFamily="@font/time_date_font"
@@ -117,7 +123,6 @@
             android:layout_marginTop="@dimen/_4sdp"
             android:layout_marginBottom="@dimen/_2sdp"
             android:contentDescription="@string/app_name"
-            android:paddingBottom="@dimen/_3sdp"
             android:src="@drawable/ic_image"
             android:visibility="gone"
             tools:visibility="visible" />

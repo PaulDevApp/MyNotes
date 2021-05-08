@@ -49,6 +49,8 @@ public final class Constants {
     public static final String ACTION_IMAGE = "image";
     public static final String ACTION_URL = "URL";
     public static final String ACTION_CAMERA = "camera";
+    public static final String ACTION_SPEECH = "speech";
+    public static final String SPEECH_STRING = "speech";
 
     public static final String All_COLORS = "all_colors";
     public static final String COLOR_DEFAULT = "#bda58f";

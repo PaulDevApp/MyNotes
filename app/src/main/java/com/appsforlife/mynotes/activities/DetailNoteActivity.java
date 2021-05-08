@@ -18,24 +18,27 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.speech.RecognizerIntent;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.appsforlife.mynotes.App;
+import com.appsforlife.mynotes.LinkPreviewUtil;
 import com.appsforlife.mynotes.R;
 import com.appsforlife.mynotes.adapters.ColorDetailPaletteAdapter;
 import com.appsforlife.mynotes.databinding.ActivityDetailBinding;
+import com.appsforlife.mynotes.databinding.LayoutLinkPreviewBinding;
 import com.appsforlife.mynotes.databinding.LayoutPaletteBinding;
 import com.appsforlife.mynotes.dialogs.ClickLinkDialog;
 import com.appsforlife.mynotes.dialogs.DeleteDialog;
@@ -55,6 +58,9 @@ import com.tomergoldst.tooltips.ToolTipsManager;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -64,7 +70,8 @@ import static com.appsforlife.mynotes.Support.*;
 import static com.appsforlife.mynotes.App.*;
 import static com.appsforlife.mynotes.constants.Constants.*;
 
-import io.github.ponnamkarthik.richlinkpreview.ViewListener;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @SuppressLint("ResourceAsColor")
 public class DetailNoteActivity extends AppCompatActivity implements ColorPaletteListener,
@@ -72,6 +79,7 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
 
     private ActivityDetailBinding detailBinding;
     private LayoutPaletteBinding paletteBinding;
+    private LayoutLinkPreviewBinding previewBinding;
 
     private Note note;
 
@@ -94,12 +102,14 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
     private boolean isFromGallery;
     private boolean isCheck;
     private boolean isFavorite;
+    private boolean prevDone;
+    private boolean prevFavorite;
 
     private ToolTipsManager toolTipsManager;
 
     public static void start(Activity caller, Note note, RelativeLayout noteLayout) {
         Intent intent = new Intent(caller, DetailNoteActivity.class);
-        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(caller, noteLayout, "note");
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(caller, noteLayout, "note");
         if (note != null) {
             intent.putExtra(NOTE, note);
         }
@@ -122,6 +132,7 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
 
         detailBinding = ActivityDetailBinding.inflate(getLayoutInflater());
         paletteBinding = detailBinding.palette;
+        previewBinding = detailBinding.includePreviewLink;
         setContentView(detailBinding.getRoot());
 
         setNoteTextSize();
@@ -171,6 +182,9 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
                         setPhoto(imagePath);
                         startViewAnimation(detailBinding.ivShowPhoto, this, R.anim.appearance);
                         startViewAnimation(detailBinding.ivDeleteImage, this, R.anim.appearance);
+                        break;
+                    case ACTION_SPEECH:
+                        detailBinding.etInputText.setText(getIntent().getStringExtra(SPEECH_STRING));
                         break;
                 }
             }
@@ -223,7 +237,6 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
                 isFavorite = false;
             }
             setFavoriteImage();
-            App.getInstance().getNoteDao().update(note);
         });
 
         paletteBinding.ivFavorite.setOnLongClickListener(v -> {
@@ -312,7 +325,7 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
         });
 
         detailBinding.tvUrl.setOnClickListener(v -> clickLinkDialog.createClickLinkDialog(
-                note, detailBinding.tvUrl, detailBinding.linkPreview, urlDialog));
+                note, detailBinding.tvUrl, detailBinding.linkPreviewDetail, urlDialog));
 
         paletteBinding.ivDone.setOnClickListener(v -> {
             if (!note.isDone()) {
@@ -323,7 +336,6 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
                 isCheck = false;
             }
             setCheckImageDone();
-            App.getInstance().getNoteDao().update(note);
             updateStrokeOut(note, detailBinding.etInputTitle, detailBinding.etInputText);
         });
         paletteBinding.ivDone.setOnLongClickListener(v -> {
@@ -333,11 +345,17 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
         });
 
         paletteBinding.ivCopyTextNote.setOnClickListener(v -> {
-            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-            ClipData clip = ClipData.newPlainText("", detailBinding.etInputTitle.getText().toString().trim()
-                    + "\n" + detailBinding.etInputText.getText().toString().trim() + "\n" + detailBinding.tvUrl.getText().toString().trim());
-            clipboard.setPrimaryClip(clip);
-            getToast(this, R.string.copy_text_note);
+            if (!detailBinding.etInputTitle.getText().toString().trim().isEmpty()
+                    || !detailBinding.etInputText.getText().toString().trim().isEmpty()
+                    || !detailBinding.tvUrl.getText().toString().trim().isEmpty()) {
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("", detailBinding.etInputTitle.getText().toString().trim()
+                        + "\n" + detailBinding.etInputText.getText().toString().trim() + "\n" + detailBinding.tvUrl.getText().toString().trim());
+                clipboard.setPrimaryClip(clip);
+                getToast(this, R.string.copy_text_note);
+            } else {
+                getToast(this, R.string.no_text_to_copy);
+            }
         });
 
         paletteBinding.ivCopyTextNote.setOnLongClickListener(v -> {
@@ -386,7 +404,7 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
 
         if (checkSomeText(note)) {
             App.getInstance().getNoteDao().insertNote(note);
-            getToast(this, R.string.note_added);
+            getToast(this, R.string.note_copied);
         } else {
             getToast(this, R.string.note_is_empty);
         }
@@ -465,9 +483,6 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
         startViewAnimation(detailBinding.tvDateInfoCreated, this, R.anim.appearance);
         startViewAnimation(detailBinding.ivDeleteNote, this, R.anim.appearance);
 
-        isCheck = note.isDone();
-        isFavorite = note.isFavorite();
-
 
         if (detailBinding.tvTextDateTimeEdited.getText().toString().length() > 0) {
             detailBinding.tvTextDateTimeEdited.setVisibility(View.VISIBLE);
@@ -500,23 +515,10 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
             detailBinding.tvUrl.setVisibility(View.VISIBLE);
             oldWebLink = note.getWebLink();
 
-            if (!detailBinding.tvUrl.getText().toString().startsWith("www")) {
-                try {
-                    detailBinding.linkPreview.setVisibility(View.VISIBLE);
-                    detailBinding.linkPreview.setLink(detailBinding.tvUrl.getText().toString(), new ViewListener() {
-                        @Override
-                        public void onSuccess(boolean status) {
-
-                        }
-
-                        @Override
-                        public void onError(Exception e) {
-
-                        }
-                    });
-                }catch (IllegalArgumentException e){
-                    detailBinding.linkPreview.setVisibility(View.GONE);
-                }
+            if (detailBinding.tvUrl.getText().toString().startsWith("https://")) {
+                setPreviewLink();
+            } else {
+                detailBinding.linkPreviewDetail.setVisibility(View.GONE);
             }
         } else {
             note.setWebLink("");
@@ -529,7 +531,51 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
         oldText = note.getText();
         oldImagePath = imagePath;
         oldColor = note.getColor();
+        isCheck = note.isDone();
+        isFavorite = note.isFavorite();
+        prevDone = note.isDone();
+        prevFavorite = note.isFavorite();
 
+    }
+
+    private void setPreviewLink() {
+        LinkPreviewUtil.getJSOUPContent(detailBinding.tvUrl.getText().toString())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result -> {
+                            if (result != null) {
+                                Elements metaTags = result.getElementsByTag("meta");
+                                for (Element element : metaTags) {
+                                    if (element.attr("property").equals("og:image")) {
+                                        Glide.with(this).load(element.attr("content"))
+                                                .into(previewBinding.ivPreviewImageLink);
+                                    } else if (element.attr("name").equals("title")) {
+                                        previewBinding.tvPreviewTitleLink.setText(element.attr("content"));
+                                        previewBinding.tvPreviewTitleLink.setVisibility(View.VISIBLE);
+                                    } else if (element.attr("name").equals("description")) {
+                                        previewBinding.tvPreviewDescriptionLink.setText(element.attr("content"));
+                                        previewBinding.tvPreviewDescriptionLink.setVisibility(View.VISIBLE);
+                                        if (previewBinding.tvPreviewTitleLink.getVisibility() == View.GONE) {
+                                            previewBinding.tvPreviewDescriptionLink.setMaxLines(3);
+                                        }
+                                    } else if (element.attr("property").equals("og:url")) {
+                                        previewBinding.tvPreviewUrl.setText(element.attr("content"));
+                                        previewBinding.tvPreviewUrl.setVisibility(View.VISIBLE);
+                                    }
+                                    startViewAnimation(detailBinding.linkPreviewDetail, this, R.anim.appearance);
+                                    detailBinding.linkPreviewDetail.setVisibility(View.VISIBLE);
+
+                                    detailBinding.linkPreviewDetail.setOnClickListener(v -> {
+                                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                                        intent.setData(Uri.parse(detailBinding.tvUrl.getText().toString()));
+                                        startActivity(intent);
+                                    });
+                                }
+                            } else {
+                                detailBinding.linkPreviewDetail.setVisibility(View.GONE);
+                            }
+                        },
+                        throwable -> detailBinding.linkPreviewDetail.setVisibility(View.GONE));
     }
 
     private void initialNote() {
@@ -637,7 +683,9 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
                 || !oldText.equals(note.getText().trim())
                 || !oldImagePath.equals(imagePath)
                 || !oldColor.equals(note.getColor().trim())
-                || !oldWebLink.equals(note.getWebLink());
+                || !oldWebLink.equals(note.getWebLink())
+                || prevDone != note.isDone()
+                || prevFavorite != note.isFavorite();
     }
 
     @Override
@@ -684,7 +732,7 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
     }
 
     private void setNoteTextSize() {
-        switch ((int) App.getInstance().getTextSize()) {
+        switch (App.getInstance().getTextSize()) {
             case 1:
                 detailBinding.etInputTitle.setTextSize(23);
                 detailBinding.tvUrl.setTextSize(17);

@@ -4,23 +4,13 @@ import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.SearchView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.appsforlife.mynotes.App;
 import com.appsforlife.mynotes.R;
-import com.appsforlife.mynotes.entities.Note;
 import com.appsforlife.mynotes.listeners.DialogDeleteNoteListener;
 import com.google.android.material.checkbox.MaterialCheckBox;
-
-import static com.appsforlife.mynotes.Support.*;
-import static com.appsforlife.mynotes.App.*;
-
-import java.util.ArrayList;
 
 public class DeleteDialog {
 

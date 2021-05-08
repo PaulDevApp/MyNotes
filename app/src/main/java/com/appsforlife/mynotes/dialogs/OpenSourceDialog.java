@@ -7,18 +7,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.appsforlife.mynotes.App;
 import com.appsforlife.mynotes.R;
-
-import static com.appsforlife.mynotes.Support.getToast;
-import static com.appsforlife.mynotes.constants.Constants.TEXT_SIZE_1;
-import static com.appsforlife.mynotes.constants.Constants.TEXT_SIZE_2;
-import static com.appsforlife.mynotes.constants.Constants.TEXT_SIZE_3;
-import static com.appsforlife.mynotes.constants.Constants.TEXT_SIZE_4;
 
 public class OpenSourceDialog {
 
@@ -56,9 +48,6 @@ public class OpenSourceDialog {
 
         view.findViewById(R.id.tv_lottie).setOnClickListener(v->
                 activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://lottiefiles.com/"))));
-
-        view.findViewById(R.id.tv_preview_link).setOnClickListener(v->
-                activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/ponnamkarthik/RichLinkPreview"))));
 
         view.findViewById(R.id.tv_tooltips).setOnClickListener(v->
                 activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/tomergoldst/tooltips"))));

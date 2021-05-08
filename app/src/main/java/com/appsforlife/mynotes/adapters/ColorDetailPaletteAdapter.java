@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appsforlife.mynotes.R;
-import com.appsforlife.mynotes.Support;
 import com.appsforlife.mynotes.entities.PaletteColor;
 import com.appsforlife.mynotes.listeners.ColorPaletteListener;
 
@@ -63,7 +62,7 @@ public class ColorDetailPaletteAdapter extends RecyclerView.Adapter<ColorDetailP
             viewBackground = itemView.findViewById(R.id.v_item_detail_color);
             imageViewColor = itemView.findViewById(R.id.iv_item_detail_color);
 
-            itemView.setOnClickListener(v -> colorPaletteListener.onColorPaletteClickListener(paletteColors.get(getAdapterPosition()), imageViewColor));
+            itemView.setOnClickListener(v -> colorPaletteListener.onColorPaletteClickListener(paletteColors.get(getAbsoluteAdapterPosition()), imageViewColor));
 
         }
 

@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.speech.RecognizerIntent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,18 +50,15 @@ import com.appsforlife.mynotes.listeners.NoteListener;
 import com.appsforlife.mynotes.listeners.NoteLongListener;
 import com.appsforlife.mynotes.listeners.NoteSelectListener;
 import com.appsforlife.mynotes.model.MainViewModel;
-import com.google.android.material.behavior.HideBottomViewOnScrollBehavior;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Objects;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
-import static com.appsforlife.mynotes.Support.setDarkTheme;
-import static com.appsforlife.mynotes.Support.startItemAnimation;
-import static com.appsforlife.mynotes.Support.startViewAnimation;
 import static com.appsforlife.mynotes.Support.*;
 import static com.appsforlife.mynotes.constants.Constants.*;
 
@@ -74,6 +72,8 @@ import static com.appsforlife.mynotes.constants.Constants.*;
  * 6. "О приложении" в настройках +
  * 7. добавить tooltips +
  * 8. добавить переводы + Хинди и Испанский
+ * 9. Проверка на сделано
+ * 10. Не копировать пустой текст
  * */
 
 public class MainActivity extends AppCompatActivity implements NoteListener, NoteSelectListener,
@@ -129,8 +129,10 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
         int spanCount;
         if (App.getInstance().isChangeView()) {
             spanCount = 1;
+            menuBinding.tvChangeView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_view_headline, 0);
         } else {
             spanCount = 2;
+            menuBinding.tvChangeView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_view_module, 0);
         }
 
         if (App.getInstance().getSelectedColor().equals(All_COLORS)) {
@@ -359,11 +361,14 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
         }
     }
 
+    private void sortingWithPath() {
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
         getMenuInflater().inflate(R.menu.bottom_appbar_menu, menu);
-        changeItemIcon(menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -378,16 +383,23 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
                 urlDialog.createMainUrlDialog();
                 throwOff(0);
                 break;
-            case R.id.appbar_add_view:
-                if (!App.getInstance().isChangeView()) {
-                    App.getInstance().setChangeView(true);
-                    staggeredGridLayoutManager.setSpanCount(1);
-                } else {
-                    App.getInstance().setChangeView(false);
-                    staggeredGridLayoutManager.setSpanCount(2);
+            case R.id.appbar_add_note:
+//                if (!App.getInstance().isChangeView()) {
+//                    App.getInstance().setChangeView(true);
+//                    staggeredGridLayoutManager.setSpanCount(1);
+//                } else {
+//                    App.getInstance().setChangeView(false);
+//                    staggeredGridLayoutManager.setSpanCount(2);
+//                }
+//                notesAdapter.notifyItemRangeChanged(notesFromDB.size(), notesAdapter.getItemCount());
+//                changeItemIcon(menu);
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, Locale.getDefault().getLanguage());
+                try {
+                    startActivityForResult(intent, REQUEST_CODE_SPEECH);
+                } catch (Exception e) {
+                    getToast(this, R.string.speech_message);
                 }
-                notesAdapter.notifyItemRangeChanged(notesFromDB.size(), notesAdapter.getItemCount());
-                changeItemIcon(menu);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -421,6 +433,17 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
             startActivityForResult(intent, REQUEST_CODE_ADD_NOTE);
             overridePendingTransition(R.anim.zoom_in, R.anim.activity_static_animation);
             throwOff(400);
+        } else if (requestCode == REQUEST_CODE_SPEECH) {
+            if (resultCode == RESULT_OK && data != null) {
+                ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                Intent intent = new Intent(getApplicationContext(), DetailNoteActivity.class);
+                intent.putExtra(IS_FROM_QUICK_ACTIONS, true);
+                intent.putExtra(QUICK_ACTIONS_TYPE, ACTION_SPEECH);
+                intent.putExtra(SPEECH_STRING, text.get(0) + ".");
+                startActivityForResult(intent, REQUEST_CODE_ADD_NOTE);
+                overridePendingTransition(R.anim.zoom_in, R.anim.activity_static_animation);
+                throwOff(400);
+            }
         }
     }
 
@@ -501,6 +524,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
                     return false;
                 }
 
+                @SuppressLint("ShowToast")
                 @Override
                 public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                     if (isSelect) {
@@ -633,6 +657,20 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
             overridePendingTransition(R.anim.activity_slide_from_bottom, R.anim.activity_slide_to_top);
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             throwOff(500);
+        });
+
+        menuBinding.tvChangeView.setOnClickListener(v -> {
+            if (!App.getInstance().isChangeView()) {
+                App.getInstance().setChangeView(true);
+                staggeredGridLayoutManager.setSpanCount(1);
+                menuBinding.tvChangeView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_view_headline, 0);
+            } else {
+                App.getInstance().setChangeView(false);
+                staggeredGridLayoutManager.setSpanCount(2);
+                menuBinding.tvChangeView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_view_module, 0);
+            }
+            notesAdapter.notifyItemRangeChanged(notesFromDB.size(), notesAdapter.getItemCount());
+//            changeItemIcon(menu);
         });
 
         bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {

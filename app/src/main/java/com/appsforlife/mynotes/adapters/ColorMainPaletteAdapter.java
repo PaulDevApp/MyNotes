@@ -61,7 +61,7 @@ public class ColorMainPaletteAdapter extends RecyclerView.Adapter<ColorMainPalet
             viewBackground = itemView.findViewById(R.id.v_item_main_color);
             imageViewColor = itemView.findViewById(R.id.iv_item_main_color);
 
-            itemView.setOnClickListener(v -> colorPaletteListener.onColorPaletteClickListener(paletteColors.get(getAdapterPosition()), imageViewColor));
+            itemView.setOnClickListener(v -> colorPaletteListener.onColorPaletteClickListener(paletteColors.get(getAbsoluteAdapterPosition()), imageViewColor));
 
         }
 
