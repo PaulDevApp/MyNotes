@@ -20,6 +20,15 @@
         android:padding="@dimen/_10sdp"
         android:paddingBottom="@dimen/_4sdp">
 
+        <ImageView
+            android:id="@+id/iv_color_indicator"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_color_note"
+            android:transitionName="color" />
+
 
         <ImageView
             android:id="@+id/iv_add_note"
@@ -78,17 +87,6 @@
             tools:ignore="UnusedAttribute" />
 
         <ImageView
-            android:id="@+id/iv_favorite"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackground"
-            android:contentDescription="@string/app_name"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:src="@drawable/ic_lock_open"
-            tools:ignore="UnusedAttribute" />
-
-        <ImageView
             android:id="@+id/iv_done"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -100,13 +98,16 @@
             tools:visibility="visible" />
 
         <ImageView
-            android:id="@+id/iv_color_indicator"
+            android:id="@+id/iv_favorite"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_color_note"
-            android:transitionName="color" />
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/ic_lock_open"
+            tools:ignore="UnusedAttribute" />
+
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

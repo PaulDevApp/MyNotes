@@ -68,6 +68,19 @@
         android:textSize="@dimen/_15ssp"
         android:textStyle="normal" />
 
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switch_only_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:paddingStart="@dimen/_6sdp"
+        android:paddingEnd="@dimen/_6sdp"
+        android:text="@string/show_notes_with_images"
+        android:textColor="?attr/color"
+        android:textSize="@dimen/_15ssp"
+        android:textStyle="normal" />
+
     <TextView
         android:id="@+id/tv_change_view"
         android:layout_width="match_parent"
@@ -97,7 +110,8 @@
         android:textColor="?attr/color"
         android:textSize="@dimen/_15ssp"
         android:textStyle="normal"
-        app:drawableEndCompat="@drawable/ic_settings"
-        tools:ignore="UnusedAttribute" />
+        android:drawablePadding="@dimen/_4sdp"
+        tools:ignore="UnusedAttribute"
+        app:drawableStartCompat="@drawable/ic_settings" />
 
 </LinearLayout>

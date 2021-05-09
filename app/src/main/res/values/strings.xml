@@ -91,4 +91,5 @@
     <string name="share_app">Share app</string>
     <string name="no_text_to_copy">No text to copy!</string>
     <string name="change_the_view_of_notes">Сhange the view of notes</string>
+    <string name="show_notes_with_images">Show notes with images</string>
 </resources>

@@ -20,6 +20,7 @@ public class App extends Application {
 
     private boolean changeView;
     private boolean includeDone;
+    private boolean includePicture;
     private boolean switchAnim;
     private boolean isVisible;
     private boolean isPreview;
@@ -50,6 +51,7 @@ public class App extends Application {
         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         this.changeView = mPrefs.getBoolean(Constants.VIEW, false);
         this.includeDone = mPrefs.getBoolean(INCLUDE_DONE, false);
+        this.includePicture = mPrefs.getBoolean(INCLUDE_PICTURE, false);
         this.selectedColor = mPrefs.getString(Constants.SELECTED_COLOR, All_COLORS);
         this.themeMode = mPrefs.getString(THEME_MODE, AUTO_MODE);
         this.switchAnim = mPrefs.getBoolean(SWITCH_ANIM, false);
@@ -87,7 +89,7 @@ public class App extends Application {
         editor.apply();
     }
 
-    public void setTextSize(int textSize){
+    public void setTextSize(int textSize) {
         this.textSize = textSize;
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();
@@ -95,7 +97,7 @@ public class App extends Application {
         editor.apply();
     }
 
-    public void setCountLines(int countLines){
+    public void setCountLines(int countLines) {
         this.countLines = countLines;
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();
@@ -109,6 +111,14 @@ public class App extends Application {
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();
         editor.putBoolean(INCLUDE_DONE, includeDone);
+        editor.apply();
+    }
+
+    public void setIncludePicture(boolean includePicture) {
+        this.includePicture = includePicture;
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = preferences.edit();
+        editor.putBoolean(INCLUDE_PICTURE, includePicture);
         editor.apply();
     }
 
@@ -192,6 +202,10 @@ public class App extends Application {
 
     public boolean isIncludeDone() {
         return includeDone;
+    }
+
+    public boolean isIncludePicture() {
+        return includePicture;
     }
 
     public String getThemeMode() {

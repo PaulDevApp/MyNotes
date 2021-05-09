@@ -29,6 +29,7 @@ public final class Constants {
     public static final String LIGHT_MODE = "light_mode";
     public static final String AUTO_MODE = "auto_mode";
     public static final String INCLUDE_DONE = "include_done";
+    public static final String INCLUDE_PICTURE = "include_picture";
     public static final String SWITCH_ANIM = "switch_anim";
     public static final String VISIBLE_IMAGES = "visible_images";
     public static final String SELECTED_COLOR = "selected_color";

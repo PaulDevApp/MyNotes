@@ -338,8 +338,16 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
             ArrayList<Note> notes = new ArrayList<>();
             for (Note note : notesFromDB) {
                 if (!note.isDone()) {
-                    if (!App.getInstance().getSelectedColor().equals(All_COLORS)) {
+                    if (!App.getInstance().getSelectedColor().equals(All_COLORS) && App.getInstance().isIncludePicture()) {
+                        if (note.getColor().equals(App.getInstance().getSelectedColor()) && !note.getImagePath().trim().isEmpty()) {
+                            notes.add(note);
+                        }
+                    } else if (!App.getInstance().getSelectedColor().equals(All_COLORS) && !App.getInstance().isIncludePicture()) {
                         if (note.getColor().equals(App.getInstance().getSelectedColor())) {
+                            notes.add(note);
+                        }
+                    } else if (App.getInstance().isIncludePicture() && App.getInstance().getSelectedColor().equals(All_COLORS)) {
+                        if (!note.getImagePath().trim().isEmpty()) {
                             notes.add(note);
                         }
                     } else {
@@ -352,6 +360,20 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
             ArrayList<Note> notes = new ArrayList<>();
             for (Note note : notesFromDB) {
                 if (note.getColor().equals(App.getInstance().getSelectedColor())) {
+                    if (App.getInstance().isIncludePicture()) {
+                        if (!note.getImagePath().trim().isEmpty()) {
+                            notes.add(note);
+                        }
+                    } else {
+                        notes.add(note);
+                    }
+                }
+            }
+            notesAdapter.setItems(notes);
+        } else if (App.getInstance().isIncludePicture()) {
+            ArrayList<Note> notes = new ArrayList<>();
+            for (Note note : notesFromDB) {
+                if (!note.getImagePath().trim().isEmpty()) {
                     notes.add(note);
                 }
             }
@@ -359,10 +381,6 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
         } else {
             notesAdapter.setItems(notesFromDB);
         }
-    }
-
-    private void sortingWithPath() {
-
     }
 
     @Override
@@ -384,15 +402,6 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
                 throwOff(0);
                 break;
             case R.id.appbar_add_note:
-//                if (!App.getInstance().isChangeView()) {
-//                    App.getInstance().setChangeView(true);
-//                    staggeredGridLayoutManager.setSpanCount(1);
-//                } else {
-//                    App.getInstance().setChangeView(false);
-//                    staggeredGridLayoutManager.setSpanCount(2);
-//                }
-//                notesAdapter.notifyItemRangeChanged(notesFromDB.size(), notesAdapter.getItemCount());
-//                changeItemIcon(menu);
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, Locale.getDefault().getLanguage());
                 try {
@@ -637,6 +646,12 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
             sorting();
         });
 
+        menuBinding.switchOnlyImage.setChecked(App.getInstance().isIncludePicture());
+        menuBinding.switchOnlyImage.setOnCheckedChangeListener(((buttonView, isChecked) -> {
+            App.getInstance().setIncludePicture(isChecked);
+            sorting();
+        }));
+
         menuBinding.rlCloseBottomMenu.setOnClickListener(v -> {
             if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -670,7 +685,6 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
                 menuBinding.tvChangeView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_view_module, 0);
             }
             notesAdapter.notifyItemRangeChanged(notesFromDB.size(), notesAdapter.getItemCount());
-//            changeItemIcon(menu);
         });
 
         bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
