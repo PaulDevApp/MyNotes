@@ -83,4 +83,6 @@
     <string name="share_app">Поделиться приложением</string>
     <string name="no_text_to_copy">Нет текста для копирования!</string>
     <string name="change_the_view_of_notes">Изменить представление заметок</string>
+    <string name="show_notes_with_images">Показывать заметки с изображениями</string>
+    <string name="empty_note_deleted">Пустая заметка удалена</string>
 </resources>

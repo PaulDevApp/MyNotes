@@ -23,7 +23,6 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,6 +35,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.appsforlife.mynotes.App;
 import com.appsforlife.mynotes.LinkPreviewUtil;
 import com.appsforlife.mynotes.R;
+import com.appsforlife.mynotes.Support;
 import com.appsforlife.mynotes.adapters.ColorDetailPaletteAdapter;
 import com.appsforlife.mynotes.databinding.ActivityDetailBinding;
 import com.appsforlife.mynotes.databinding.LayoutLinkPreviewBinding;
@@ -128,7 +128,7 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setDarkTheme();
+        Support.setTheme();
 
         detailBinding = ActivityDetailBinding.inflate(getLayoutInflater());
         paletteBinding = detailBinding.palette;
@@ -218,7 +218,7 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
 
         initPalette();
 
-        colorDetailPaletteAdapter = new ColorDetailPaletteAdapter(paletteColors, this);
+        colorDetailPaletteAdapter = new ColorDetailPaletteAdapter(paletteColors, this, this);
         paletteBinding.rvColorPalette.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         paletteBinding.rvColorPalette.setAdapter(colorDetailPaletteAdapter);
         colorDetailPaletteAdapter.setPaletteColors(getColors(paletteColors));
@@ -306,7 +306,10 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
             return true;
         });
 
-        paletteBinding.ivAddWebCreate.setOnClickListener(v -> urlDialog.createDetailUrlDialog(detailBinding.tvUrl));
+        paletteBinding.ivAddWebCreate.setOnClickListener(v -> {
+            urlDialog.createDetailUrlDialog(detailBinding.tvUrl);
+            setPreviewLink();
+        });
         paletteBinding.ivAddWebCreate.setOnLongClickListener(v -> {
             getToolTipsDetail(this, paletteBinding.ivAddWebCreate, detailBinding.rlDetail,
                     R.string.tooltips_add_url, toolTipsManager);
@@ -711,7 +714,10 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
                         getToast(this, R.string.note_updated);
                     }, 600);
                 } else {
-                    App.getInstance().getNoteDao().deleteNote(note);
+                    new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                        App.getInstance().getNoteDao().deleteNote(note);
+                        getToast(this, R.string.empty_note_deleted);
+                    }, 600);
                 }
             }
         } else {

@@ -5,6 +5,7 @@
     android:id="@+id/cl_preview_link"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="@dimen/_2sdp"
     android:background="@drawable/background_preview_link">
 
     <ImageView
@@ -78,7 +79,7 @@
             android:textStyle="bold"
             android:visibility="gone"
             app:layout_goneMarginStart="@dimen/_3sdp"
-            app:layout_goneMarginTop="@dimen/_20sdp"
+            app:layout_goneMarginTop="@dimen/_10sdp"
             tools:text="www.google.com"
             tools:visibility="visible" />
     </LinearLayout>

@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
+    android:layout_height="@dimen/_25sdp"
     android:contentInsetStart="0dp"
     android:contentInsetLeft="0dp"
     app:contentInsetLeft="0dp"
@@ -19,12 +19,13 @@
             android:id="@+id/tv_toolbar_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_12sdp"
             android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_4sdp"
             android:fontFamily="@font/app_title_font"
             android:text="@string/my_notes"
             android:textColor="?attr/color"
-            android:textSize="@dimen/_22ssp" />
+            android:textSize="@dimen/_25ssp"
+            android:transitionName="logo" />
 
     </RelativeLayout>
 

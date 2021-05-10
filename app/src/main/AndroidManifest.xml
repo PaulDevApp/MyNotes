@@ -18,9 +18,9 @@
         <intent>
             <action android:name="android.media.action.IMAGE_CAPTURE" />
         </intent>
-
         <intent>
             <action android:name="android.intent.action.PICK" />
+
             <data android:mimeType="image/jpeg" />
         </intent>
     </queries>
@@ -37,6 +37,13 @@
         android:theme="@style/Theme.MyNotes"
         tools:ignore="AllowBackup"
         tools:targetApi="q">
+        <activity android:name=".activities.SplashScreenActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activities.PictureActivity"
             android:parentActivityName=".activities.DetailNoteActivity" />
@@ -66,11 +73,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
             tools:ignore="LockedOrientationActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <provider

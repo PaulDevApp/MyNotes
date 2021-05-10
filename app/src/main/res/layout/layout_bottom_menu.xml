@@ -37,8 +37,8 @@
 
         <TextView
             android:id="@+id/tv_all_colors"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
             android:background="@drawable/background_all_colors"
             android:gravity="center"
             android:padding="@dimen/_5sdp"
@@ -55,63 +55,64 @@
     </LinearLayout>
 
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switch_done"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_30sdp"
         android:background="?android:attr/selectableItemBackground"
         android:foreground="?android:attr/selectableItemBackground"
         android:paddingStart="@dimen/_6sdp"
         android:paddingEnd="@dimen/_6sdp"
         android:text="@string/hide_done"
         android:textColor="?attr/color"
-        android:textSize="@dimen/_15ssp"
-        android:textStyle="normal" />
+        android:textSize="@dimen/_13ssp"
+        android:textStyle="normal"
+        android:theme="@style/MySwitchStyle" />
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switch_only_image"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_30sdp"
         android:background="?android:attr/selectableItemBackground"
         android:foreground="?android:attr/selectableItemBackground"
         android:paddingStart="@dimen/_6sdp"
         android:paddingEnd="@dimen/_6sdp"
         android:text="@string/show_notes_with_images"
         android:textColor="?attr/color"
-        android:textSize="@dimen/_15ssp"
-        android:textStyle="normal" />
+        android:textSize="@dimen/_13ssp"
+        android:textStyle="normal"
+        android:theme="@style/MySwitchStyle" />
 
     <TextView
         android:id="@+id/tv_change_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_30sdp"
         android:background="?android:attr/selectableItemBackground"
         android:foreground="?android:attr/selectableItemBackground"
+        android:gravity="center_vertical"
         android:paddingStart="@dimen/_6sdp"
         android:paddingEnd="@dimen/_6sdp"
-        android:paddingBottom="@dimen/_6sdp"
         android:text="@string/change_the_view_of_notes"
         android:textColor="?attr/color"
-        android:textSize="@dimen/_15ssp"
+        android:textSize="@dimen/_13ssp"
         android:textStyle="normal"
         app:drawableEndCompat="@drawable/ic_view_module" />
 
     <TextView
         android:id="@+id/tv_settings"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_30sdp"
         android:background="?android:attr/selectableItemBackground"
+        android:drawablePadding="@dimen/_4sdp"
         android:foreground="?android:attr/selectableItemBackground"
         android:gravity="center_vertical"
         android:paddingStart="@dimen/_6sdp"
-        android:paddingTop="@dimen/_6sdp"
         android:paddingEnd="@dimen/_6sdp"
         android:text="@string/settings"
         android:textColor="?attr/color"
-        android:textSize="@dimen/_15ssp"
+        android:textSize="@dimen/_13ssp"
         android:textStyle="normal"
-        android:drawablePadding="@dimen/_4sdp"
-        tools:ignore="UnusedAttribute"
-        app:drawableStartCompat="@drawable/ic_settings" />
+        app:drawableStartCompat="@drawable/ic_settings"
+        tools:ignore="UnusedAttribute" />
 
 </LinearLayout>

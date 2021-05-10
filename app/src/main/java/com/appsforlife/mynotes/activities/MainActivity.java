@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import com.appsforlife.mynotes.App;
 import com.appsforlife.mynotes.R;
+import com.appsforlife.mynotes.Support;
 import com.appsforlife.mynotes.adapters.ColorMainPaletteAdapter;
 import com.appsforlife.mynotes.adapters.NotesAdapter;
 import com.appsforlife.mynotes.constants.Constants;
@@ -61,20 +62,6 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 import static com.appsforlife.mynotes.Support.*;
 import static com.appsforlife.mynotes.constants.Constants.*;
-
-/*
- * 1. Исправить логику копирования заметки при пустой заметки выкидывает на главное активити
- *  при этом не копируя но файлы удаляет. Кнопку копирования сделать в методе getPreviousNote() +
- * 2. Предупреждать при удалении фото. +
- * 3. Сделать одинаковый шрифт при все диалогах  +
- * 4. Копировать текст заметки +
- * 5. Голосовой ввод +
- * 6. "О приложении" в настройках +
- * 7. добавить tooltips +
- * 8. добавить переводы + Хинди и Испанский
- * 9. Проверка на сделано
- * 10. Не копировать пустой текст
- * */
 
 public class MainActivity extends AppCompatActivity implements NoteListener, NoteSelectListener,
         NoteLongListener, ColorPaletteListener, DialogDeleteNoteListener {
@@ -108,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setDarkTheme();
+        Support.setTheme();
 
         notesFromDB = new ArrayList<>();
 
@@ -212,11 +199,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
                     }
                 }
             }
-            isSelect = false;
-            discharge(this, multiplyBinding.svSearch, multiplyBinding.clMultiSelectLayout,
-                    multiplyBinding.ivSelectedAll, multiplyBinding.ivMainFavoriteOn, multiplyBinding.ivMainFavoriteOff,
-                    multiplyBinding.tvToolbarCount, multiplyBinding.ivToolbarDelete, multiplyBinding.ivToolbarClose,
-                    multiplyBinding.tvToolbarCount, multiplyBinding.ivPaletteDialog, notesFromDB);
+            throwOff(0);
         });
 
         multiplyBinding.ivMainFavoriteOff.setOnClickListener(v -> {
@@ -302,7 +285,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
 
         initBottomMenu();
 
-        colorMainPaletteAdapter = new ColorMainPaletteAdapter(paletteColors, this);
+        colorMainPaletteAdapter = new ColorMainPaletteAdapter(paletteColors, this, this);
         menuBinding.rvColorPalette.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         menuBinding.rvColorPalette.setAdapter(colorMainPaletteAdapter);
         colorMainPaletteAdapter.setPaletteColors(getColors(paletteColors));
@@ -316,7 +299,8 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
                 note.setSelected(false);
                 if (note.getTitle().toLowerCase().contains(keyword.toLowerCase())
                         || (note.getWebLink() != null && note.getWebLink().toLowerCase().contains(keyword.toLowerCase()))
-                        || note.getText().toLowerCase().contains(keyword.toLowerCase())) {
+                        || note.getText().toLowerCase().contains(keyword.toLowerCase())
+                        || note.getDateTime().toLowerCase().contains(keyword.toLowerCase())) {
                     temp.add(note);
                 }
             }

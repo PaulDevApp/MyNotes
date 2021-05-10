@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.appsforlife.mynotes.App;
 import com.appsforlife.mynotes.R;
+import com.appsforlife.mynotes.Support;
 import com.appsforlife.mynotes.databinding.ActivitySettingsBinding;
 import com.appsforlife.mynotes.dialogs.DeleteDialog;
 import com.appsforlife.mynotes.dialogs.NoteTextSizeDialog;
@@ -38,7 +39,7 @@ public class SettingsActivity extends AppCompatActivity implements DialogDeleteN
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setDarkTheme();
+        Support.setTheme();
 
         com.appsforlife.mynotes.databinding.ActivitySettingsBinding settingsBinding = ActivitySettingsBinding.inflate(getLayoutInflater());
         setContentView(settingsBinding.getRoot());

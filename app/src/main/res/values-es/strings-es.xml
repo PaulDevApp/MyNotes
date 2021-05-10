@@ -82,4 +82,7 @@
     <string name="resources_used">Recursos utilizados:</string>
     <string name="share_app">Comparte la aplicación</string>
     <string name="no_text_to_copy">¡No hay texto para copiar!</string>
+    <string name="change_the_view_of_notes">Cambiar la vista de notas</string>
+    <string name="show_notes_with_images">Mostrar notas con imágenes</string>
+    <string name="empty_note_deleted">Nota vacía eliminada</string>
 </resources>

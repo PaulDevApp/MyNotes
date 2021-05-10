@@ -67,7 +67,7 @@ public final class Support {
         }
     }
 
-    public static void setDarkTheme() {
+    public static void setTheme() {
         if (App.getInstance().getThemeMode().equals(AUTO_MODE)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         } else if (App.getInstance().getThemeMode().equals(LIGHT_MODE)) {
@@ -76,14 +76,6 @@ public final class Support {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
     }
-
-//    public static void changeItemIcon(Menu menu) {
-//        if (App.getInstance().isChangeView()) {
-//            menu.getItem(2).setIcon(R.drawable.ic_view_headline);
-//        } else {
-//            menu.getItem(2).setIcon(R.drawable.ic_view_module);
-//        }
-//    }
 
     public static void setVisibleMenuItems(Menu menu, boolean open) {
         if (!open) {

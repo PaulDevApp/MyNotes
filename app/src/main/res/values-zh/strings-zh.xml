@@ -5,7 +5,7 @@
     <string name="title">标题</string>
     <string name="write_something">在这里写点东西…</string>
     <string name="enter_title">输入标题</string>
-    <string name="enter_text">导入字符</string>
+    <string name="enter_text">输入文字</string>
     <string name="permission_denied">没有权限</string>
     <string name="add_link">新增连结</string>
     <string name="add_image">添加图片</string>
@@ -17,8 +17,8 @@
     <string name="toast_enter_valid_url">输入的网址不正确</string>
     <string name="delete">删除</string>
     <string name="delete_note">删除记事？</string>
-    <string name="created_date">已建立:</string>
-    <string name="updated_date">更新:</string>
+    <string name="created_date">创建时间：</string>
+    <string name="updated_date">更新：</string>
     <string name="link_copied">链接已复制</string>
     <string name="all">全部</string>
     <string name="note_updated">笔记已更新</string>
@@ -30,7 +30,7 @@
     <string name="set_theme">设定主题</string>
     <string name="delete_all_notes">删除所有笔记</string>
     <string name="delete_all_notes_accept">删除所有笔记？</string>
-    <string name="message">笔记将被永久删除！</string>
+    <string name="message">笔记将被删除，且不可撤消！</string>
     <string name="successfully">成功地！</string>
     <string name="the_list_is_empty">清单是空的！</string>
     <string name="light">日</string>
@@ -38,7 +38,7 @@
     <string name="auto">汽车</string>
     <string name="disable_animation">禁用动画</string>
     <string name="delete_selected_notes">删除选定的笔记？</string>
-    <string name="message_2">所选笔记将被永久删除！</string>
+    <string name="message_2">所选笔记将被删除，并且将无法撤消！</string>
     <string name="note_copied">笔记已复制</string>
     <string name="hide_images">隐藏图片</string>
     <string name="hide_preview_link">隐藏预览链接</string>
@@ -48,8 +48,8 @@
     <string name="replace_image">替换图片？</string>
     <string name="replace">代替</string>
     <string name="rate_app">评价应用</string>
-    <string name="privacy_policy">隱私政策</string>
-    <string name="ui">界面</string>
+    <string name="privacy_policy">隐私政策</string>
+    <string name="ui">洋葱</string>
     <string name="other">其他</string>
     <string name="delete_image">删除图片？</string>
     <string name="tooltips_favorite">固定便条</string>
@@ -73,13 +73,16 @@
     <string name="select_text_size">选择文字大小</string>
     <string name="preview_count">预览中的行数</string>
     <string name="select_count_lines">选择行数</string>
-    <string name="_1">1行…</string>
-    <string name="_3">3行…</string>
-    <string name="_5">5行…</string>
-    <string name="_7">7行…</string>
-    <string name="_10">10行…</string>
+    <string name="_1">1行</string>
+    <string name="_3">3行</string>
+    <string name="_5">5行</string>
+    <string name="_7">7行</string>
+    <string name="_10">10行</string>
     <string name="open_source_libraries">开源库</string>
     <string name="resources_used">使用的资源：</string>
     <string name="share_app">分享应用</string>
     <string name="no_text_to_copy">没有可复制的文字！</string>
+    <string name="change_the_view_of_notes">更改笔记的视图</string>
+    <string name="show_notes_with_images">显示带有图像的注释</string>
+    <string name="empty_note_deleted">空笔记已删除</string>
 </resources>

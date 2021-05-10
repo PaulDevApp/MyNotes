@@ -1,5 +1,6 @@
 package com.appsforlife.mynotes.adapters;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.appsforlife.mynotes.App;
 import com.appsforlife.mynotes.R;
+import com.appsforlife.mynotes.Support;
 import com.appsforlife.mynotes.entities.PaletteColor;
 import com.appsforlife.mynotes.listeners.ColorPaletteListener;
 
@@ -22,11 +24,15 @@ public class ColorMainPaletteAdapter extends RecyclerView.Adapter<ColorMainPalet
 
     private List<PaletteColor> paletteColors;
     private final ColorPaletteListener colorPaletteListener;
+    private final Context context;
+    private int lastPosition = -1;
 
 
-    public ColorMainPaletteAdapter(List<PaletteColor> paletteColors, ColorPaletteListener colorPaletteListener) {
+    public ColorMainPaletteAdapter(List<PaletteColor> paletteColors, ColorPaletteListener colorPaletteListener,
+                                   Context context) {
         this.paletteColors = paletteColors;
         this.colorPaletteListener = colorPaletteListener;
+        this.context = context;
     }
 
     @NonNull
@@ -39,6 +45,10 @@ public class ColorMainPaletteAdapter extends RecyclerView.Adapter<ColorMainPalet
     @Override
     public void onBindViewHolder(@NonNull ColorMainPaletteViewHolder holder, int position) {
         holder.setViewBackground(paletteColors.get(position));
+        if (position > lastPosition) {
+            Support.startViewAnimation(holder.viewBackground, context, R.anim.zoom_in);
+            lastPosition = position;
+        }
     }
 
     @Override
@@ -69,9 +79,9 @@ public class ColorMainPaletteAdapter extends RecyclerView.Adapter<ColorMainPalet
             GradientDrawable gradientDrawable = (GradientDrawable) viewBackground.getBackground();
             gradientDrawable.setColor(Color.parseColor(paletteColor.getColor()));
 
-            if (App.getInstance().getSelectedColor().equals(paletteColor.getColor())){
+            if (App.getInstance().getSelectedColor().equals(paletteColor.getColor())) {
                 imageViewColor.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 imageViewColor.setVisibility(View.GONE);
             }
         }

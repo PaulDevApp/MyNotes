@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_30sdp">
+    android:layout_height="@dimen/_35sdp">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/sv_search"
@@ -30,13 +30,13 @@
 
         <ImageView
             android:id="@+id/iv_toolbar_close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="match_parent"
             android:layout_marginStart="@dimen/_8sdp"
-            android:layout_marginTop="@dimen/_6sdp"
             android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/app_name"
             android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
             android:src="@drawable/ic_close"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -45,11 +45,11 @@
 
         <TextView
             android:id="@+id/tv_toolbar_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_4sdp"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
             android:textColor="?attr/color"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_15ssp"
             android:textStyle="normal"
             app:layout_constraintStart_toEndOf="@+id/iv_toolbar_close"
             app:layout_constraintTop_toTopOf="@id/iv_toolbar_close"
@@ -58,7 +58,7 @@
 
         <ImageView
             android:id="@+id/iv_toolbar_delete"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/_25sdp"
             android:layout_height="0dp"
             android:layout_marginEnd="@dimen/_8sdp"
             android:background="?android:attr/selectableItemBackground"
@@ -72,7 +72,7 @@
 
         <ImageView
             android:id="@+id/iv_selected_all"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/_25sdp"
             android:layout_height="0dp"
             android:layout_marginEnd="@dimen/_34sdp"
             android:background="?android:attr/selectableItemBackground"

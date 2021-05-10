@@ -11,10 +11,10 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.appsforlife.mynotes.R;
+import com.appsforlife.mynotes.Support;
 import com.appsforlife.mynotes.databinding.ActivityPictureBinding;
 import com.bumptech.glide.Glide;
 
-import static com.appsforlife.mynotes.Support.setDarkTheme;
 import static com.appsforlife.mynotes.constants.Constants.PICTURE_PATH;
 
 public class PictureActivity extends AppCompatActivity {
@@ -27,7 +27,7 @@ public class PictureActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setDarkTheme();
+        Support.setTheme();
 
         binding = ActivityPictureBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
