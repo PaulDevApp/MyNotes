@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_35sdp">
+    android:layout_height="@dimen/_32sdp">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/sv_search"
@@ -45,11 +45,11 @@
 
         <TextView
             android:id="@+id/tv_toolbar_count"
-            android:layout_width="@dimen/_25sdp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:textColor="?attr/color"
-            android:textSize="@dimen/_15ssp"
+            android:textSize="@dimen/_17ssp"
             android:textStyle="normal"
             app:layout_constraintStart_toEndOf="@+id/iv_toolbar_close"
             app:layout_constraintTop_toTopOf="@id/iv_toolbar_close"
