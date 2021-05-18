@@ -1,7 +1,6 @@
 package com.appsforlife.mynotes.adapters;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
@@ -38,14 +37,12 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
     private final NoteListener noteListener;
     private final NoteLongListener noteLongListener;
     private final NoteSelectListener noteSelectListener;
-    private final Context context;
 
     public NotesAdapter(NoteListener noteListener, NoteLongListener noteLongListener,
-                        NoteSelectListener noteSelectListener, Context context) {
+                        NoteSelectListener noteSelectListener) {
         this.noteListener = noteListener;
         this.noteLongListener = noteLongListener;
         this.noteSelectListener = noteSelectListener;
-        this.context = context;
         sortedList = new SortedList<>(Note.class, new SortedList.Callback<Note>() {
             @Override
             public int compare(Note o1, Note o2) {
@@ -109,7 +106,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
 
     @Override
     public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
-        holder.setNote(sortedList.get(position));
+        holder.setNote(sortedList.get(position), holder);
     }
 
     @Override
@@ -184,7 +181,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
         }
 
         @SuppressLint("ResourceAsColor")
-        void setNote(Note note) {
+        void setNote(Note note, NoteViewHolder holder) {
             this.note = note;
 
             text.setMaxLines(App.getInstance().getCountLines());
@@ -227,7 +224,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
             webLink.setText(note.getWebLink());
 
             if (note.getImagePath() != null && !note.getImagePath().trim().isEmpty() && !App.getInstance().isVisible()) {
-                Glide.with(context).load(note.getImagePath()).into(itemImageView);
+                Glide.with(holder.itemImageView.getContext()).load(note.getImagePath()).into(itemImageView);
                 itemImageView.setVisibility(View.VISIBLE);
             } else {
                 itemImageView.setVisibility(View.GONE);
@@ -247,7 +244,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
                 webLink.setVisibility(View.VISIBLE);
                 checkLink.setVisibility(View.VISIBLE);
                 if (webLink.getText().toString().startsWith("https://") && !App.getInstance().isPreview()) {
-                    setPreviewLink(context, webLink, ivPreviewImageLink, tvPreviewLinkTitle, tvDescriptionPreview,
+                    setPreviewLink(holder.itemView.getContext(), webLink, ivPreviewImageLink, tvPreviewLinkTitle, tvDescriptionPreview,
                             tvPreviewUrl, linkPreviewItem, false);
                 } else {
                     linkPreviewItem.setVisibility(View.GONE);

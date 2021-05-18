@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
             menuBinding.tvAllColors.setText("");
         }
 
-        notesAdapter = new NotesAdapter(this, this, this, this);
+        notesAdapter = new NotesAdapter(this, this, this);
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.VERTICAL);
 
         if (App.getInstance().isChangeView()) {
