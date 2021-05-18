@@ -6,8 +6,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -31,7 +29,7 @@ import static com.appsforlife.mynotes.LinkPreviewUtil.setPreviewLink;
 import static com.appsforlife.mynotes.Support.*;
 import static com.appsforlife.mynotes.constants.Constants.*;
 
-public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHolder> implements Filterable {
+public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHolder>{
 
     private final SortedList<Note> sortedList;
     private final NoteListener noteListener;
@@ -116,11 +114,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
 
     public void setItems(List<Note> notes) {
         sortedList.replaceAll(notes);
-    }
-
-    @Override
-    public Filter getFilter() {
-        return null;
     }
 
     class NoteViewHolder extends RecyclerView.ViewHolder {
