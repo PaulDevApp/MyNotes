@@ -615,7 +615,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private void initBottomMenu() {
-        final BottomSheetBehavior<LinearLayout> bottomSheetBehavior = BottomSheetBehavior.from(menuBinding.llBottomMenu);
+        bottomSheetBehavior = BottomSheetBehavior.from(menuBinding.llBottomMenu);
         mainBinding.bottomAppbar.setNavigationOnClickListener(v -> {
             if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);

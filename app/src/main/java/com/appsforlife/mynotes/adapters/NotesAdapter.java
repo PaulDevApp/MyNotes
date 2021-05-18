@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SortedList;
 
 import com.appsforlife.mynotes.App;
-import com.appsforlife.mynotes.LinkPreviewUtil;
 import com.appsforlife.mynotes.R;
 import com.appsforlife.mynotes.entities.Note;
 import com.appsforlife.mynotes.listeners.NoteListener;
@@ -27,14 +26,9 @@ import com.appsforlife.mynotes.listeners.NoteLongListener;
 import com.appsforlife.mynotes.listeners.NoteSelectListener;
 import com.bumptech.glide.Glide;
 
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
 import java.util.List;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-
+import static com.appsforlife.mynotes.LinkPreviewUtil.setPreviewLink;
 import static com.appsforlife.mynotes.Support.*;
 import static com.appsforlife.mynotes.constants.Constants.*;
 
@@ -253,7 +247,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
                 webLink.setVisibility(View.VISIBLE);
                 checkLink.setVisibility(View.VISIBLE);
                 if (webLink.getText().toString().startsWith("https://") && !App.getInstance().isPreview()) {
-                    setPreviewLink();
+                    setPreviewLink(context, webLink, ivPreviewImageLink, tvPreviewLinkTitle, tvDescriptionPreview,
+                            tvPreviewUrl, linkPreviewItem, false);
                 } else {
                     linkPreviewItem.setVisibility(View.GONE);
                 }
@@ -265,40 +260,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
             } else {
                 gradientDrawable.setColor(Color.parseColor(COLOR_DEFAULT));
             }
-        }
-
-        private void setPreviewLink() {
-            LinkPreviewUtil.getJSOUPContent(webLink.getText().toString())
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(result -> {
-                                if (result != null) {
-                                    Elements metaTags = result.getElementsByTag("meta");
-                                    for (Element element : metaTags) {
-                                        if (element.attr("property").equals("og:image")) {
-                                            Glide.with(context).load(element.attr("content"))
-                                                    .into(ivPreviewImageLink);
-                                        } else if (element.attr("name").equals("title")) {
-                                            tvPreviewLinkTitle.setText(element.attr("content"));
-                                            tvPreviewLinkTitle.setVisibility(View.VISIBLE);
-                                        } else if (element.attr("name").equals("description")) {
-                                            tvDescriptionPreview.setText(element.attr("content"));
-                                            tvDescriptionPreview.setVisibility(View.VISIBLE);
-                                            if (tvPreviewLinkTitle.getVisibility() == View.GONE) {
-                                                tvDescriptionPreview.setMaxLines(3);
-                                            }
-                                        } else if (element.attr("property").equals("og:url")) {
-                                            tvPreviewUrl.setText(element.attr("content"));
-                                            tvPreviewUrl.setVisibility(View.VISIBLE);
-                                        }
-                                        startViewAnimation(linkPreviewItem, context, R.anim.appearance);
-                                        linkPreviewItem.setVisibility(View.VISIBLE);
-                                    }
-                                } else {
-                                    linkPreviewItem.setVisibility(View.GONE);
-                                }
-                            },
-                            throwable -> linkPreviewItem.setVisibility(View.GONE));
         }
     }
 }

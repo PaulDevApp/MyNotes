@@ -33,7 +33,6 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.appsforlife.mynotes.App;
-import com.appsforlife.mynotes.LinkPreviewUtil;
 import com.appsforlife.mynotes.R;
 import com.appsforlife.mynotes.Support;
 import com.appsforlife.mynotes.adapters.ColorDetailPaletteAdapter;
@@ -58,20 +57,15 @@ import com.tomergoldst.tooltips.ToolTipsManager;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import static com.appsforlife.mynotes.LinkPreviewUtil.setPreviewLink;
 import static com.appsforlife.mynotes.Support.*;
 import static com.appsforlife.mynotes.App.*;
 import static com.appsforlife.mynotes.constants.Constants.*;
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @SuppressLint("ResourceAsColor")
 public class DetailNoteActivity extends AppCompatActivity implements ColorPaletteListener,
@@ -85,9 +79,8 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
 
     private BottomSheetBehavior<LinearLayout> bottomSheetBehavior;
 
-    private String oldTitle, oldText, oldWebLink, oldColor;
+    private String oldTitle, oldText, oldWebLink, oldColor, oldImagePath;
     private String imagePath;
-    private String oldImagePath;
 
     private final ArrayList<PaletteColor> paletteColors = new ArrayList<>();
     private ColorDetailPaletteAdapter colorDetailPaletteAdapter;
@@ -308,7 +301,9 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
 
         paletteBinding.ivAddWebCreate.setOnClickListener(v -> {
             urlDialog.createDetailUrlDialog(detailBinding.tvUrl);
-            setPreviewLink();
+            setPreviewLink(this, detailBinding.tvUrl, previewBinding.ivPreviewImageLink,
+                    previewBinding.tvPreviewTitleLink, previewBinding.tvPreviewDescriptionLink,detailBinding.tvUrl,
+                    detailBinding.linkPreviewDetail, true);
         });
         paletteBinding.ivAddWebCreate.setOnLongClickListener(v -> {
             getToolTipsDetail(this, paletteBinding.ivAddWebCreate, detailBinding.rlDetail,
@@ -519,7 +514,9 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
             oldWebLink = note.getWebLink();
 
             if (detailBinding.tvUrl.getText().toString().startsWith("https://")) {
-                setPreviewLink();
+                setPreviewLink(this, detailBinding.tvUrl, previewBinding.ivPreviewImageLink,
+                        previewBinding.tvPreviewTitleLink, previewBinding.tvPreviewDescriptionLink,detailBinding.tvUrl,
+                        detailBinding.linkPreviewDetail, true);
             } else {
                 detailBinding.linkPreviewDetail.setVisibility(View.GONE);
             }
@@ -539,46 +536,6 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
         prevDone = note.isDone();
         prevFavorite = note.isFavorite();
 
-    }
-
-    private void setPreviewLink() {
-        LinkPreviewUtil.getJSOUPContent(detailBinding.tvUrl.getText().toString())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> {
-                            if (result != null) {
-                                Elements metaTags = result.getElementsByTag("meta");
-                                for (Element element : metaTags) {
-                                    if (element.attr("property").equals("og:image")) {
-                                        Glide.with(this).load(element.attr("content"))
-                                                .into(previewBinding.ivPreviewImageLink);
-                                    } else if (element.attr("name").equals("title")) {
-                                        previewBinding.tvPreviewTitleLink.setText(element.attr("content"));
-                                        previewBinding.tvPreviewTitleLink.setVisibility(View.VISIBLE);
-                                    } else if (element.attr("name").equals("description")) {
-                                        previewBinding.tvPreviewDescriptionLink.setText(element.attr("content"));
-                                        previewBinding.tvPreviewDescriptionLink.setVisibility(View.VISIBLE);
-                                        if (previewBinding.tvPreviewTitleLink.getVisibility() == View.GONE) {
-                                            previewBinding.tvPreviewDescriptionLink.setMaxLines(3);
-                                        }
-                                    } else if (element.attr("property").equals("og:url")) {
-                                        previewBinding.tvPreviewUrl.setText(element.attr("content"));
-                                        previewBinding.tvPreviewUrl.setVisibility(View.VISIBLE);
-                                    }
-                                    startViewAnimation(detailBinding.linkPreviewDetail, this, R.anim.appearance);
-                                    detailBinding.linkPreviewDetail.setVisibility(View.VISIBLE);
-
-                                    detailBinding.linkPreviewDetail.setOnClickListener(v -> {
-                                        Intent intent = new Intent(Intent.ACTION_VIEW);
-                                        intent.setData(Uri.parse(detailBinding.tvUrl.getText().toString()));
-                                        startActivity(intent);
-                                    });
-                                }
-                            } else {
-                                detailBinding.linkPreviewDetail.setVisibility(View.GONE);
-                            }
-                        },
-                        throwable -> detailBinding.linkPreviewDetail.setVisibility(View.GONE));
     }
 
     private void initialNote() {
