@@ -88,14 +88,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/iv_item_image"
-            android:visibility="gone"
-            android:transitionName="preview"
-            android:layout_marginEnd="@dimen/_4sdp"
-            android:layout_marginTop="@dimen/_2sdp"
             android:layout_marginStart="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginEnd="@dimen/_4sdp"
+            android:transitionName="preview"
+            android:visibility="gone"
             tools:visibility="visible">
 
-            <include layout="@layout/layout_link_preview" />
+            <include
+                android:id="@+id/previewLink"
+                layout="@layout/layout_link_preview" />
         </FrameLayout>
 
         <TextView

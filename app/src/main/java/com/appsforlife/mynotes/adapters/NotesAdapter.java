@@ -6,17 +6,14 @@ import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SortedList;
 
 import com.appsforlife.mynotes.App;
-import com.appsforlife.mynotes.R;
+import com.appsforlife.mynotes.databinding.ItemNoteBinding;
+import com.appsforlife.mynotes.databinding.LayoutLinkPreviewBinding;
 import com.appsforlife.mynotes.entities.Note;
 import com.appsforlife.mynotes.listeners.NoteListener;
 import com.appsforlife.mynotes.listeners.NoteLongListener;
@@ -29,7 +26,7 @@ import static com.appsforlife.mynotes.LinkPreviewUtil.setPreviewLink;
 import static com.appsforlife.mynotes.Support.*;
 import static com.appsforlife.mynotes.constants.Constants.*;
 
-public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHolder>{
+public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHolder> {
 
     private final SortedList<Note> sortedList;
     private final NoteListener noteListener;
@@ -94,8 +91,9 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
     @NonNull
     @Override
     public NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new NoteViewHolder(LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.item_note, parent, false));
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        ItemNoteBinding itemNoteBinding = ItemNoteBinding.inflate(layoutInflater, parent, false);
+        return new NoteViewHolder(itemNoteBinding);
     }
 
     public Note getNoteAt(int position) {
@@ -118,56 +116,26 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
 
     class NoteViewHolder extends RecyclerView.ViewHolder {
 
-        final FrameLayout linkPreviewItem;
-        final RelativeLayout relativeLayoutNote;
-        final TextView title;
-        final TextView text;
-        final TextView dateTime;
-        final TextView webLink;
-        final TextView tvPreviewUrl;
-        final TextView tvPreviewLinkTitle;
-        final TextView tvDescriptionPreview;
-        final ImageView checkImage;
-        final ImageView checkLink;
-        final ImageView imageViewFavorite;
-        final ImageView itemImageView;
-        final ImageView ivPreviewImageLink;
         Note note;
-        final FrameLayout itemBackground;
-        final View selectedView;
-        final View doneView;
+        ItemNoteBinding itemNoteBinding;
+        LayoutLinkPreviewBinding layoutLinkPreviewBinding;
 
-        NoteViewHolder(@NonNull View itemView) {
-            super(itemView);
-            text = itemView.findViewById(R.id.tv_item_text);
-            title = itemView.findViewById(R.id.tv_item_text_title);
-            dateTime = itemView.findViewById(R.id.tv_item_date_time);
-            relativeLayoutNote = itemView.findViewById(R.id.rl_note);
-            webLink = itemView.findViewById(R.id.tv_web_item);
-            checkImage = itemView.findViewById(R.id.iv_check_image);
-            checkLink = itemView.findViewById(R.id.iv_check_link);
-            itemBackground = itemView.findViewById(R.id.item_background);
-            selectedView = itemView.findViewById(R.id.v_color_selected);
-            imageViewFavorite = itemView.findViewById(R.id.iv_item_favorite);
-            itemImageView = itemView.findViewById(R.id.iv_item_image);
-            doneView = itemView.findViewById(R.id.v_color_done);
-            linkPreviewItem = itemView.findViewById(R.id.linkPreviewItem);
-            tvPreviewLinkTitle = itemView.findViewById(R.id.tv_preview_title_link);
-            tvDescriptionPreview = itemView.findViewById(R.id.tv_preview_description_link);
-            ivPreviewImageLink = itemView.findViewById(R.id.iv_preview_image_link);
-            tvPreviewUrl = itemView.findViewById(R.id.tv_preview_url);
-
+        NoteViewHolder(ItemNoteBinding itemNoteBinding) {
+            super(itemNoteBinding.getRoot());
+            this.itemNoteBinding = itemNoteBinding;
+            layoutLinkPreviewBinding = itemNoteBinding.previewLink;
 
             itemView.setOnClickListener(v -> {
                 if (isSelect) {
-                    noteSelectListener.onNoteSelectListener(sortedList.get(getAbsoluteAdapterPosition()), selectedView);
+                    noteSelectListener.onNoteSelectListener(sortedList.get(getAbsoluteAdapterPosition()),
+                            itemNoteBinding.vColorSelected);
                 } else {
-                    noteListener.onNoteClicked(sortedList.get(getAbsoluteAdapterPosition()), relativeLayoutNote);
+                    noteListener.onNoteClicked(sortedList.get(getAbsoluteAdapterPosition()), itemNoteBinding.rlNote);
                 }
             });
 
             itemView.setOnLongClickListener(v -> {
-                noteLongListener.onNoteLongListener(sortedList.get(getAbsoluteAdapterPosition()), selectedView);
+                noteLongListener.onNoteLongListener(sortedList.get(getAbsoluteAdapterPosition()), itemNoteBinding.vColorSelected);
                 return true;
             });
 
@@ -177,74 +145,75 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
         void setNote(Note note, NoteViewHolder holder) {
             this.note = note;
 
-            text.setMaxLines(App.getInstance().getCountLines());
+            itemNoteBinding.tvItemText.setMaxLines(App.getInstance().getCountLines());
 
             if (note.isSelected()) {
-                selectedView.setVisibility(View.VISIBLE);
+                itemNoteBinding.vColorSelected.setVisibility(View.VISIBLE);
             } else {
-                selectedView.setVisibility(View.GONE);
+                itemNoteBinding.vColorSelected.setVisibility(View.GONE);
             }
 
             if (note.isDone()) {
-                doneView.setVisibility(View.VISIBLE);
+                itemNoteBinding.vColorDone.setVisibility(View.VISIBLE);
             } else {
-                doneView.setVisibility(View.GONE);
+                itemNoteBinding.vColorDone.setVisibility(View.GONE);
             }
 
             if (note.isFavorite()) {
-                imageViewFavorite.setVisibility(View.VISIBLE);
+                itemNoteBinding.ivItemFavorite.setVisibility(View.VISIBLE);
             } else {
-                imageViewFavorite.setVisibility(View.GONE);
+                itemNoteBinding.ivItemFavorite.setVisibility(View.GONE);
             }
 
             if (!note.getTitle().trim().isEmpty()) {
-                title.setVisibility(View.VISIBLE);
-                title.setText(note.getTitle());
+                itemNoteBinding.tvItemTextTitle.setVisibility(View.VISIBLE);
+                itemNoteBinding.tvItemTextTitle.setText(note.getTitle());
             } else {
-                title.setVisibility(View.GONE);
+                itemNoteBinding.tvItemTextTitle.setVisibility(View.GONE);
             }
 
             if (!note.getText().trim().isEmpty()) {
-                text.setVisibility(View.VISIBLE);
-                text.setText(note.getText());
+                itemNoteBinding.tvItemText.setVisibility(View.VISIBLE);
+                itemNoteBinding.tvItemText.setText(note.getText());
             } else {
-                text.setVisibility(View.GONE);
+                itemNoteBinding.tvItemText.setVisibility(View.GONE);
             }
 
-            updateStrokeOut(note, title, text);
+            updateStrokeOut(note, itemNoteBinding.tvItemTextTitle, itemNoteBinding.tvItemText);
 
-            dateTime.setText(note.getDateTime());
-            webLink.setText(note.getWebLink());
+            itemNoteBinding.tvItemDateTime.setText(note.getDateTime());
+            itemNoteBinding.tvWebItem.setText(note.getWebLink());
 
             if (note.getImagePath() != null && !note.getImagePath().trim().isEmpty() && !App.getInstance().isVisible()) {
-                Glide.with(holder.itemImageView.getContext()).load(note.getImagePath()).into(itemImageView);
-                itemImageView.setVisibility(View.VISIBLE);
+                Glide.with(holder.itemNoteBinding.ivItemImage.getContext()).load(note.getImagePath()).into(itemNoteBinding.ivItemImage);
+                itemNoteBinding.ivItemImage.setVisibility(View.VISIBLE);
             } else {
-                itemImageView.setVisibility(View.GONE);
+                itemNoteBinding.ivItemImage.setVisibility(View.GONE);
             }
 
             if (note.getImagePath() != null && !note.getImagePath().trim().isEmpty()) {
-                checkImage.setVisibility(View.VISIBLE);
+                itemNoteBinding.ivCheckImage.setVisibility(View.VISIBLE);
             } else {
-                checkImage.setVisibility(View.GONE);
+                itemNoteBinding.ivCheckImage.setVisibility(View.GONE);
             }
 
-            if (webLink.getText().toString().trim().isEmpty()) {
-                webLink.setVisibility(View.GONE);
-                checkLink.setVisibility(View.GONE);
-                linkPreviewItem.setVisibility(View.GONE);
+            if (itemNoteBinding.tvWebItem.getText().toString().trim().isEmpty()) {
+                itemNoteBinding.tvWebItem.setVisibility(View.GONE);
+                itemNoteBinding.ivCheckLink.setVisibility(View.GONE);
+                itemNoteBinding.linkPreviewItem.setVisibility(View.GONE);
             } else {
-                webLink.setVisibility(View.VISIBLE);
-                checkLink.setVisibility(View.VISIBLE);
-                if (webLink.getText().toString().startsWith("https://") && !App.getInstance().isPreview()) {
-                    setPreviewLink(holder.itemView.getContext(), webLink, ivPreviewImageLink, tvPreviewLinkTitle, tvDescriptionPreview,
-                            tvPreviewUrl, linkPreviewItem, false);
+                itemNoteBinding.tvWebItem.setVisibility(View.VISIBLE);
+                itemNoteBinding.ivCheckLink.setVisibility(View.VISIBLE);
+                if (itemNoteBinding.tvWebItem.getText().toString().startsWith("https://") && !App.getInstance().isPreview()) {
+                    setPreviewLink(holder.itemView.getContext(), itemNoteBinding.tvWebItem, layoutLinkPreviewBinding.ivPreviewImageLink,
+                            layoutLinkPreviewBinding.tvPreviewTitleLink, layoutLinkPreviewBinding.tvPreviewDescriptionLink,
+                            layoutLinkPreviewBinding.tvPreviewUrl, itemNoteBinding.linkPreviewItem, false);
                 } else {
-                    linkPreviewItem.setVisibility(View.GONE);
+                    itemNoteBinding.linkPreviewItem.setVisibility(View.GONE);
                 }
             }
 
-            GradientDrawable gradientDrawable = (GradientDrawable) itemBackground.getBackground();
+            GradientDrawable gradientDrawable = (GradientDrawable) itemNoteBinding.itemBackground.getBackground();
             if (note.getColor() != null) {
                 gradientDrawable.setColor(Color.parseColor(note.getColor()));
             } else {

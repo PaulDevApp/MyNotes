@@ -25,12 +25,12 @@ import static com.appsforlife.mynotes.Support.startViewAnimation;
 
 public class LinkPreviewUtil {
 
-    private static Observable<Document> getJSOUPContent(String url){
+    private static Observable<Document> getJSOUPContent(String url) {
         return Observable.fromCallable(() -> {
             try {
                 return Jsoup.connect(url).timeout(0).get();
-            }catch (IOException e){
-                throw  new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         });
     }
@@ -64,13 +64,18 @@ public class LinkPreviewUtil {
                                     startViewAnimation(linkPreviewDetail, context, R.anim.appearance);
                                     linkPreviewDetail.setVisibility(View.VISIBLE);
 
-                                    if (isClick){
+                                    if (isClick) {
                                         linkPreviewDetail.setOnClickListener(v -> {
                                             Intent intent = new Intent(Intent.ACTION_VIEW);
                                             intent.setData(Uri.parse(tvUrl.getText().toString()));
                                             context.startActivity(intent);
                                         });
                                     }
+                                }
+                                if (tvPreviewDescription.getVisibility() == View.GONE
+                                        && tvPreviewTitle.getVisibility() == View.GONE
+                                        && tvPreviewUrl.getVisibility() == View.GONE) {
+                                    linkPreviewDetail.setVisibility(View.GONE);
                                 }
                             } else {
                                 linkPreviewDetail.setVisibility(View.GONE);
