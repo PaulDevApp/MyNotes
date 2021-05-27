@@ -1,6 +1,5 @@
 package com.appsforlife.mynotes.adapters;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
@@ -24,15 +23,12 @@ public class ColorMainPaletteAdapter extends RecyclerView.Adapter<ColorMainPalet
 
     private List<PaletteColor> paletteColors;
     private final ColorPaletteListener colorPaletteListener;
-    private final Context context;
     private int lastPosition = -1;
 
 
-    public ColorMainPaletteAdapter(List<PaletteColor> paletteColors, ColorPaletteListener colorPaletteListener,
-                                   Context context) {
+    public ColorMainPaletteAdapter(List<PaletteColor> paletteColors, ColorPaletteListener colorPaletteListener) {
         this.paletteColors = paletteColors;
         this.colorPaletteListener = colorPaletteListener;
-        this.context = context;
     }
 
     @NonNull
@@ -46,7 +42,7 @@ public class ColorMainPaletteAdapter extends RecyclerView.Adapter<ColorMainPalet
     public void onBindViewHolder(@NonNull ColorMainPaletteViewHolder holder, int position) {
         holder.setViewBackground(paletteColors.get(position));
         if (position > lastPosition) {
-            Support.startViewAnimation(holder.viewBackground, context, R.anim.zoom_in);
+            Support.startViewAnimation(holder.viewBackground, holder.imageViewColor.getContext(), R.anim.zoom_in);
             lastPosition = position;
         }
     }

@@ -91,7 +91,6 @@
             android:layout_marginStart="@dimen/_4sdp"
             android:layout_marginTop="@dimen/_2sdp"
             android:layout_marginEnd="@dimen/_4sdp"
-            android:transitionName="preview"
             android:visibility="gone"
             tools:visibility="visible">
 

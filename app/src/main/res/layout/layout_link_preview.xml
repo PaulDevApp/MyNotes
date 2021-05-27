@@ -5,8 +5,8 @@
     android:id="@+id/cl_preview_link"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/_2sdp"
-    android:background="@drawable/background_preview_link">
+    android:background="@drawable/background_preview_link"
+    android:padding="@dimen/_2sdp">
 
     <ImageView
         android:id="@+id/iv_preview_image_link"
@@ -17,17 +17,22 @@
         android:maxWidth="@dimen/_50sdp"
         android:maxHeight="@dimen/_50sdp"
         android:scaleType="centerCrop"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars"
+        tools:visibility="visible" />
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv_preview_image_link"
         app:layout_constraintTop_toTopOf="parent">
+
 
         <TextView
             android:id="@+id/tv_preview_title_link"
@@ -78,8 +83,6 @@
             android:textSize="@dimen/_9ssp"
             android:textStyle="bold"
             android:visibility="gone"
-            app:layout_goneMarginStart="@dimen/_3sdp"
-            app:layout_goneMarginTop="@dimen/_10sdp"
             tools:text="www.google.com"
             tools:visibility="visible" />
     </LinearLayout>

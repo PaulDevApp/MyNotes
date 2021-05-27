@@ -1,4 +1,4 @@
-package com.appsforlife.mynotes;
+package com.appsforlife.mynotes.util;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.appsforlife.mynotes.R;
 import com.bumptech.glide.Glide;
 
 import org.jsoup.Jsoup;
@@ -19,11 +20,15 @@ import java.io.IOException;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 import static com.appsforlife.mynotes.Support.startViewAnimation;
 
 public class LinkPreviewUtil {
+
+    private static CompositeDisposable compositeDisposable;
 
     private static Observable<Document> getJSOUPContent(String url) {
         return Observable.fromCallable(() -> {
@@ -38,7 +43,8 @@ public class LinkPreviewUtil {
     public static void setPreviewLink(Context context, TextView tvUrl, ImageView ivPreview,
                                       TextView tvPreviewTitle, TextView tvPreviewDescription,
                                       TextView tvPreviewUrl, FrameLayout linkPreviewDetail, boolean isClick) {
-        getJSOUPContent(tvUrl.getText().toString())
+        compositeDisposable = new CompositeDisposable();
+        Disposable disposable = getJSOUPContent(tvUrl.getText().toString())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> {
@@ -48,6 +54,7 @@ public class LinkPreviewUtil {
                                     if (element.attr("property").equals("og:image")) {
                                         Glide.with(context).load(element.attr("content"))
                                                 .into(ivPreview);
+                                        ivPreview.setVisibility(View.VISIBLE);
                                     } else if (element.attr("name").equals("title")) {
                                         tvPreviewTitle.setText(element.attr("content"));
                                         tvPreviewTitle.setVisibility(View.VISIBLE);
@@ -82,5 +89,12 @@ public class LinkPreviewUtil {
                             }
                         },
                         throwable -> linkPreviewDetail.setVisibility(View.GONE));
+        compositeDisposable.add(disposable);
+    }
+
+    public static void dispose() {
+        if (compositeDisposable != null) {
+            compositeDisposable.dispose();
+        }
     }
 }

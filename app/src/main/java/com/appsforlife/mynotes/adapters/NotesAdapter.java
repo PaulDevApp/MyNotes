@@ -22,7 +22,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import static com.appsforlife.mynotes.LinkPreviewUtil.setPreviewLink;
+import static com.appsforlife.mynotes.util.LinkPreviewUtil.setPreviewLink;
 import static com.appsforlife.mynotes.Support.*;
 import static com.appsforlife.mynotes.constants.Constants.*;
 
@@ -204,7 +204,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
             } else {
                 itemNoteBinding.tvWebItem.setVisibility(View.VISIBLE);
                 itemNoteBinding.ivCheckLink.setVisibility(View.VISIBLE);
-                if (itemNoteBinding.tvWebItem.getText().toString().startsWith("https://") && !App.getInstance().isPreview()) {
+                if (!App.getInstance().isPreview()) {
                     setPreviewLink(holder.itemView.getContext(), itemNoteBinding.tvWebItem, layoutLinkPreviewBinding.ivPreviewImageLink,
                             layoutLinkPreviewBinding.tvPreviewTitleLink, layoutLinkPreviewBinding.tvPreviewDescriptionLink,
                             layoutLinkPreviewBinding.tvPreviewUrl, itemNoteBinding.linkPreviewItem, false);

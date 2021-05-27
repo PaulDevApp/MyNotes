@@ -51,6 +51,7 @@ import com.appsforlife.mynotes.listeners.ColorPaletteListener;
 import com.appsforlife.mynotes.listeners.DialogDeleteImageListener;
 import com.appsforlife.mynotes.listeners.DialogDeleteNoteListener;
 import com.appsforlife.mynotes.listeners.DialogReplaceImageListener;
+import com.appsforlife.mynotes.util.LinkPreviewUtil;
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.tomergoldst.tooltips.ToolTipsManager;
@@ -62,7 +63,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import static com.appsforlife.mynotes.LinkPreviewUtil.setPreviewLink;
+import static com.appsforlife.mynotes.util.LinkPreviewUtil.setPreviewLink;
 import static com.appsforlife.mynotes.Support.*;
 import static com.appsforlife.mynotes.App.*;
 import static com.appsforlife.mynotes.constants.Constants.*;
@@ -211,7 +212,7 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
 
         initPalette();
 
-        colorDetailPaletteAdapter = new ColorDetailPaletteAdapter(paletteColors, this, this);
+        colorDetailPaletteAdapter = new ColorDetailPaletteAdapter(paletteColors, this);
         paletteBinding.rvColorPalette.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         paletteBinding.rvColorPalette.setAdapter(colorDetailPaletteAdapter);
         colorDetailPaletteAdapter.setPaletteColors(getColors(paletteColors));
@@ -299,12 +300,8 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
             return true;
         });
 
-        paletteBinding.ivAddWebCreate.setOnClickListener(v -> {
-            urlDialog.createDetailUrlDialog(detailBinding.tvUrl);
-            setPreviewLink(this, detailBinding.tvUrl, previewBinding.ivPreviewImageLink,
-                    previewBinding.tvPreviewTitleLink, previewBinding.tvPreviewDescriptionLink,detailBinding.tvUrl,
-                    detailBinding.linkPreviewDetail, true);
-        });
+        paletteBinding.ivAddWebCreate.setOnClickListener(v -> urlDialog.createDetailUrlDialog(detailBinding.tvUrl));
+
         paletteBinding.ivAddWebCreate.setOnLongClickListener(v -> {
             getToolTipsDetail(this, paletteBinding.ivAddWebCreate, detailBinding.rlDetail,
                     R.string.tooltips_add_url, toolTipsManager);
@@ -513,13 +510,9 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
             detailBinding.tvUrl.setVisibility(View.VISIBLE);
             oldWebLink = note.getWebLink();
 
-            if (detailBinding.tvUrl.getText().toString().startsWith("https://")) {
-                setPreviewLink(this, detailBinding.tvUrl, previewBinding.ivPreviewImageLink,
-                        previewBinding.tvPreviewTitleLink, previewBinding.tvPreviewDescriptionLink,detailBinding.tvUrl,
-                        detailBinding.linkPreviewDetail, true);
-            } else {
-                detailBinding.linkPreviewDetail.setVisibility(View.GONE);
-            }
+            setPreviewLink(this, detailBinding.tvUrl, previewBinding.ivPreviewImageLink,
+                    previewBinding.tvPreviewTitleLink, previewBinding.tvPreviewDescriptionLink, previewBinding.tvPreviewUrl,
+                    detailBinding.linkPreviewDetail, true);
         } else {
             note.setWebLink("");
             detailBinding.tvUrl.setText(note.getWebLink());
@@ -755,5 +748,11 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
             App.getInstance().getNoteDao().deleteNote(note);
             finish();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LinkPreviewUtil.dispose();
     }
 }

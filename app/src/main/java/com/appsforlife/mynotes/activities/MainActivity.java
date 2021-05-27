@@ -51,6 +51,7 @@ import com.appsforlife.mynotes.listeners.NoteListener;
 import com.appsforlife.mynotes.listeners.NoteLongListener;
 import com.appsforlife.mynotes.listeners.NoteSelectListener;
 import com.appsforlife.mynotes.model.MainViewModel;
+import com.appsforlife.mynotes.util.LinkPreviewUtil;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -133,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
 
         if (App.getInstance().isChangeView()) {
             mainBinding.rvNotes.setLayoutManager(staggeredGridLayoutManager);
-            startItemAnimation(this, mainBinding.rvNotes, R.anim.slide_from_bottom_layout);
+                startItemAnimation(this, mainBinding.rvNotes, R.anim.slide_from_bottom_layout);
         } else {
             mainBinding.rvNotes.setLayoutManager(staggeredGridLayoutManager);
             startItemAnimation(this, mainBinding.rvNotes, R.anim.fall_dawn_layout);
@@ -285,7 +286,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
 
         initBottomMenu();
 
-        colorMainPaletteAdapter = new ColorMainPaletteAdapter(paletteColors, this, this);
+        colorMainPaletteAdapter = new ColorMainPaletteAdapter(paletteColors, this);
         menuBinding.rvColorPalette.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         menuBinding.rvColorPalette.setAdapter(colorMainPaletteAdapter);
         colorMainPaletteAdapter.setPaletteColors(getColors(paletteColors));
@@ -690,6 +691,12 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
             }
         });
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LinkPreviewUtil.dispose();
     }
 
     @Override
