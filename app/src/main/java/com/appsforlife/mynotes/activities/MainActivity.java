@@ -1,5 +1,9 @@
 package com.appsforlife.mynotes.activities;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.AnimRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -7,11 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Canvas;
@@ -25,34 +29,28 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.appsforlife.mynotes.App;
 import com.appsforlife.mynotes.R;
 import com.appsforlife.mynotes.Support;
-import com.appsforlife.mynotes.adapters.ColorMainPaletteAdapter;
 import com.appsforlife.mynotes.adapters.NotesAdapter;
+import com.appsforlife.mynotes.bottomsheets.MainBottomSheetFragment;
 import com.appsforlife.mynotes.constants.Constants;
 import com.appsforlife.mynotes.databinding.ActivityMainBinding;
-import com.appsforlife.mynotes.databinding.LayoutBottomMenuBinding;
 import com.appsforlife.mynotes.databinding.LayoutMultiplyBinding;
 import com.appsforlife.mynotes.dialogs.DeleteDialog;
 import com.appsforlife.mynotes.dialogs.ImagePickerDialog;
 import com.appsforlife.mynotes.dialogs.PaletteDialog;
 import com.appsforlife.mynotes.dialogs.UrlDialog;
 import com.appsforlife.mynotes.entities.Note;
-import com.appsforlife.mynotes.entities.PaletteColor;
-import com.appsforlife.mynotes.listeners.ColorPaletteListener;
 import com.appsforlife.mynotes.listeners.DialogDeleteNoteListener;
 import com.appsforlife.mynotes.listeners.NoteListener;
 import com.appsforlife.mynotes.listeners.NoteLongListener;
 import com.appsforlife.mynotes.listeners.NoteSelectListener;
 import com.appsforlife.mynotes.model.MainViewModel;
 import com.appsforlife.mynotes.util.LinkPreviewUtil;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -65,20 +63,16 @@ import static com.appsforlife.mynotes.Support.*;
 import static com.appsforlife.mynotes.constants.Constants.*;
 
 public class MainActivity extends AppCompatActivity implements NoteListener, NoteSelectListener,
-        NoteLongListener, ColorPaletteListener, DialogDeleteNoteListener {
+        NoteLongListener, DialogDeleteNoteListener, MainBottomSheetFragment.BottomSheetSetSortingListener,
+        MainBottomSheetFragment.BottomSheetSetViewListener {
 
     private NotesAdapter notesAdapter;
     private ArrayList<Note> notesFromDB;
-    private Menu menu;
-    private BottomSheetBehavior<LinearLayout> bottomSheetBehavior;
 
     private ActivityMainBinding mainBinding;
-    private LayoutBottomMenuBinding menuBinding;
     private LayoutMultiplyBinding multiplyBinding;
     private StaggeredGridLayoutManager staggeredGridLayoutManager;
 
-    private final ArrayList<PaletteColor> paletteColors = new ArrayList<>();
-    private ColorMainPaletteAdapter colorMainPaletteAdapter;
 
     private ImagePickerDialog imagePickerDialog;
     private UrlDialog urlDialog;
@@ -101,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
         notesFromDB = new ArrayList<>();
 
         mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
-        menuBinding = mainBinding.bottomAppbarMenu;
         com.appsforlife.mynotes.databinding.LayoutToolbarBinding toolbarBinding = mainBinding.toolbarMain;
         multiplyBinding = mainBinding.multiply;
         setContentView(mainBinding.getRoot());
@@ -114,27 +107,13 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
         deleteDialog = new DeleteDialog(this, this);
         paletteDialog = new PaletteDialog(this);
 
-        int spanCount;
-        if (App.getInstance().isChangeView()) {
-            spanCount = 1;
-            menuBinding.tvChangeView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_view_headline, 0);
-        } else {
-            spanCount = 2;
-            menuBinding.tvChangeView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_view_module, 0);
-        }
-
-        if (App.getInstance().getSelectedColor().equals(All_COLORS)) {
-            menuBinding.tvAllColors.setText(R.string.all);
-        } else {
-            menuBinding.tvAllColors.setText("");
-        }
-
         notesAdapter = new NotesAdapter(this, this, this);
-        staggeredGridLayoutManager = new StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.VERTICAL);
+        staggeredGridLayoutManager = new StaggeredGridLayoutManager(
+                App.getInstance().isChangeView() ? 1 : 2, StaggeredGridLayoutManager.VERTICAL);
 
         if (App.getInstance().isChangeView()) {
             mainBinding.rvNotes.setLayoutManager(staggeredGridLayoutManager);
-                startItemAnimation(this, mainBinding.rvNotes, R.anim.slide_from_bottom_layout);
+            startItemAnimation(this, mainBinding.rvNotes, R.anim.slide_from_bottom_layout);
         } else {
             mainBinding.rvNotes.setLayoutManager(staggeredGridLayoutManager);
             startItemAnimation(this, mainBinding.rvNotes, R.anim.fall_dawn_layout);
@@ -155,7 +134,6 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
             sorting();
         });
 
-        bottomSheetBehavior = BottomSheetBehavior.from(menuBinding.llBottomMenu);
         setSupportActionBar(mainBinding.bottomAppbar);
 
         startViewAnimation(mainBinding.fab, this, R.anim.fab_bounce);
@@ -284,12 +262,10 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
 
         multiplyBinding.ivToolbarDelete.setOnClickListener(v -> deleteDialog.createDeleteAllSelectedNotesDialog());
 
-        initBottomMenu();
-
-        colorMainPaletteAdapter = new ColorMainPaletteAdapter(paletteColors, this);
-        menuBinding.rvColorPalette.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        menuBinding.rvColorPalette.setAdapter(colorMainPaletteAdapter);
-        colorMainPaletteAdapter.setPaletteColors(getColors(paletteColors));
+        mainBinding.bottomAppbar.setNavigationOnClickListener(v -> {
+            MainBottomSheetFragment blankFragment = new MainBottomSheetFragment();
+            blankFragment.show(getSupportFragmentManager(), blankFragment.getTag());
+        });
     }
 
     private void findNote(String keyword) {
@@ -370,7 +346,6 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        this.menu = menu;
         getMenuInflater().inflate(R.menu.bottom_appbar_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
@@ -477,9 +452,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
 
     @Override
     public void onBackPressed() {
-        if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
-            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        } else if (isSelect) {
+        if (isSelect) {
             isSelect = false;
             throwOff(0);
         } else if (isFind) {
@@ -614,98 +587,10 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
         }
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
-    private void initBottomMenu() {
-        bottomSheetBehavior = BottomSheetBehavior.from(menuBinding.llBottomMenu);
-        mainBinding.bottomAppbar.setNavigationOnClickListener(v -> {
-            if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
-                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-            } else {
-                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-            }
-        });
-
-        menuBinding.switchDone.setChecked(App.getInstance().isIncludeDone());
-        menuBinding.switchDone.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            App.getInstance().setIncludeDone(isChecked);
-            sorting();
-        });
-
-        menuBinding.switchOnlyImage.setChecked(App.getInstance().isIncludePicture());
-        menuBinding.switchOnlyImage.setOnCheckedChangeListener(((buttonView, isChecked) -> {
-            App.getInstance().setIncludePicture(isChecked);
-            sorting();
-        }));
-
-        menuBinding.rlCloseBottomMenu.setOnClickListener(v -> {
-            if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
-                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-            } else {
-                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-            }
-        });
-
-        menuBinding.tvAllColors.setOnClickListener(v -> {
-            menuBinding.tvAllColors.setText(R.string.all);
-            colorMainPaletteAdapter.notifyDataSetChanged();
-            App.getInstance().setSelectedColor(All_COLORS);
-            sorting();
-        });
-
-        menuBinding.tvSettings.setOnClickListener(v -> {
-            startActivity(new Intent(this, SettingsActivity.class));
-            overridePendingTransition(R.anim.activity_slide_from_bottom, R.anim.activity_slide_to_top);
-            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-            throwOff(500);
-        });
-
-        menuBinding.tvChangeView.setOnClickListener(v -> {
-            if (!App.getInstance().isChangeView()) {
-                App.getInstance().setChangeView(true);
-                staggeredGridLayoutManager.setSpanCount(1);
-                menuBinding.tvChangeView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_view_headline, 0);
-            } else {
-                App.getInstance().setChangeView(false);
-                staggeredGridLayoutManager.setSpanCount(2);
-                menuBinding.tvChangeView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_view_module, 0);
-            }
-            notesAdapter.notifyItemRangeChanged(notesFromDB.size(), notesAdapter.getItemCount());
-        });
-
-        bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                if (BottomSheetBehavior.STATE_DRAGGING == newState) {
-                    mainBinding.fab.show();
-                    setVisibleMenuItems(menu, true);
-                } else if (BottomSheetBehavior.STATE_COLLAPSED == newState) {
-                    mainBinding.fab.show();
-                    setVisibleMenuItems(menu, true);
-                }
-            }
-
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                mainBinding.fab.hide();
-                setVisibleMenuItems(menu, false);
-            }
-        });
-
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         LinkPreviewUtil.dispose();
-    }
-
-    @Override
-    public void onColorPaletteClickListener(PaletteColor paletteColor, ImageView imageViewColor) {
-        App.getInstance().setSelectedColor(paletteColor.getColor());
-        imageViewColor.setVisibility(View.VISIBLE);
-        colorMainPaletteAdapter.notifyDataSetChanged();
-        menuBinding.tvAllColors.setText("");
-        sorting();
     }
 
     @Override
@@ -722,5 +607,22 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
                     multiplyBinding.tvToolbarCount, multiplyBinding.ivToolbarDelete, multiplyBinding.ivToolbarClose,
                     multiplyBinding.tvToolbarCount, multiplyBinding.ivPaletteDialog, notesFromDB);
         }
+    }
+
+    @Override
+    public void onOnClick(boolean isClick) {
+        if (isClick) {
+            sorting();
+        }
+    }
+
+    @Override
+    public void onChangeView(boolean isChange) {
+        if (isChange) {
+            staggeredGridLayoutManager.setSpanCount(1);
+        } else {
+            staggeredGridLayoutManager.setSpanCount(2);
+        }
+        notesAdapter.notifyItemRangeChanged(notesFromDB.size(), notesAdapter.getItemCount());
     }
 }
