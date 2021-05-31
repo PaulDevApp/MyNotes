@@ -1,9 +1,5 @@
 package com.appsforlife.mynotes.activities;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.AnimRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Canvas;
@@ -36,7 +31,7 @@ import com.appsforlife.mynotes.App;
 import com.appsforlife.mynotes.R;
 import com.appsforlife.mynotes.Support;
 import com.appsforlife.mynotes.adapters.NotesAdapter;
-import com.appsforlife.mynotes.bottomsheets.MainBottomSheetFragment;
+import com.appsforlife.mynotes.bottomsheet.MainBottomSheetFragment;
 import com.appsforlife.mynotes.constants.Constants;
 import com.appsforlife.mynotes.databinding.ActivityMainBinding;
 import com.appsforlife.mynotes.databinding.LayoutMultiplyBinding;

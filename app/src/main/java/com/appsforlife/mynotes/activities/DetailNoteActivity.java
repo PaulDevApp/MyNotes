@@ -140,7 +140,6 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
         replaceImageDialog = new ReplaceImageDialog(this, this);
         deleteImageDialog = new DeleteImageDialog(this, this);
 
-        bottomSheetBehavior = BottomSheetBehavior.from(paletteBinding.llPalette);
         if (getIntent().hasExtra(NOTE)) {
             note = getIntent().getParcelableExtra(NOTE);
             getPreviousNote();
@@ -222,65 +221,6 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
         setFavoriteImage();
         updateStrokeOut(note, detailBinding.etInputTitle, detailBinding.etInputText);
 
-        paletteBinding.ivFavorite.setOnClickListener(v -> {
-            if (!note.isFavorite()) {
-                note.setFavorite(true);
-                isFavorite = true;
-            } else {
-                note.setFavorite(false);
-                isFavorite = false;
-            }
-            setFavoriteImage();
-        });
-
-        paletteBinding.ivFavorite.setOnLongClickListener(v -> {
-            getToolTipsDetail(this, paletteBinding.ivFavorite, detailBinding.rlDetail,
-                    R.string.tooltips_favorite, toolTipsManager);
-            return true;
-        });
-
-
-        paletteBinding.ivShare.setOnClickListener(v -> {
-            if (imagePath != null && !imagePath.trim().isEmpty()) {
-                shareNote(this, detailBinding.etInputTitle.getText().toString(),
-                        detailBinding.etInputText.getText().toString(), detailBinding.tvUrl.getText().toString(),
-                        getContentResolver(), imagePath, detailBinding.ivShowPhoto);
-            } else {
-                shareNote(this, detailBinding.etInputTitle.getText().toString(),
-                        detailBinding.etInputText.getText().toString(), detailBinding.tvUrl.getText().toString());
-            }
-        });
-
-        paletteBinding.ivShare.setOnLongClickListener(v -> {
-            getToolTipsDetail(this, paletteBinding.ivShare, detailBinding.rlDetail,
-                    R.string.tooltips_share, toolTipsManager);
-            return true;
-        });
-
-        paletteBinding.ivAddNote.setOnClickListener(v -> copy());
-
-        paletteBinding.ivAddNote.setOnLongClickListener(v -> {
-            getToolTipsDetail(this, paletteBinding.ivAddNote, detailBinding.rlDetail,
-                    R.string.tooltips_make_a_copy, toolTipsManager);
-            return true;
-        });
-
-        paletteBinding.ivAddPhotoCreate.setOnClickListener(v -> {
-            if (!App.getInstance().isReplace()) {
-                if (imagePath != null && !imagePath.trim().isEmpty()) {
-                    if (checkFile(imagePath)) {
-                        imagePickerDialog.createImagePickerDialog();
-                    } else {
-                        replaceImageDialog.createReplaceImageDialog();
-                    }
-                } else {
-                    imagePickerDialog.createImagePickerDialog();
-                }
-            } else {
-                imagePickerDialog.createImagePickerDialog();
-            }
-        });
-
         detailBinding.ivDeleteImage.setOnClickListener(v -> {
                     if (!App.getInstance().isDelete()) {
                         if (!checkFile(imagePath)) {
@@ -293,20 +233,6 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
                     }
                 }
         );
-
-        paletteBinding.ivAddPhotoCreate.setOnLongClickListener(v -> {
-            getToolTipsDetail(this, paletteBinding.ivAddPhotoCreate, detailBinding.rlDetail,
-                    R.string.tooltips_add_picture, toolTipsManager);
-            return true;
-        });
-
-        paletteBinding.ivAddWebCreate.setOnClickListener(v -> urlDialog.createDetailUrlDialog(detailBinding.tvUrl));
-
-        paletteBinding.ivAddWebCreate.setOnLongClickListener(v -> {
-            getToolTipsDetail(this, paletteBinding.ivAddWebCreate, detailBinding.rlDetail,
-                    R.string.tooltips_add_url, toolTipsManager);
-            return true;
-        });
 
         detailBinding.ivBackToMain.setOnClickListener(v -> onBackPressed());
 
@@ -321,51 +247,6 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
 
         detailBinding.tvUrl.setOnClickListener(v -> clickLinkDialog.createClickLinkDialog(
                 note, detailBinding.tvUrl, detailBinding.linkPreviewDetail, urlDialog));
-
-        paletteBinding.ivDone.setOnClickListener(v -> {
-            if (!note.isDone()) {
-                note.setDone(true);
-                isCheck = true;
-            } else {
-                note.setDone(false);
-                isCheck = false;
-            }
-            setCheckImageDone();
-            updateStrokeOut(note, detailBinding.etInputTitle, detailBinding.etInputText);
-        });
-        paletteBinding.ivDone.setOnLongClickListener(v -> {
-            getToolTipsDetail(this, paletteBinding.ivDone, detailBinding.rlDetail,
-                    R.string.tooltips_add_complete, toolTipsManager);
-            return true;
-        });
-
-        paletteBinding.ivCopyTextNote.setOnClickListener(v -> {
-            if (!detailBinding.etInputTitle.getText().toString().trim().isEmpty()
-                    || !detailBinding.etInputText.getText().toString().trim().isEmpty()
-                    || !detailBinding.tvUrl.getText().toString().trim().isEmpty()) {
-                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("", detailBinding.etInputTitle.getText().toString().trim()
-                        + "\n" + detailBinding.etInputText.getText().toString().trim() + "\n" + detailBinding.tvUrl.getText().toString().trim());
-                clipboard.setPrimaryClip(clip);
-                getToast(this, R.string.copy_text_note);
-            } else {
-                getToast(this, R.string.no_text_to_copy);
-            }
-        });
-
-        paletteBinding.ivCopyTextNote.setOnLongClickListener(v -> {
-            getToolTipsDetail(this, paletteBinding.ivCopyTextNote, detailBinding.rlDetail,
-                    R.string.tooltips_copy_text_note, toolTipsManager);
-            return true;
-        });
-
-        KeyboardVisibilityEvent.setEventListener(this, isOpen -> {
-            if (isOpen) {
-                if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                }
-            }
-        });
 
         detailBinding.tvUrl.setPaintFlags(detailBinding.tvUrl.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
@@ -545,6 +426,7 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
     }
 
     private void initPalette() {
+        bottomSheetBehavior = BottomSheetBehavior.from(paletteBinding.llPalette);
         paletteBinding.tvChangeNoteColor.setOnClickListener(v -> {
             if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -552,6 +434,125 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             }
         });
+
+        paletteBinding.ivFavorite.setOnClickListener(v -> {
+            if (!note.isFavorite()) {
+                note.setFavorite(true);
+                isFavorite = true;
+            } else {
+                note.setFavorite(false);
+                isFavorite = false;
+            }
+            setFavoriteImage();
+        });
+
+        paletteBinding.ivFavorite.setOnLongClickListener(v -> {
+            getToolTipsDetail(this, paletteBinding.ivFavorite, detailBinding.rlDetail,
+                    R.string.tooltips_favorite, toolTipsManager);
+            return true;
+        });
+
+
+        paletteBinding.ivShare.setOnClickListener(v -> {
+            if (imagePath != null && !imagePath.trim().isEmpty()) {
+                shareNote(this, detailBinding.etInputTitle.getText().toString(),
+                        detailBinding.etInputText.getText().toString(), detailBinding.tvUrl.getText().toString(),
+                        getContentResolver(), imagePath, detailBinding.ivShowPhoto);
+            } else {
+                shareNote(this, detailBinding.etInputTitle.getText().toString(),
+                        detailBinding.etInputText.getText().toString(), detailBinding.tvUrl.getText().toString());
+            }
+        });
+
+        paletteBinding.ivShare.setOnLongClickListener(v -> {
+            getToolTipsDetail(this, paletteBinding.ivShare, detailBinding.rlDetail,
+                    R.string.tooltips_share, toolTipsManager);
+            return true;
+        });
+
+        paletteBinding.ivAddNote.setOnClickListener(v -> copy());
+
+        paletteBinding.ivAddNote.setOnLongClickListener(v -> {
+            getToolTipsDetail(this, paletteBinding.ivAddNote, detailBinding.rlDetail,
+                    R.string.tooltips_make_a_copy, toolTipsManager);
+            return true;
+        });
+
+        paletteBinding.ivAddPhotoCreate.setOnClickListener(v -> {
+            if (!App.getInstance().isReplace()) {
+                if (imagePath != null && !imagePath.trim().isEmpty()) {
+                    if (checkFile(imagePath)) {
+                        imagePickerDialog.createImagePickerDialog();
+                    } else {
+                        replaceImageDialog.createReplaceImageDialog();
+                    }
+                } else {
+                    imagePickerDialog.createImagePickerDialog();
+                }
+            } else {
+                imagePickerDialog.createImagePickerDialog();
+            }
+        });
+
+        paletteBinding.ivAddPhotoCreate.setOnLongClickListener(v -> {
+            getToolTipsDetail(this, paletteBinding.ivAddPhotoCreate, detailBinding.rlDetail,
+                    R.string.tooltips_add_picture, toolTipsManager);
+            return true;
+        });
+
+        paletteBinding.ivAddWebCreate.setOnClickListener(v -> urlDialog.createDetailUrlDialog(detailBinding.tvUrl));
+
+        paletteBinding.ivAddWebCreate.setOnLongClickListener(v -> {
+            getToolTipsDetail(this, paletteBinding.ivAddWebCreate, detailBinding.rlDetail,
+                    R.string.tooltips_add_url, toolTipsManager);
+            return true;
+        });
+
+        paletteBinding.ivDone.setOnClickListener(v -> {
+            if (!note.isDone()) {
+                note.setDone(true);
+                isCheck = true;
+            } else {
+                note.setDone(false);
+                isCheck = false;
+            }
+            setCheckImageDone();
+            updateStrokeOut(note, detailBinding.etInputTitle, detailBinding.etInputText);
+        });
+        paletteBinding.ivDone.setOnLongClickListener(v -> {
+            getToolTipsDetail(this, paletteBinding.ivDone, detailBinding.rlDetail,
+                    R.string.tooltips_add_complete, toolTipsManager);
+            return true;
+        });
+
+        paletteBinding.ivCopyTextNote.setOnClickListener(v -> {
+            if (!detailBinding.etInputTitle.getText().toString().trim().isEmpty()
+                    || !detailBinding.etInputText.getText().toString().trim().isEmpty()
+                    || !detailBinding.tvUrl.getText().toString().trim().isEmpty()) {
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("", detailBinding.etInputTitle.getText().toString().trim()
+                        + "\n" + detailBinding.etInputText.getText().toString().trim() + "\n" + detailBinding.tvUrl.getText().toString().trim());
+                clipboard.setPrimaryClip(clip);
+                getToast(this, R.string.copy_text_note);
+            } else {
+                getToast(this, R.string.no_text_to_copy);
+            }
+        });
+
+        paletteBinding.ivCopyTextNote.setOnLongClickListener(v -> {
+            getToolTipsDetail(this, paletteBinding.ivCopyTextNote, detailBinding.rlDetail,
+                    R.string.tooltips_copy_text_note, toolTipsManager);
+            return true;
+        });
+
+        KeyboardVisibilityEvent.setEventListener(this, isOpen -> {
+            if (isOpen) {
+                if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+            }
+        });
+
 
         setColorIndicator(colorPicker, paletteBinding.ivColorIndicator, this);
     }

@@ -1,4 +1,4 @@
-package com.appsforlife.mynotes.bottomsheets;
+package com.appsforlife.mynotes.bottomsheet;
 
 import android.content.Context;
 import android.content.Intent;
