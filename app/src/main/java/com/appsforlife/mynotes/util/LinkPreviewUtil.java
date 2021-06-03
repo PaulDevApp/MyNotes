@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.appsforlife.mynotes.R;
 import com.bumptech.glide.Glide;
@@ -40,11 +41,10 @@ public class LinkPreviewUtil {
         });
     }
 
-    public static void setPreviewLink(Context context, TextView tvUrl, ImageView ivPreview,
-                                      TextView tvPreviewTitle, TextView tvPreviewDescription,
-                                      TextView tvPreviewUrl, FrameLayout linkPreviewDetail, boolean isClick) {
+    public static void setPreviewLink(Context context, String url, ImageView ivPreview,
+                                      TextView tvPreviewTitle, TextView tvPreviewDescription) {
         compositeDisposable = new CompositeDisposable();
-        Disposable disposable = getJSOUPContent(tvUrl.getText().toString())
+        Disposable disposable = getJSOUPContent(url)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> {
@@ -54,41 +54,24 @@ public class LinkPreviewUtil {
                                     if (element.attr("property").equals("og:image")) {
                                         Glide.with(context).load(element.attr("content"))
                                                 .into(ivPreview);
+                                        startViewAnimation(ivPreview, context, R.anim.appearance);
                                         ivPreview.setVisibility(View.VISIBLE);
                                     } else if (element.attr("name").equals("title")) {
                                         tvPreviewTitle.setText(element.attr("content"));
+                                        startViewAnimation(tvPreviewTitle, context, R.anim.appearance);
                                         tvPreviewTitle.setVisibility(View.VISIBLE);
                                     } else if (element.attr("name").equals("description")) {
-                                        tvPreviewDescription.setText(element.attr("content"));
-                                        tvPreviewDescription.setVisibility(View.VISIBLE);
-                                        if (tvPreviewDescription.getVisibility() == View.GONE) {
+                                        if (tvPreviewTitle.getVisibility() == View.GONE) {
                                             tvPreviewDescription.setMaxLines(3);
                                         }
-                                    } else if (element.attr("property").equals("og:url")) {
-                                        tvPreviewUrl.setText(element.attr("content"));
-                                        tvPreviewUrl.setVisibility(View.VISIBLE);
-                                    }
-                                    startViewAnimation(linkPreviewDetail, context, R.anim.appearance);
-                                    linkPreviewDetail.setVisibility(View.VISIBLE);
-
-                                    if (isClick) {
-                                        linkPreviewDetail.setOnClickListener(v -> {
-                                            Intent intent = new Intent(Intent.ACTION_VIEW);
-                                            intent.setData(Uri.parse(tvUrl.getText().toString()));
-                                            context.startActivity(intent);
-                                        });
+                                        tvPreviewDescription.setText(element.attr("content"));
+                                        startViewAnimation(tvPreviewDescription, context, R.anim.appearance);
+                                        tvPreviewDescription.setVisibility(View.VISIBLE);
                                     }
                                 }
-                                if (tvPreviewDescription.getVisibility() == View.GONE
-                                        && tvPreviewTitle.getVisibility() == View.GONE
-                                        && tvPreviewUrl.getVisibility() == View.GONE) {
-                                    linkPreviewDetail.setVisibility(View.GONE);
-                                }
-                            } else {
-                                linkPreviewDetail.setVisibility(View.GONE);
                             }
                         },
-                        throwable -> linkPreviewDetail.setVisibility(View.GONE));
+                        Throwable::printStackTrace);
         compositeDisposable.add(disposable);
     }
 

@@ -8,84 +8,75 @@
     android:background="@drawable/background_preview_link"
     android:padding="@dimen/_2sdp">
 
+    <TextView
+        android:id="@+id/tv_preview_url"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_2sdp"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:paddingBottom="@dimen/_1sdp"
+        android:textColor="?attr/color"
+        android:textSize="@dimen/_9ssp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="www.google.com" />
+
     <ImageView
         android:id="@+id/iv_preview_image_link"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:contentDescription="@string/app_name"
-        android:maxWidth="@dimen/_50sdp"
-        android:maxHeight="@dimen/_50sdp"
+        android:maxWidth="@dimen/_40sdp"
+        android:maxHeight="@dimen/_40sdp"
         android:scaleType="centerCrop"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_preview_url"
         tools:src="@tools:sample/avatars"
         tools:visibility="visible" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/tv_preview_title_link"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_2sdp"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:textColor="?attr/color"
+        android:textSize="@dimen/_11ssp"
+        android:textStyle="normal"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv_preview_image_link"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/tv_preview_url"
+        app:layout_goneMarginStart="0dp"
+        tools:text="@tools:sample/lorem/random"
+        tools:visibility="visible" />
 
-
-        <TextView
-            android:id="@+id/tv_preview_title_link"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/_4sdp"
-            android:layout_marginTop="@dimen/_2sdp"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:includeFontPadding="false"
-            android:maxLines="1"
-            android:textColor="?attr/color"
-            android:textSize="@dimen/_10ssp"
-            android:textStyle="normal"
-            android:visibility="gone"
-            tools:text="Batman"
-            tools:visibility="visible" />
-
-        <TextView
-            android:id="@+id/tv_preview_description_link"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/_3sdp"
-            android:layout_marginTop="@dimen/_2sdp"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:includeFontPadding="false"
-            android:maxLines="2"
-            android:textColor="?attr/color"
-            android:textSize="@dimen/_9ssp"
-            android:textStyle="italic"
-            android:visibility="gone"
-            app:layout_goneMarginStart="@dimen/_3sdp"
-            tools:text="Бэтмен является одним из самых популярных и известных героев комиксов."
-            tools:visibility="visible" />
-
-        <TextView
-            android:id="@+id/tv_preview_url"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/_3sdp"
-            android:layout_marginTop="@dimen/_3sdp"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:includeFontPadding="false"
-            android:maxLines="1"
-            android:textColor="?attr/color"
-            android:textSize="@dimen/_9ssp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            tools:text="www.google.com"
-            tools:visibility="visible" />
-    </LinearLayout>
-
-
+    <TextView
+        android:id="@+id/tv_preview_description_link"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_2sdp"
+        android:layout_marginTop="@dimen/_1sdp"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:maxLines="2"
+        android:textColor="?attr/color"
+        android:textSize="@dimen/_10ssp"
+        android:textStyle="italic"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_preview_image_link"
+        app:layout_constraintTop_toBottomOf="@+id/tv_preview_title_link"
+        tools:text="@tools:sample/lorem/random"
+        tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

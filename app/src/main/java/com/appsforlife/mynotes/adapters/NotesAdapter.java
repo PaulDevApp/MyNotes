@@ -118,12 +118,12 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
 
         Note note;
         ItemNoteBinding itemNoteBinding;
-        LayoutLinkPreviewBinding layoutLinkPreviewBinding;
+        LayoutLinkPreviewBinding previewBinding;
 
         NoteViewHolder(ItemNoteBinding itemNoteBinding) {
             super(itemNoteBinding.getRoot());
             this.itemNoteBinding = itemNoteBinding;
-            layoutLinkPreviewBinding = itemNoteBinding.previewLink;
+            previewBinding = itemNoteBinding.previewLink;
 
             itemView.setOnClickListener(v -> {
                 if (isSelect) {
@@ -182,7 +182,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
             updateStrokeOut(note, itemNoteBinding.tvItemTextTitle, itemNoteBinding.tvItemText);
 
             itemNoteBinding.tvItemDateTime.setText(note.getDateTime());
-            itemNoteBinding.tvWebItem.setText(note.getWebLink());
 
             if (note.getImagePath() != null && !note.getImagePath().trim().isEmpty() && !App.getInstance().isVisible()) {
                 Glide.with(holder.itemNoteBinding.ivItemImage.getContext()).load(note.getImagePath()).into(itemNoteBinding.ivItemImage);
@@ -197,20 +196,18 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
                 itemNoteBinding.ivCheckImage.setVisibility(View.GONE);
             }
 
-            if (itemNoteBinding.tvWebItem.getText().toString().trim().isEmpty()) {
-                itemNoteBinding.tvWebItem.setVisibility(View.GONE);
+            if (note.getWebLink() != null && !note.getWebLink().trim().isEmpty()) {
+                itemNoteBinding.ivCheckLink.setVisibility(View.VISIBLE);
+                itemNoteBinding.linkPreviewItem.setVisibility(View.VISIBLE);
+                previewBinding.tvPreviewUrl.setText(note.getWebLink());
+                if (!App.getInstance().isPreview()) {
+                    setPreviewLink(holder.itemView.getContext(), note.getWebLink(), previewBinding.ivPreviewImageLink,
+                            previewBinding.tvPreviewTitleLink, previewBinding.tvPreviewDescriptionLink);
+                }
+            } else {
                 itemNoteBinding.ivCheckLink.setVisibility(View.GONE);
                 itemNoteBinding.linkPreviewItem.setVisibility(View.GONE);
-            } else {
-                itemNoteBinding.tvWebItem.setVisibility(View.VISIBLE);
-                itemNoteBinding.ivCheckLink.setVisibility(View.VISIBLE);
-                if (!App.getInstance().isPreview()) {
-                    setPreviewLink(holder.itemView.getContext(), itemNoteBinding.tvWebItem, layoutLinkPreviewBinding.ivPreviewImageLink,
-                            layoutLinkPreviewBinding.tvPreviewTitleLink, layoutLinkPreviewBinding.tvPreviewDescriptionLink,
-                            layoutLinkPreviewBinding.tvPreviewUrl, itemNoteBinding.linkPreviewItem, false);
-                } else {
-                    itemNoteBinding.linkPreviewItem.setVisibility(View.GONE);
-                }
+
             }
 
             GradientDrawable gradientDrawable = (GradientDrawable) itemNoteBinding.itemBackground.getBackground();

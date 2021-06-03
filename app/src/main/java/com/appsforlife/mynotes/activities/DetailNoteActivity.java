@@ -390,10 +390,20 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
             detailBinding.tvUrl.setText(note.getWebLink());
             detailBinding.tvUrl.setVisibility(View.VISIBLE);
             oldWebLink = note.getWebLink();
+            detailBinding.linkPreviewDetail.setVisibility(View.VISIBLE);
+            previewBinding.tvPreviewUrl.setText(note.getWebLink());
+            setPreviewLink(this, note.getWebLink(), previewBinding.ivPreviewImageLink,
+                    previewBinding.tvPreviewTitleLink, previewBinding.tvPreviewDescriptionLink);
+            previewBinding.clPreviewLink.setOnClickListener(v -> {
+                Intent intent;
+                if (note.getWebLink().startsWith("www")) {
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://" + note.getWebLink()));
+                } else {
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse(note.getWebLink()));
+                }
+                startActivity(intent);
+            });
 
-            setPreviewLink(this, detailBinding.tvUrl, previewBinding.ivPreviewImageLink,
-                    previewBinding.tvPreviewTitleLink, previewBinding.tvPreviewDescriptionLink, previewBinding.tvPreviewUrl,
-                    detailBinding.linkPreviewDetail, true);
         } else {
             note.setWebLink("");
             detailBinding.tvUrl.setText(note.getWebLink());

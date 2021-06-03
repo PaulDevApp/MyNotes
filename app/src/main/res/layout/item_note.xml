@@ -34,29 +34,10 @@
             tools:text="Title" />
 
         <TextView
-            android:id="@+id/tv_web_item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_item_text_title"
-            android:layout_marginStart="@dimen/_4sdp"
-            android:layout_marginTop="@dimen/_2sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
-            android:ellipsize="end"
-            android:gravity="start"
-            android:singleLine="true"
-            android:textColor="?attr/color"
-            android:textSize="@dimen/_9ssp"
-            android:textStyle="normal"
-            android:transitionName="url"
-            android:visibility="gone"
-            tools:text="www.google.com"
-            tools:visibility="visible" />
-
-        <TextView
             android:id="@+id/tv_item_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_web_item"
+            android:layout_below="@id/tv_item_text_title"
             android:layout_marginStart="@dimen/_4sdp"
             android:layout_marginTop="@dimen/_4sdp"
             android:layout_marginEnd="@dimen/_5sdp"
@@ -89,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/iv_item_image"
             android:layout_marginStart="@dimen/_4sdp"
-            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginEnd="@dimen/_4sdp"
             android:visibility="gone"
             tools:visibility="visible">
@@ -116,8 +97,8 @@
 
         <ImageView
             android:id="@+id/iv_check_image"
-            android:layout_width="@dimen/_12sdp"
-            android:layout_height="@dimen/_12sdp"
+            android:layout_width="@dimen/_9sdp"
+            android:layout_height="@dimen/_9sdp"
             android:layout_below="@id/linkPreviewItem"
             android:layout_marginStart="@dimen/_4sdp"
             android:layout_marginTop="@dimen/_4sdp"
@@ -129,8 +110,8 @@
 
         <ImageView
             android:id="@+id/iv_check_link"
-            android:layout_width="@dimen/_12sdp"
-            android:layout_height="@dimen/_12sdp"
+            android:layout_width="@dimen/_9sdp"
+            android:layout_height="@dimen/_9sdp"
             android:layout_below="@+id/linkPreviewItem"
             android:layout_marginStart="@dimen/_4sdp"
             android:layout_marginTop="@dimen/_4sdp"
