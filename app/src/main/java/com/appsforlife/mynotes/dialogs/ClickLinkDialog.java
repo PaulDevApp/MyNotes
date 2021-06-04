@@ -1,35 +1,29 @@
 package com.appsforlife.mynotes.dialogs;
 
 import android.app.Activity;
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
 import com.appsforlife.mynotes.R;
-import com.appsforlife.mynotes.entities.Note;
+import com.appsforlife.mynotes.listeners.DialogClickLinkListener;
 
 import static com.appsforlife.mynotes.Support.*;
 
 public class ClickLinkDialog {
 
     private final Activity activity;
-    private final ClipboardManager clipboard;
+    private final DialogClickLinkListener dialogClickLinkListener;
 
-    public ClickLinkDialog(Activity activity, ClipboardManager clipboard) {
+    public ClickLinkDialog(Activity activity, DialogClickLinkListener dialogClickLinkListener) {
         this.activity = activity;
-        this.clipboard = clipboard;
+        this.dialogClickLinkListener = dialogClickLinkListener;
     }
 
-    public void createClickLinkDialog(Note note, TextView tvUrl, FrameLayout linkPreviewDetail,
-                                      UrlDialog urlDialog) {
+    public void createClickLinkDialog(String url) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         View view = LayoutInflater.from(activity).inflate(R.layout.layout_dialog_click_link, null);
         builder.setView(view);
@@ -37,13 +31,10 @@ public class ClickLinkDialog {
         if (dialogClick.getWindow() != null) {
             dialogClick.getWindow().setBackgroundDrawable(new ColorDrawable());
         }
+
         view.findViewById(R.id.iv_dialog_open).setOnClickListener(v -> {
-            if (tvUrl.getText().toString().startsWith("www")) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://" + tvUrl.getText().toString().trim()));
-                activity.startActivity(intent);
-            } else {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(tvUrl.getText().toString().trim()));
-                activity.startActivity(intent);
+            if (dialogClickLinkListener != null){
+                dialogClickLinkListener.onClickLink(true);
             }
         });
 
@@ -53,11 +44,13 @@ public class ClickLinkDialog {
         });
 
         final TextView textViewShowLink = view.findViewById(R.id.tv_dialog_show_link);
-        textViewShowLink.setText(tvUrl.getText().toString());
+        textViewShowLink.setText(url);
 
         view.findViewById(R.id.iv_dialog_edit_url).setOnClickListener(v->{
-            urlDialog.createDetailUrlDialog(tvUrl);
-            dialogClick.cancel();
+            if (dialogClickLinkListener != null){
+                dialogClickLinkListener.onEditLink(true);
+                dialogClick.cancel();
+            }
         });
 
         view.findViewById(R.id.iv_dialog_edit_url).setOnLongClickListener(v -> {
@@ -66,11 +59,9 @@ public class ClickLinkDialog {
         });
 
         view.findViewById(R.id.iv_dialog_share).setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("text/plain");
-            intent.putExtra(Intent.EXTRA_TEXT, note.getWebLink());
-            Intent chosenIntent = Intent.createChooser(intent, "");
-            activity.startActivity(chosenIntent);
+            if (dialogClickLinkListener != null){
+                dialogClickLinkListener.onShareLink(true);
+            }
         });
 
         view.findViewById(R.id.iv_dialog_share).setOnLongClickListener(v -> {
@@ -79,9 +70,9 @@ public class ClickLinkDialog {
         });
 
         view.findViewById(R.id.iv_dialog_copy).setOnClickListener(v -> {
-            ClipData clip = ClipData.newPlainText("", tvUrl.getText().toString().trim());
-            clipboard.setPrimaryClip(clip);
-            getToast(activity, R.string.link_copied);
+            if (dialogClickLinkListener != null){
+                dialogClickLinkListener.onCopyLink(true);
+            }
         });
 
         view.findViewById(R.id.iv_dialog_copy).setOnLongClickListener(v -> {
@@ -91,11 +82,10 @@ public class ClickLinkDialog {
 
 
         view.findViewById(R.id.iv_dialog_delete).setOnClickListener(v -> {
-            note.setWebLink("");
-            tvUrl.setText("");
-            tvUrl.setVisibility(View.GONE);
-            linkPreviewDetail.setVisibility(View.GONE);
-            dialogClick.cancel();
+            if (dialogClickLinkListener != null){
+                dialogClickLinkListener.onDeleteLink(true);
+                dialogClick.cancel();
+            }
         });
 
         view.findViewById(R.id.iv_dialog_delete).setOnLongClickListener(v -> {

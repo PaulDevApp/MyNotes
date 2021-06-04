@@ -1,7 +1,6 @@
 package com.appsforlife.mynotes.dialogs;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -12,17 +11,18 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 
 import com.appsforlife.mynotes.R;
-import com.appsforlife.mynotes.activities.DetailNoteActivity;
+import com.appsforlife.mynotes.listeners.DialogCreateLinkListener;
 
 import static com.appsforlife.mynotes.Support.*;
-import static com.appsforlife.mynotes.constants.Constants.*;
 
 public class UrlDialog {
 
     private final Activity activity;
+    private final DialogCreateLinkListener dialogCreateLinkListener;
 
-    public UrlDialog(Activity activity) {
+    public UrlDialog(Activity activity, DialogCreateLinkListener dialogCreateLinkListener) {
         this.activity = activity;
+        this.dialogCreateLinkListener = dialogCreateLinkListener;
     }
 
     public void createDetailUrlDialog(TextView tvUrl) {
@@ -44,11 +44,10 @@ public class UrlDialog {
             } else if (!Patterns.WEB_URL.matcher(editTextAddUrl.getText().toString()).matches()) {
                 getToast(activity, R.string.toast_enter_valid_url);
             } else {
-                tvUrl.setText(editTextAddUrl.getText().toString());
-                tvUrl.setVisibility(View.VISIBLE);
-                startViewAnimation(tvUrl, activity, R.anim.appearance);
-                getToast(activity, R.string.toast_valid_url);
-                dialogURL.dismiss();
+                if (dialogCreateLinkListener != null){
+                    dialogCreateLinkListener.onCreateLink(editTextAddUrl.getText().toString());
+                    dialogURL.dismiss();
+                }
             }
         });
         dialogURL.show();
@@ -72,13 +71,10 @@ public class UrlDialog {
             } else if (!Patterns.WEB_URL.matcher(editTextAddUrl.getText().toString()).matches()) {
                 getToast(activity, R.string.toast_enter_valid_url);
             } else {
-                dialogUrl.dismiss();
-                Intent intent = new Intent(activity, DetailNoteActivity.class);
-                intent.putExtra(IS_FROM_QUICK_ACTIONS, true);
-                intent.putExtra(QUICK_ACTIONS_TYPE, ACTION_URL);
-                intent.putExtra(ACTION_URL, editTextAddUrl.getText().toString());
-                activity.startActivityForResult(intent, REQUEST_CODE_ADD_NOTE);
-                activity.overridePendingTransition(R.anim.zoom_in, R.anim.activity_static_animation);
+                if (dialogCreateLinkListener != null){
+                    dialogCreateLinkListener.onCreateLink(editTextAddUrl.getText().toString());
+                    dialogUrl.dismiss();
+                }
             }
         });
         dialogUrl.show();

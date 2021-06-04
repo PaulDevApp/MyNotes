@@ -48,6 +48,8 @@ import com.appsforlife.mynotes.dialogs.UrlDialog;
 import com.appsforlife.mynotes.entities.Note;
 import com.appsforlife.mynotes.entities.PaletteColor;
 import com.appsforlife.mynotes.listeners.ColorPaletteListener;
+import com.appsforlife.mynotes.listeners.DialogClickLinkListener;
+import com.appsforlife.mynotes.listeners.DialogCreateLinkListener;
 import com.appsforlife.mynotes.listeners.DialogDeleteImageListener;
 import com.appsforlife.mynotes.listeners.DialogDeleteNoteListener;
 import com.appsforlife.mynotes.listeners.DialogReplaceImageListener;
@@ -69,8 +71,9 @@ import static com.appsforlife.mynotes.App.*;
 import static com.appsforlife.mynotes.constants.Constants.*;
 
 @SuppressLint("ResourceAsColor")
-public class DetailNoteActivity extends AppCompatActivity implements ColorPaletteListener,
-        DialogDeleteImageListener, DialogReplaceImageListener, DialogDeleteNoteListener {
+public class NoteActivity extends AppCompatActivity implements ColorPaletteListener,
+        DialogDeleteImageListener, DialogReplaceImageListener, DialogDeleteNoteListener,
+        DialogClickLinkListener, DialogCreateLinkListener {
 
     private ActivityDetailBinding detailBinding;
     private LayoutPaletteBinding paletteBinding;
@@ -102,7 +105,7 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
     private ToolTipsManager toolTipsManager;
 
     public static void start(Activity caller, Note note, RelativeLayout noteLayout) {
-        Intent intent = new Intent(caller, DetailNoteActivity.class);
+        Intent intent = new Intent(caller, NoteActivity.class);
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(caller, noteLayout, "note");
         if (note != null) {
             intent.putExtra(NOTE, note);
@@ -111,7 +114,7 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
     }
 
     public static void start(Activity caller, Note note) {
-        Intent intent = new Intent(caller, DetailNoteActivity.class);
+        Intent intent = new Intent(caller, NoteActivity.class);
         if (note != null) {
             intent.putExtra(NOTE, note);
         }
@@ -134,8 +137,8 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
         toolTipsManager = new ToolTipsManager();
 
         imagePickerDialog = new ImagePickerDialog(this, getPackageManager(), getExternalFilesDir(Environment.DIRECTORY_PICTURES));
-        urlDialog = new UrlDialog(this);
-        clickLinkDialog = new ClickLinkDialog(this, (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE));
+        urlDialog = new UrlDialog(this, this);
+        clickLinkDialog = new ClickLinkDialog(this, this);
         deleteDialog = new DeleteDialog(this, this);
         replaceImageDialog = new ReplaceImageDialog(this, this);
         deleteImageDialog = new DeleteImageDialog(this, this);
@@ -246,7 +249,7 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
         });
 
         detailBinding.tvUrl.setOnClickListener(v -> clickLinkDialog.createClickLinkDialog(
-                note, detailBinding.tvUrl, detailBinding.linkPreviewDetail, urlDialog));
+                note.getWebLink()));
 
         detailBinding.tvUrl.setPaintFlags(detailBinding.tvUrl.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
@@ -259,8 +262,6 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
                 getToast(this, R.string.speech_message);
             }
         });
-
-
     }
 
     private void copy() {
@@ -765,5 +766,63 @@ public class DetailNoteActivity extends AppCompatActivity implements ColorPalett
     protected void onDestroy() {
         super.onDestroy();
         LinkPreviewUtil.dispose();
+    }
+
+    @Override
+    public void onClickLink(boolean isOpen) {
+        if (isOpen) {
+            if (detailBinding.tvUrl.getText().toString().startsWith("www")) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://" + detailBinding.tvUrl.getText().toString().trim()));
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(detailBinding.tvUrl.getText().toString().trim()));
+                startActivity(intent);
+            }
+        }
+
+    }
+
+    @Override
+    public void onShareLink(boolean isShare) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, note.getWebLink());
+        Intent chosenIntent = Intent.createChooser(intent, "");
+        startActivity(chosenIntent);
+    }
+
+    @Override
+    public void onEditLink(boolean isEdit) {
+        if (isEdit){
+            urlDialog.createDetailUrlDialog(detailBinding.tvUrl);
+        }
+    }
+
+    @Override
+    public void onDeleteLink(boolean isDelete) {
+        if (isDelete) {
+            note.setWebLink("");
+            detailBinding.tvUrl.setText("");
+            detailBinding.tvUrl.setVisibility(View.GONE);
+            detailBinding.linkPreviewDetail.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onCopyLink(boolean isCopied) {
+        if (isCopied) {
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("", detailBinding.tvUrl.getText().toString().trim());
+            clipboard.setPrimaryClip(clip);
+            getToast(this, R.string.link_copied);
+        }
+    }
+
+    @Override
+    public void onCreateLink(String link) {
+        detailBinding.tvUrl.setText(link);
+        detailBinding.tvUrl.setVisibility(View.VISIBLE);
+        startViewAnimation(detailBinding.tvUrl, this, R.anim.appearance);
+        getToast(this, R.string.toast_valid_url);
     }
 }

@@ -10,12 +10,10 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -27,8 +25,6 @@ import android.widget.Toast;
 
 import androidx.annotation.AnimRes;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.SearchView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,7 +45,6 @@ import static com.appsforlife.mynotes.constants.Constants.*;
 public final class Support {
 
     public static boolean isSelect;
-    public static int countSelected;
 
     public static void startViewAnimation(View view, Context context, int anim) {
         if (App.getInstance().isSwitchAnim()) {
@@ -74,18 +69,6 @@ public final class Support {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }
-    }
-
-    public static void setVisibleMenuItems(Menu menu, boolean open) {
-        if (!open) {
-            menu.getItem(0).setVisible(false);
-            menu.getItem(1).setVisible(false);
-            menu.getItem(2).setVisible(false);
-        } else {
-            menu.getItem(0).setVisible(true);
-            menu.getItem(1).setVisible(true);
-            menu.getItem(2).setVisible(true);
         }
     }
 
@@ -205,34 +188,6 @@ public final class Support {
         activity.startActivity(chosenIntent);
     }
 
-    public static void discharge(Activity activity, SearchView svSearch, ConstraintLayout rlMultiSelectLayout,
-                                 ImageView ivSelectedAll, ImageView ivFavoriteOn, ImageView ivFavoriteOff, TextView tvToolbarCount,
-                                 ImageView ivDelete, ImageView ivClose, TextView tvCount, ImageView ivPickColor, ArrayList<Note> notesFromDB) {
-        if (isSelect) {
-            svSearch.setVisibility(View.GONE);
-            rlMultiSelectLayout.setVisibility(View.VISIBLE);
-            ivDelete.setVisibility(View.VISIBLE);
-            startViewAnimation(ivSelectedAll, activity, R.anim.appearance);
-            startViewAnimation(ivFavoriteOn, activity, R.anim.appearance);
-            startViewAnimation(ivFavoriteOff, activity, R.anim.appearance);
-            startViewAnimation(ivDelete, activity, R.anim.slide_right);
-            startViewAnimation(ivClose, activity, R.anim.slide_left);
-            startViewAnimation(tvCount, activity, R.anim.appearance);
-            startViewAnimation(ivPickColor, activity, R.anim.appearance);
-
-            tvToolbarCount.setText(String.valueOf(countSelected));
-        } else {
-            for (Note note : notesFromDB) {
-                note.setSelected(false);
-            }
-            rlMultiSelectLayout.setVisibility(View.GONE);
-            svSearch.setVisibility(View.VISIBLE);
-            startViewAnimation(svSearch, activity, R.anim.appearance);
-            tvToolbarCount.setText("");
-            countSelected = 0;
-        }
-    }
-
     public static boolean checkFile(String filePath) {
         File file = new File(filePath);
         return !file.exists();
@@ -250,7 +205,7 @@ public final class Support {
     }
 
     private static void callBroadCast(Context context) {
-        MediaScannerConnection.scanFile(context, new String[]{Environment.getExternalStorageDirectory().toString()}, null, (path, uri) -> {
+        MediaScannerConnection.scanFile(context, new String[]{context.getExternalFilesDir(null).getAbsolutePath()}, null, (path, uri) -> {
             Log.e("ExternalStorage", "Scanned " + path + ":");
             Log.e("ExternalStorage", "-> uri=" + uri);
         });

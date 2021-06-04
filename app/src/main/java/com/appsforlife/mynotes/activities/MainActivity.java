@@ -40,7 +40,9 @@ import com.appsforlife.mynotes.dialogs.ImagePickerDialog;
 import com.appsforlife.mynotes.dialogs.PaletteDialog;
 import com.appsforlife.mynotes.dialogs.UrlDialog;
 import com.appsforlife.mynotes.entities.Note;
+import com.appsforlife.mynotes.listeners.DialogCreateLinkListener;
 import com.appsforlife.mynotes.listeners.DialogDeleteNoteListener;
+import com.appsforlife.mynotes.listeners.DialogPaletteListener;
 import com.appsforlife.mynotes.listeners.NoteListener;
 import com.appsforlife.mynotes.listeners.NoteLongListener;
 import com.appsforlife.mynotes.listeners.NoteSelectListener;
@@ -59,7 +61,7 @@ import static com.appsforlife.mynotes.constants.Constants.*;
 
 public class MainActivity extends AppCompatActivity implements NoteListener, NoteSelectListener,
         NoteLongListener, DialogDeleteNoteListener, MainBottomSheetFragment.BottomSheetSetSortingListener,
-        MainBottomSheetFragment.BottomSheetSetViewListener {
+        MainBottomSheetFragment.BottomSheetSetViewListener, DialogPaletteListener, DialogCreateLinkListener {
 
     private NotesAdapter notesAdapter;
     private ArrayList<Note> notesFromDB;
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
     private boolean isClick;
     private boolean isAnim;
     private boolean isSelectedAll;
+    public static int countSelected;
 
     @SuppressLint("SupportAnnotationUsage")
     @AnimRes
@@ -98,9 +101,9 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
         imagePickerDialog = new ImagePickerDialog(this, getPackageManager(), getExternalFilesDir(Environment.DIRECTORY_PICTURES));
-        urlDialog = new UrlDialog(this);
+        urlDialog = new UrlDialog(this, this);
         deleteDialog = new DeleteDialog(this, this);
-        paletteDialog = new PaletteDialog(this);
+        paletteDialog = new PaletteDialog(this, this);
 
         notesAdapter = new NotesAdapter(this, this, this);
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(
@@ -134,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
         startViewAnimation(mainBinding.fab, this, R.anim.fab_bounce);
         mainBinding.fab.setOnClickListener(v -> {
             if (!isClick) {
-                DetailNoteActivity.start(MainActivity.this, null);
+                NoteActivity.start(MainActivity.this, null);
                 overridePendingTransition(R.anim.zoom_in, R.anim.activity_static_animation);
                 isClick = true;
                 throwOff(400);
@@ -189,10 +192,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
             throwOff(0);
         });
 
-        multiplyBinding.ivPaletteDialog.setOnClickListener(v -> paletteDialog.createPaletteDialog(
-                notesFromDB, multiplyBinding.svSearch, multiplyBinding.clMultiSelectLayout, multiplyBinding.ivSelectedAll,
-                multiplyBinding.ivMainFavoriteOn, multiplyBinding.ivMainFavoriteOff, multiplyBinding.tvToolbarCount,
-                multiplyBinding.ivToolbarDelete, multiplyBinding.ivToolbarClose, multiplyBinding.ivPaletteDialog, notesAdapter));
+        multiplyBinding.ivPaletteDialog.setOnClickListener(v -> paletteDialog.createPaletteDialog());
 
         multiplyBinding.ivSelectedAll.setOnClickListener(v -> {
             if (!isSelectedAll) {
@@ -377,7 +377,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
                 Uri selectedImageUri = data.getData();
                 if (selectedImageUri != null) {
                     try {
-                        Intent intent = new Intent(getApplicationContext(), DetailNoteActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), NoteActivity.class);
                         intent.putExtra(IS_FROM_QUICK_ACTIONS, true);
                         intent.putExtra(QUICK_ACTIONS_TYPE, ACTION_IMAGE);
                         intent.putExtra(IMAGE_PATH, selectedImageUri.toString());
@@ -390,7 +390,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
                 }
             }
         } else if (requestCode == REQUEST_CAMERA && resultCode == RESULT_OK) {
-            Intent intent = new Intent(getApplicationContext(), DetailNoteActivity.class);
+            Intent intent = new Intent(getApplicationContext(), NoteActivity.class);
             intent.putExtra(IS_FROM_QUICK_ACTIONS, true);
             intent.putExtra(QUICK_ACTIONS_TYPE, ACTION_CAMERA);
             intent.putExtra(CAMERA_PATH, imagePickerDialog.getPhotoPath());
@@ -400,7 +400,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
         } else if (requestCode == REQUEST_CODE_SPEECH) {
             if (resultCode == RESULT_OK && data != null) {
                 ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                Intent intent = new Intent(getApplicationContext(), DetailNoteActivity.class);
+                Intent intent = new Intent(getApplicationContext(), NoteActivity.class);
                 intent.putExtra(IS_FROM_QUICK_ACTIONS, true);
                 intent.putExtra(QUICK_ACTIONS_TYPE, ACTION_SPEECH);
                 intent.putExtra(SPEECH_STRING, text.get(0) + ".");
@@ -462,10 +462,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
     private void throwOff(int i) {
         isSelect = false;
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            discharge(this, multiplyBinding.svSearch, multiplyBinding.clMultiSelectLayout,
-                    multiplyBinding.ivSelectedAll, multiplyBinding.ivMainFavoriteOn, multiplyBinding.ivMainFavoriteOff,
-                    multiplyBinding.tvToolbarCount, multiplyBinding.ivToolbarDelete, multiplyBinding.ivToolbarClose,
-                    multiplyBinding.tvToolbarCount, multiplyBinding.ivPaletteDialog, notesFromDB);
+            discharge();
             notesAdapter.notifyDataSetChanged();
         }, i);
     }
@@ -538,7 +535,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
     @Override
     public void onNoteClicked(Note note, RelativeLayout noteLayout) {
         if (!isClick) {
-            DetailNoteActivity.start(this, note, noteLayout);
+            NoteActivity.start(this, note, noteLayout);
             isClick = true;
         }
     }
@@ -551,10 +548,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
             selectedView.setVisibility(View.VISIBLE);
             note.setSelected(true);
             countSelected = 1;
-            discharge(this, multiplyBinding.svSearch, multiplyBinding.clMultiSelectLayout,
-                    multiplyBinding.ivSelectedAll, multiplyBinding.ivMainFavoriteOn, multiplyBinding.ivMainFavoriteOff,
-                    multiplyBinding.tvToolbarCount, multiplyBinding.ivToolbarDelete, multiplyBinding.ivToolbarClose,
-                    multiplyBinding.tvToolbarCount, multiplyBinding.ivPaletteDialog, notesFromDB);
+            discharge();
         } else {
             note.setSelected(false);
             selectedView.setVisibility(View.GONE);
@@ -597,10 +591,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
                 }
             }
             isSelect = false;
-            discharge(this, multiplyBinding.svSearch, multiplyBinding.clMultiSelectLayout,
-                    multiplyBinding.ivSelectedAll, multiplyBinding.ivMainFavoriteOn, multiplyBinding.ivMainFavoriteOff,
-                    multiplyBinding.tvToolbarCount, multiplyBinding.ivToolbarDelete, multiplyBinding.ivToolbarClose,
-                    multiplyBinding.tvToolbarCount, multiplyBinding.ivPaletteDialog, notesFromDB);
+            discharge();
         }
     }
 
@@ -619,5 +610,54 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
             staggeredGridLayoutManager.setSpanCount(2);
         }
         notesAdapter.notifyItemRangeChanged(notesFromDB.size(), notesAdapter.getItemCount());
+    }
+
+    @Override
+    public void onSelectColor(String color) {
+        for (Note note : notesFromDB) {
+            if (note.isSelected()) {
+                note.setSelected(false);
+                note.setColor(color);
+                App.getInstance().getNoteDao().update(note);
+            }
+        }
+        isSelect = false;
+        discharge();
+        notesAdapter.notifyDataSetChanged();
+    }
+
+    private void discharge() {
+        if (isSelect) {
+            multiplyBinding.svSearch.setVisibility(View.GONE);
+            multiplyBinding.clMultiSelectLayout.setVisibility(View.VISIBLE);
+            multiplyBinding.ivToolbarDelete.setVisibility(View.VISIBLE);
+            startViewAnimation(multiplyBinding.ivSelectedAll, this, R.anim.appearance);
+            startViewAnimation(multiplyBinding.ivMainFavoriteOn, this, R.anim.appearance);
+            startViewAnimation(multiplyBinding.ivMainFavoriteOff, this, R.anim.appearance);
+            startViewAnimation(multiplyBinding.ivToolbarDelete, this, R.anim.slide_right);
+            startViewAnimation(multiplyBinding.ivToolbarClose, this, R.anim.slide_left);
+            startViewAnimation(multiplyBinding.tvToolbarCount, this, R.anim.appearance);
+            startViewAnimation(multiplyBinding.ivPaletteDialog, this, R.anim.appearance);
+            multiplyBinding.tvToolbarCount.setText(String.valueOf(countSelected));
+        } else {
+            for (Note note : notesFromDB) {
+                note.setSelected(false);
+            }
+            multiplyBinding.clMultiSelectLayout.setVisibility(View.GONE);
+            multiplyBinding.svSearch.setVisibility(View.VISIBLE);
+            startViewAnimation(multiplyBinding.svSearch, this, R.anim.appearance);
+            multiplyBinding.tvToolbarCount.setText("");
+            countSelected = 0;
+        }
+    }
+
+    @Override
+    public void onCreateLink(String link) {
+        Intent intent = new Intent(this, NoteActivity.class);
+        intent.putExtra(IS_FROM_QUICK_ACTIONS, true);
+        intent.putExtra(QUICK_ACTIONS_TYPE, ACTION_URL);
+        intent.putExtra(ACTION_URL, link);
+        startActivityForResult(intent, REQUEST_CODE_ADD_NOTE);
+        overridePendingTransition(R.anim.zoom_in, R.anim.activity_static_animation);
     }
 }
