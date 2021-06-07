@@ -198,15 +198,16 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
 
             if (note.getWebLink() != null && !note.getWebLink().trim().isEmpty()) {
                 itemNoteBinding.ivCheckLink.setVisibility(View.VISIBLE);
-                itemNoteBinding.linkPreviewItem.setVisibility(View.VISIBLE);
-                previewBinding.tvPreviewUrl.setText(note.getWebLink());
+                previewBinding.tvSiteUrl.setVisibility(View.VISIBLE);
+                previewBinding.clPreviewLink.setVisibility(View.VISIBLE);
+                previewBinding.tvSiteUrl.setText(note.getWebLink());
                 if (!App.getInstance().isPreview()) {
-                    setPreviewLink(holder.itemView.getContext(), note.getWebLink(), previewBinding.ivPreviewImageLink,
-                            previewBinding.tvPreviewTitleLink, previewBinding.tvPreviewDescriptionLink);
+                    setPreviewLink(holder.itemView.getContext(), note.getWebLink(), previewBinding.ivSiteImage,
+                            previewBinding.tvSiteName, previewBinding.tvSiteDescription);
                 }
             } else {
                 itemNoteBinding.ivCheckLink.setVisibility(View.GONE);
-                itemNoteBinding.linkPreviewItem.setVisibility(View.GONE);
+                previewBinding.clPreviewLink.setVisibility(View.GONE);
 
             }
 

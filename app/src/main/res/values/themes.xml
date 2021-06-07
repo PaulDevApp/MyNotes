@@ -6,6 +6,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorSecondary">@color/colorSecondaryDay</item>
         <item name="colorSecondaryVariant">@color/colorAppBarDay</item>
+        <item name="cardBackgroundColor">@color/backgroundLinkAccent</item>
         <item name="colorOnBackground">@color/colorPrimaryDayTransparent</item>
         <item name="colorControlHighlight">@color/colorBackgroundDoneDay</item>
         <item name="android:navigationBarColor">@color/colorAppBarDay</item>

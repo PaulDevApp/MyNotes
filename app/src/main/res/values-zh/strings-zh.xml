@@ -85,4 +85,5 @@
     <string name="change_the_view_of_notes">更改笔记的视图</string>
     <string name="show_notes_with_images">显示带有图像的注释</string>
     <string name="empty_note_deleted">空笔记已删除</string>
+    <string name="note_deleted">注释已删除！</string>
 </resources>

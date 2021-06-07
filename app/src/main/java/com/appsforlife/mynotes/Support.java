@@ -211,12 +211,13 @@ public final class Support {
         });
     }
 
-    public static void getToolTipsDetail(Activity activity, View button, ViewGroup layout, int message, ToolTipsManager toolTipsManager) {
+    public static void getToolTipsDetail(Activity activity, View button, ViewGroup layout, int message) {
         ToolTip.Builder builder = new ToolTip.Builder(activity, button, layout,
                 activity.getResources().getString(message), ToolTip.POSITION_ABOVE);
         builder.setBackgroundColor(activity.getColor(R.color.colorTransparent));
         builder.setGravity(ToolTip.GRAVITY_CENTER);
         builder.setTextAppearance(R.style.TooltipTextAppearance);
+        ToolTipsManager toolTipsManager = new ToolTipsManager();
         toolTipsManager.show(builder.build());
         new Handler(Looper.getMainLooper()).postDelayed(toolTipsManager::dismissAll, 1500);
     }

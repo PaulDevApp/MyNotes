@@ -19,6 +19,7 @@ import com.appsforlife.mynotes.databinding.LayoutBottomMenuBinding;
 import com.appsforlife.mynotes.entities.PaletteColor;
 import com.appsforlife.mynotes.listeners.ColorPaletteListener;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
 import java.util.ArrayList;
 
 import static com.appsforlife.mynotes.Support.getColors;
@@ -59,7 +60,6 @@ public class MainBottomSheetFragment extends BottomSheetDialogFragment implement
         View view = binding.getRoot();
 
         colorMainPaletteAdapter = new ColorMainPaletteAdapter(paletteColors, this);
-        binding.rvColorPalette.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         binding.rvColorPalette.setAdapter(colorMainPaletteAdapter);
         colorMainPaletteAdapter.setPaletteColors(getColors(paletteColors));
 

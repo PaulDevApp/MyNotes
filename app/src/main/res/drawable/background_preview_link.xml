@@ -2,9 +2,6 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
 
-    <solid android:color="@color/backgroundLink" />
+    <solid android:color="?attr/cardBackgroundColor" />
     <corners android:radius="@dimen/_2sdp" />
-    <stroke
-        android:color="?attr/colorControlNormal"
-        android:width="0.1dp"/>
 </shape>

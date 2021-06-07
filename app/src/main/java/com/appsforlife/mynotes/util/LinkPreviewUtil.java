@@ -1,15 +1,11 @@
 package com.appsforlife.mynotes.util;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
+import android.text.TextUtils;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.appsforlife.mynotes.R;
 import com.bumptech.glide.Glide;
 
 import org.jsoup.Jsoup;
@@ -25,7 +21,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-import static com.appsforlife.mynotes.Support.startViewAnimation;
+import static com.appsforlife.mynotes.constants.Constants.*;
 
 public class LinkPreviewUtil {
 
@@ -41,32 +37,35 @@ public class LinkPreviewUtil {
         });
     }
 
-    public static void setPreviewLink(Context context, String url, ImageView ivPreview,
-                                      TextView tvPreviewTitle, TextView tvPreviewDescription) {
+    public static void setPreviewLink(Context context, String url, ImageView ivSiteImage,
+                                      TextView tvSiteName, TextView tvSiteDescription) {
         compositeDisposable = new CompositeDisposable();
         Disposable disposable = getJSOUPContent(url)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> {
                             if (result != null) {
-                                Elements metaTags = result.getElementsByTag("meta");
+                                Elements metaTags = result.getElementsByTag(META);
                                 for (Element element : metaTags) {
-                                    if (element.attr("property").equals("og:image")) {
-                                        Glide.with(context).load(element.attr("content"))
-                                                .into(ivPreview);
-                                        startViewAnimation(ivPreview, context, R.anim.appearance);
-                                        ivPreview.setVisibility(View.VISIBLE);
-                                    } else if (element.attr("name").equals("title")) {
-                                        tvPreviewTitle.setText(element.attr("content"));
-                                        startViewAnimation(tvPreviewTitle, context, R.anim.appearance);
-                                        tvPreviewTitle.setVisibility(View.VISIBLE);
-                                    } else if (element.attr("name").equals("description")) {
-                                        if (tvPreviewTitle.getVisibility() == View.GONE) {
-                                            tvPreviewDescription.setMaxLines(3);
-                                        }
-                                        tvPreviewDescription.setText(element.attr("content"));
-                                        startViewAnimation(tvPreviewDescription, context, R.anim.appearance);
-                                        tvPreviewDescription.setVisibility(View.VISIBLE);
+                                    switch (element.attr(PROPERTY)) {
+                                        case META_SITE_IMAGE:
+                                            Glide.with(context).load(element.attr(CONTENT))
+                                                    .into(ivSiteImage);
+                                            ivSiteImage.setVisibility(View.VISIBLE);
+                                            break;
+                                        case META_SITE_TITLE:
+                                            tvSiteName.setText(element.attr(CONTENT));
+                                            if (!TextUtils.isEmpty(tvSiteName.getText())) {
+                                                tvSiteName.setVisibility(View.VISIBLE);
+                                            }
+                                            tvSiteName.setVisibility(View.VISIBLE);
+                                            break;
+                                        case META_SITE_DESCRIPTION:
+                                            tvSiteDescription.setText(element.attr(CONTENT));
+                                            if (!TextUtils.isEmpty(tvSiteDescription.getText())) {
+                                                tvSiteDescription.setVisibility(View.VISIBLE);
+                                            }
+                                            break;
                                     }
                                 }
                             }

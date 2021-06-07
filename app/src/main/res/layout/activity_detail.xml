@@ -99,33 +99,11 @@
                     android:textSize="23sp"
                     android:transitionName="title" />
 
-                <TextView
-                    android:id="@+id/tv_url"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/et_input_title"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_marginBottom="@dimen/_4sdp"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:ellipsize="end"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:includeFontPadding="false"
-                    android:paddingBottom="@dimen/_2sdp"
-                    android:singleLine="true"
-                    android:textColor="?attr/colorAccent"
-                    android:textSize="17sp"
-                    android:textStyle="normal"
-                    android:transitionName="url"
-                    android:visibility="gone"
-                    tools:text="www.google.com"
-                    tools:visibility="visible" />
-
                 <EditText
                     android:id="@+id/et_input_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_url"
+                    android:layout_below="@+id/et_input_title"
                     android:layout_marginStart="@dimen/_4sdp"
                     android:layout_marginEnd="@dimen/_4sdp"
                     android:layout_marginBottom="@dimen/_6sdp"
@@ -169,30 +147,24 @@
                     android:visibility="gone"
                     tools:visibility="visible" />
 
-                <FrameLayout
-                    android:id="@+id/linkPreviewDetail"
+                <include
+                    android:id="@+id/include_preview_link"
+                    layout="@layout/layout_link_preview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/iv_show_photo"
                     android:layout_marginStart="@dimen/_4sdp"
-                    android:layout_marginEnd="@dimen/_4sdp"
                     android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
                     android:layout_marginBottom="@dimen/_8sdp"
                     android:background="?android:attr/selectableItemBackground"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:visibility="gone"
-                    tools:visibility="visible">
-
-                    <include
-                        android:id="@+id/include_preview_link"
-                        layout="@layout/layout_link_preview" />
-                </FrameLayout>
+                    android:foreground="?android:attr/selectableItemBackground" />
 
                 <TextView
                     android:id="@+id/tv_text_date_time_created"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/linkPreviewDetail"
+                    android:layout_below="@+id/include_preview_link"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginEnd="@dimen/_8sdp"
@@ -210,7 +182,7 @@
                     android:id="@+id/tv_date_info_created"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/linkPreviewDetail"
+                    android:layout_below="@+id/include_preview_link"
                     android:layout_marginTop="@dimen/_21sdp"
                     android:layout_marginEnd="@dimen/_2sdp"
                     android:layout_toStartOf="@+id/tv_text_date_time_created"

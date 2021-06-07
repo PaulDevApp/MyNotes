@@ -85,4 +85,5 @@
     <string name="change_the_view_of_notes">Изменить представление заметок</string>
     <string name="show_notes_with_images">Показывать заметки с изображениями</string>
     <string name="empty_note_deleted">Пустая заметка удалена</string>
+    <string name="note_deleted">Заметка удалена！</string>
 </resources>

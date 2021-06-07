@@ -31,5 +31,6 @@
     <color name="colorBackgroundDoneDay">#A6fafafa</color>
     <color name="colorBackgroundDoneNight">#A6282726</color>
     <color name="colorTransparent">#0000ffff</color>
-    <color name="backgroundLink">#26fafafa</color>
+    <color name="backgroundLinkAccent">#1A7e57c2</color>
+    <color name="backgroundLinkAccentSecondary">#1AFFEB3B</color>
 </resources>

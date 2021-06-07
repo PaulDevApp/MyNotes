@@ -69,4 +69,11 @@ public final class Constants {
     public static final String COLOR_GREY = "#798486";
     public static final String COLOR_LIGHT_YELLOW = "#a69e70";
 
+    public static final String META = "meta";
+    public static final String PROPERTY = "property";
+    public static final String CONTENT = "content";
+    public static final String META_SITE_TITLE = "og:title";
+    public static final String META_SITE_IMAGE = "og:image";
+    public static final String META_SITE_DESCRIPTION = "og:description";
+
 }

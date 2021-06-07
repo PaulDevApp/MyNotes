@@ -6,6 +6,7 @@
         <item name="colorAccent">@color/colorAccentSecondary</item>
         <item name="colorOnBackground">@color/colorPrimaryNightTransparent</item>
         <item name="colorControlHighlight">@color/colorBackgroundDoneNight</item>
+        <item name="cardBackgroundColor">@color/backgroundLinkAccentSecondary</item>
         <item name="android:navigationBarColor">@color/colorAppBarNight</item>
         <item name="colorSecondary">@color/colorSecondaryNight</item>
         <item name="colorSecondaryVariant">@color/colorAppBarNight</item>

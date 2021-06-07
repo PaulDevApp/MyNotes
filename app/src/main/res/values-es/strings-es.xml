@@ -85,4 +85,5 @@
     <string name="change_the_view_of_notes">Cambiar la vista de notas</string>
     <string name="show_notes_with_images">Mostrar notas con imágenes</string>
     <string name="empty_note_deleted">Nota vacía eliminada</string>
+    <string name="note_deleted">¡Nota eliminada!</string>
 </resources>

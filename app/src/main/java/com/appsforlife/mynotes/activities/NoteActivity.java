@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,7 +29,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.appsforlife.mynotes.App;
 import com.appsforlife.mynotes.R;
@@ -56,7 +54,6 @@ import com.appsforlife.mynotes.listeners.DialogReplaceImageListener;
 import com.appsforlife.mynotes.util.LinkPreviewUtil;
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.tomergoldst.tooltips.ToolTipsManager;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 
@@ -96,13 +93,8 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
     private ReplaceImageDialog replaceImageDialog;
     private DeleteImageDialog deleteImageDialog;
 
-    private boolean isFromGallery;
-    private boolean isCheck;
-    private boolean isFavorite;
-    private boolean prevDone;
-    private boolean prevFavorite;
+    private boolean isFromGallery, isCheck, isFavorite, prevDone, prevFavorite;
 
-    private ToolTipsManager toolTipsManager;
 
     public static void start(Activity caller, Note note, RelativeLayout noteLayout) {
         Intent intent = new Intent(caller, NoteActivity.class);
@@ -133,8 +125,6 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
         setContentView(detailBinding.getRoot());
 
         setNoteTextSize();
-
-        toolTipsManager = new ToolTipsManager();
 
         imagePickerDialog = new ImagePickerDialog(this, getPackageManager(), getExternalFilesDir(Environment.DIRECTORY_PICTURES));
         urlDialog = new UrlDialog(this, this);
@@ -169,8 +159,12 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
                         startViewAnimation(detailBinding.ivDeleteImage, this, R.anim.appearance);
                         break;
                     case ACTION_URL:
-                        detailBinding.tvUrl.setText(getIntent().getStringExtra(ACTION_URL));
-                        detailBinding.tvUrl.setVisibility(View.VISIBLE);
+                        previewBinding.tvSiteUrl.setText(getIntent().getStringExtra(ACTION_URL));
+                        note.setWebLink(getIntent().getStringExtra(ACTION_URL));
+                        setPreviewLink(this, getIntent().getStringExtra(ACTION_URL),
+                                previewBinding.ivSiteImage, previewBinding.tvSiteName, previewBinding.tvSiteDescription);
+                        previewBinding.clPreviewLink.setVisibility(View.VISIBLE);
+                        previewBinding.tvSiteUrl.setVisibility(View.VISIBLE);
                         break;
                     case ACTION_CAMERA:
                         isFromGallery = false;
@@ -214,12 +208,6 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
 
         initPalette();
 
-        colorDetailPaletteAdapter = new ColorDetailPaletteAdapter(paletteColors, this);
-        paletteBinding.rvColorPalette.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        paletteBinding.rvColorPalette.setAdapter(colorDetailPaletteAdapter);
-        colorDetailPaletteAdapter.setPaletteColors(getColors(paletteColors));
-
-
         setCheckImageDone();
         setFavoriteImage();
         updateStrokeOut(note, detailBinding.etInputTitle, detailBinding.etInputText);
@@ -248,10 +236,8 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
             }
         });
 
-        detailBinding.tvUrl.setOnClickListener(v -> clickLinkDialog.createClickLinkDialog(
+        previewBinding.clPreviewLink.setOnClickListener(v -> clickLinkDialog.createClickLinkDialog(
                 note.getWebLink()));
-
-        detailBinding.tvUrl.setPaintFlags(detailBinding.tvUrl.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         detailBinding.ivSpeech.setOnClickListener(v -> {
             Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -268,7 +254,7 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
         Note note = new Note();
         note.setTitle(detailBinding.etInputTitle.getText().toString());
         note.setText(detailBinding.etInputText.getText().toString());
-        note.setWebLink(detailBinding.tvUrl.getText().toString());
+        note.setWebLink(previewBinding.tvSiteUrl.getText().toString());
         note.setDone(isCheck);
         note.setFavorite(isFavorite);
         note.setDateTime(getDate());
@@ -306,8 +292,11 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
         String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
         if (sharedText != null) {
             if (sharedText.startsWith("www") || sharedText.startsWith("https://")) {
-                detailBinding.tvUrl.setVisibility(View.VISIBLE);
-                detailBinding.tvUrl.setText(sharedText);
+                previewBinding.tvSiteUrl.setText(sharedText);
+                setPreviewLink(this, getIntent().getStringExtra(ACTION_URL),
+                        previewBinding.ivSiteImage, previewBinding.tvSiteName, previewBinding.tvSiteDescription);
+                previewBinding.clPreviewLink.setVisibility(View.VISIBLE);
+                previewBinding.tvSiteUrl.setVisibility(View.VISIBLE);
             } else {
                 detailBinding.etInputText.setText(sharedText);
             }
@@ -350,7 +339,6 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
         detailBinding.tvTextDateTimeCreated.setText(note.getDateTime());
         detailBinding.tvTextDateTimeEdited.setText(note.getDateTimeEdited());
 
-        detailBinding.tvUrl.setVisibility(View.VISIBLE);
         detailBinding.tvDateInfoCreated.setVisibility(View.VISIBLE);
         detailBinding.ivDeleteNote.setVisibility(View.VISIBLE);
 
@@ -388,29 +376,15 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
         }
 
         if (note.getWebLink() != null && !note.getWebLink().trim().isEmpty()) {
-            detailBinding.tvUrl.setText(note.getWebLink());
-            detailBinding.tvUrl.setVisibility(View.VISIBLE);
-            oldWebLink = note.getWebLink();
-            detailBinding.linkPreviewDetail.setVisibility(View.VISIBLE);
-            previewBinding.tvPreviewUrl.setText(note.getWebLink());
-            setPreviewLink(this, note.getWebLink(), previewBinding.ivPreviewImageLink,
-                    previewBinding.tvPreviewTitleLink, previewBinding.tvPreviewDescriptionLink);
-            previewBinding.clPreviewLink.setOnClickListener(v -> {
-                Intent intent;
-                if (note.getWebLink().startsWith("www")) {
-                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://" + note.getWebLink()));
-                } else {
-                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse(note.getWebLink()));
-                }
-                startActivity(intent);
-            });
-
+            previewBinding.tvSiteUrl.setText(note.getWebLink());
+            setPreviewLink(this, note.getWebLink(), previewBinding.ivSiteImage,
+                    previewBinding.tvSiteName, previewBinding.tvSiteDescription);
+            previewBinding.tvSiteUrl.setVisibility(View.VISIBLE);
+            previewBinding.clPreviewLink.setVisibility(View.VISIBLE);
         } else {
             note.setWebLink("");
-            detailBinding.tvUrl.setText(note.getWebLink());
-            detailBinding.tvUrl.setVisibility(View.GONE);
-            oldWebLink = note.getWebLink();
         }
+        oldWebLink = note.getWebLink();
 
         oldTitle = note.getTitle();
         oldText = note.getText();
@@ -429,15 +403,15 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
         note.setDateTime(detailBinding.tvTextDateTimeCreated.getText().toString().trim());
         note.setColor(colorPicker);
         note.setImagePath(imagePath);
-
-        if (detailBinding.tvUrl.getVisibility() == View.VISIBLE) {
-            note.setWebLink(detailBinding.tvUrl.getText().toString());
-        }
-
     }
 
     private void initPalette() {
         bottomSheetBehavior = BottomSheetBehavior.from(paletteBinding.llPalette);
+
+        colorDetailPaletteAdapter = new ColorDetailPaletteAdapter(paletteColors, this);
+        paletteBinding.rvColorPalette.setAdapter(colorDetailPaletteAdapter);
+        colorDetailPaletteAdapter.setPaletteColors(getColors(paletteColors));
+
         paletteBinding.tvChangeNoteColor.setOnClickListener(v -> {
             if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -459,7 +433,7 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
 
         paletteBinding.ivFavorite.setOnLongClickListener(v -> {
             getToolTipsDetail(this, paletteBinding.ivFavorite, detailBinding.rlDetail,
-                    R.string.tooltips_favorite, toolTipsManager);
+                    R.string.tooltips_favorite);
             return true;
         });
 
@@ -467,17 +441,17 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
         paletteBinding.ivShare.setOnClickListener(v -> {
             if (imagePath != null && !imagePath.trim().isEmpty()) {
                 shareNote(this, detailBinding.etInputTitle.getText().toString(),
-                        detailBinding.etInputText.getText().toString(), detailBinding.tvUrl.getText().toString(),
+                        detailBinding.etInputText.getText().toString(), previewBinding.tvSiteUrl.getText().toString(),
                         getContentResolver(), imagePath, detailBinding.ivShowPhoto);
             } else {
                 shareNote(this, detailBinding.etInputTitle.getText().toString(),
-                        detailBinding.etInputText.getText().toString(), detailBinding.tvUrl.getText().toString());
+                        detailBinding.etInputText.getText().toString(), previewBinding.tvSiteUrl.getText().toString());
             }
         });
 
         paletteBinding.ivShare.setOnLongClickListener(v -> {
             getToolTipsDetail(this, paletteBinding.ivShare, detailBinding.rlDetail,
-                    R.string.tooltips_share, toolTipsManager);
+                    R.string.tooltips_share);
             return true;
         });
 
@@ -485,7 +459,7 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
 
         paletteBinding.ivAddNote.setOnLongClickListener(v -> {
             getToolTipsDetail(this, paletteBinding.ivAddNote, detailBinding.rlDetail,
-                    R.string.tooltips_make_a_copy, toolTipsManager);
+                    R.string.tooltips_make_a_copy);
             return true;
         });
 
@@ -507,15 +481,15 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
 
         paletteBinding.ivAddPhotoCreate.setOnLongClickListener(v -> {
             getToolTipsDetail(this, paletteBinding.ivAddPhotoCreate, detailBinding.rlDetail,
-                    R.string.tooltips_add_picture, toolTipsManager);
+                    R.string.tooltips_add_picture);
             return true;
         });
 
-        paletteBinding.ivAddWebCreate.setOnClickListener(v -> urlDialog.createDetailUrlDialog(detailBinding.tvUrl));
+        paletteBinding.ivAddWebCreate.setOnClickListener(v -> urlDialog.createDetailUrlDialog(previewBinding.tvSiteUrl));
 
         paletteBinding.ivAddWebCreate.setOnLongClickListener(v -> {
             getToolTipsDetail(this, paletteBinding.ivAddWebCreate, detailBinding.rlDetail,
-                    R.string.tooltips_add_url, toolTipsManager);
+                    R.string.tooltips_add_url);
             return true;
         });
 
@@ -532,17 +506,18 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
         });
         paletteBinding.ivDone.setOnLongClickListener(v -> {
             getToolTipsDetail(this, paletteBinding.ivDone, detailBinding.rlDetail,
-                    R.string.tooltips_add_complete, toolTipsManager);
+                    R.string.tooltips_add_complete);
             return true;
         });
 
         paletteBinding.ivCopyTextNote.setOnClickListener(v -> {
             if (!detailBinding.etInputTitle.getText().toString().trim().isEmpty()
                     || !detailBinding.etInputText.getText().toString().trim().isEmpty()
-                    || !detailBinding.tvUrl.getText().toString().trim().isEmpty()) {
+                    || !previewBinding.tvSiteUrl.getText().toString().trim().isEmpty()) {
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("", detailBinding.etInputTitle.getText().toString().trim()
-                        + "\n" + detailBinding.etInputText.getText().toString().trim() + "\n" + detailBinding.tvUrl.getText().toString().trim());
+                        + "\n" + detailBinding.etInputText.getText().toString().trim() + "\n" +
+                        previewBinding.tvSiteUrl.getText().toString().trim());
                 clipboard.setPrimaryClip(clip);
                 getToast(this, R.string.copy_text_note);
             } else {
@@ -552,7 +527,7 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
 
         paletteBinding.ivCopyTextNote.setOnLongClickListener(v -> {
             getToolTipsDetail(this, paletteBinding.ivCopyTextNote, detailBinding.rlDetail,
-                    R.string.tooltips_copy_text_note, toolTipsManager);
+                    R.string.tooltips_copy_text_note);
             return true;
         });
 
@@ -645,7 +620,7 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
 
     private boolean isUpdate() {
         return !oldTitle.equals(note.getTitle().trim())
-                || !oldText.equals(note.getText().trim())
+                || !oldText.equals(note.getText())
                 || !oldImagePath.equals(imagePath)
                 || !oldColor.equals(note.getColor().trim())
                 || !oldWebLink.equals(note.getWebLink())
@@ -703,7 +678,6 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
         switch (App.getInstance().getTextSize()) {
             case 1:
                 detailBinding.etInputTitle.setTextSize(23);
-                detailBinding.tvUrl.setTextSize(17);
                 detailBinding.etInputText.setTextSize(19);
                 detailBinding.tvTextDateTimeCreated.setTextSize(12);
                 detailBinding.tvTextDateTimeEdited.setTextSize(12);
@@ -712,7 +686,6 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
                 break;
             case 2:
                 detailBinding.etInputTitle.setTextSize(27);
-                detailBinding.tvUrl.setTextSize(21);
                 detailBinding.etInputText.setTextSize(23);
                 detailBinding.tvTextDateTimeCreated.setTextSize(14);
                 detailBinding.tvTextDateTimeEdited.setTextSize(14);
@@ -721,7 +694,6 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
                 break;
             case 3:
                 detailBinding.etInputTitle.setTextSize(31);
-                detailBinding.tvUrl.setTextSize(25);
                 detailBinding.etInputText.setTextSize(27);
                 detailBinding.tvTextDateTimeCreated.setTextSize(16);
                 detailBinding.tvTextDateTimeEdited.setTextSize(16);
@@ -730,7 +702,6 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
                 break;
             case 4:
                 detailBinding.etInputTitle.setTextSize(35);
-                detailBinding.tvUrl.setTextSize(29);
                 detailBinding.etInputText.setTextSize(31);
                 detailBinding.tvTextDateTimeCreated.setTextSize(18);
                 detailBinding.tvTextDateTimeEdited.setTextSize(18);
@@ -757,7 +728,10 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
     @Override
     public void dialogDeleteCallback(boolean confirm) {
         if (confirm) {
-            App.getInstance().getNoteDao().deleteNote(note);
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                App.getInstance().getNoteDao().deleteNote(note);
+                getToast(this, R.string.note_deleted);
+            }, 300);
             finish();
         }
     }
@@ -771,11 +745,11 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
     @Override
     public void onClickLink(boolean isOpen) {
         if (isOpen) {
-            if (detailBinding.tvUrl.getText().toString().startsWith("www")) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://" + detailBinding.tvUrl.getText().toString().trim()));
+            if (previewBinding.tvSiteUrl.getText().toString().startsWith("www")) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://" + previewBinding.tvSiteUrl.getText().toString().trim()));
                 startActivity(intent);
             } else {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(detailBinding.tvUrl.getText().toString().trim()));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(previewBinding.tvSiteUrl.getText().toString().trim()));
                 startActivity(intent);
             }
         }
@@ -793,8 +767,9 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
 
     @Override
     public void onEditLink(boolean isEdit) {
-        if (isEdit){
-            urlDialog.createDetailUrlDialog(detailBinding.tvUrl);
+        if (isEdit) {
+            urlDialog.createDetailUrlDialog(previewBinding.tvSiteUrl);
+            note.setWebLink(previewBinding.tvSiteUrl.getText().toString());
         }
     }
 
@@ -802,9 +777,9 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
     public void onDeleteLink(boolean isDelete) {
         if (isDelete) {
             note.setWebLink("");
-            detailBinding.tvUrl.setText("");
-            detailBinding.tvUrl.setVisibility(View.GONE);
-            detailBinding.linkPreviewDetail.setVisibility(View.GONE);
+            previewBinding.tvSiteUrl.setText("");
+            previewBinding.tvSiteUrl.setVisibility(View.GONE);
+            previewBinding.clPreviewLink.setVisibility(View.GONE);
         }
     }
 
@@ -812,7 +787,7 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
     public void onCopyLink(boolean isCopied) {
         if (isCopied) {
             ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-            ClipData clip = ClipData.newPlainText("", detailBinding.tvUrl.getText().toString().trim());
+            ClipData clip = ClipData.newPlainText("", previewBinding.tvSiteUrl.getText().toString().trim());
             clipboard.setPrimaryClip(clip);
             getToast(this, R.string.link_copied);
         }
@@ -820,9 +795,13 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
 
     @Override
     public void onCreateLink(String link) {
-        detailBinding.tvUrl.setText(link);
-        detailBinding.tvUrl.setVisibility(View.VISIBLE);
-        startViewAnimation(detailBinding.tvUrl, this, R.anim.appearance);
+        note.setWebLink(link);
+        setPreviewLink(this, link, previewBinding.ivSiteImage,
+                previewBinding.tvSiteName, previewBinding.tvSiteDescription);
+        previewBinding.tvSiteUrl.setText(link);
+        previewBinding.tvSiteUrl.setVisibility(View.VISIBLE);
+        previewBinding.clPreviewLink.setVisibility(View.VISIBLE);
+        startViewAnimation(previewBinding.clPreviewLink, this, R.anim.appearance);
         getToast(this, R.string.toast_valid_url);
     }
 }

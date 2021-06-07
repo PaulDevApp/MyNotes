@@ -85,4 +85,5 @@
     <string name="change_the_view_of_notes">नोटों का दृश्य बदलें</string>
     <string name="show_notes_with_images">छवियों के साथ नोट दिखाएं</string>
     <string name="empty_note_deleted">खाली नोट हटाया गया</string>
+    <string name="note_deleted">नोट हटा दिया गया!</string>
 </resources>
