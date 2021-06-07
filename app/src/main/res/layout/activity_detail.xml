@@ -156,9 +156,7 @@
                     android:layout_marginStart="@dimen/_4sdp"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginEnd="@dimen/_4sdp"
-                    android:layout_marginBottom="@dimen/_8sdp"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:foreground="?android:attr/selectableItemBackground" />
+                    android:layout_marginBottom="@dimen/_8sdp" />
 
                 <TextView
                     android:id="@+id/tv_text_date_time_created"
