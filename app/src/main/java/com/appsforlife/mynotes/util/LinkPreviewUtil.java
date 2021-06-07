@@ -57,8 +57,8 @@ public class LinkPreviewUtil {
                                             tvSiteName.setText(element.attr(CONTENT));
                                             if (!TextUtils.isEmpty(tvSiteName.getText())) {
                                                 tvSiteName.setVisibility(View.VISIBLE);
+                                                tvSiteName.setVisibility(View.VISIBLE);
                                             }
-                                            tvSiteName.setVisibility(View.VISIBLE);
                                             break;
                                         case META_SITE_DESCRIPTION:
                                             tvSiteDescription.setText(element.attr(CONTENT));
