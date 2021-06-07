@@ -64,27 +64,15 @@
             android:transitionName="image"
             android:visibility="gone" />
 
-<!--        <FrameLayout-->
-<!--            android:id="@+id/linkPreviewItem"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@+id/iv_item_image"-->
-<!--            android:layout_marginStart="@dimen/_4sdp"-->
-<!--            android:layout_marginTop="@dimen/_5sdp"-->
-<!--            android:layout_marginEnd="@dimen/_4sdp"-->
-<!--            android:visibility="gone"-->
-<!--            tools:visibility="visible">-->
-
-            <include
-                android:id="@+id/previewLink"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/iv_item_image"
-                android:layout_marginStart="@dimen/_4sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginEnd="@dimen/_4sdp"
-                layout="@layout/layout_link_preview" />
-<!--        </FrameLayout>-->
+        <include
+            android:id="@+id/previewLink"
+            layout="@layout/layout_link_preview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_item_image"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_4sdp" />
 
         <TextView
             android:id="@+id/tv_item_date_time"

@@ -11,12 +11,14 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.speech.RecognizerIntent;
+import android.transition.TransitionInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -53,6 +55,11 @@ import com.appsforlife.mynotes.listeners.DialogDeleteNoteListener;
 import com.appsforlife.mynotes.listeners.DialogReplaceImageListener;
 import com.appsforlife.mynotes.util.LinkPreviewUtil;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
@@ -98,7 +105,7 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
 
     public static void start(Activity caller, Note note, RelativeLayout noteLayout) {
         Intent intent = new Intent(caller, NoteActivity.class);
-        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(caller, noteLayout, "note");
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(caller, noteLayout, noteLayout.getTransitionName());
         if (note != null) {
             intent.putExtra(NOTE, note);
         }
@@ -312,9 +319,9 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
     }
 
     private void setPhoto(String imageUri) {
-        Glide.with(this).load(imageUri).into(detailBinding.ivShowPhoto);
         detailBinding.ivShowPhoto.setVisibility(View.VISIBLE);
         detailBinding.ivDeleteImage.setVisibility(View.VISIBLE);
+        Glide.with(this).load(imageUri).diskCacheStrategy(DiskCacheStrategy.ALL).into(detailBinding.ivShowPhoto);
     }
 
     private void setCheckImageDone() {

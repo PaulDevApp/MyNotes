@@ -8,6 +8,13 @@
         <item name="colorControlHighlight">@color/colorBackgroundDoneNight</item>
         <item name="cardBackgroundColor">@color/backgroundLinkAccentSecondary</item>
         <item name="android:navigationBarColor">@color/colorAppBarNight</item>
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowSharedElementEnterTransition">
+            @transition/shared_element_transition
+        </item>
+        <item name="android:windowSharedElementExitTransition">
+            @transition/shared_element_transition
+        </item>
         <item name="colorSecondary">@color/colorSecondaryNight</item>
         <item name="colorSecondaryVariant">@color/colorAppBarNight</item>
         <item name="android:windowAnimationStyle">@style/WindowsAnimationTransition</item>

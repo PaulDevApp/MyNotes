@@ -7,6 +7,7 @@
         <item name="colorSecondary">@color/colorSecondaryDay</item>
         <item name="colorSecondaryVariant">@color/colorAppBarDay</item>
         <item name="cardBackgroundColor">@color/backgroundLinkAccent</item>
+        <item name="android:windowActivityTransitions">true</item>
         <item name="colorOnBackground">@color/colorPrimaryDayTransparent</item>
         <item name="colorControlHighlight">@color/colorBackgroundDoneDay</item>
         <item name="android:navigationBarColor">@color/colorAppBarDay</item>
@@ -17,13 +18,11 @@
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
     </style>
 
-    <style name="BottomSheetDialogTheme"
-        parent="Theme.Design.Light.BottomSheetDialog">
+    <style name="BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/AppModalStyle</item>
     </style>
 
-    <style name="AppModalStyle"
-        parent="Widget.Design.BottomSheet.Modal">
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/background_palette</item>
     </style>
 
