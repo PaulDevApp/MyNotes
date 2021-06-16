@@ -11,20 +11,20 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.speech.RecognizerIntent;
-import android.transition.TransitionInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -55,11 +55,7 @@ import com.appsforlife.mynotes.listeners.DialogDeleteNoteListener;
 import com.appsforlife.mynotes.listeners.DialogReplaceImageListener;
 import com.appsforlife.mynotes.util.LinkPreviewUtil;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
@@ -74,8 +70,8 @@ import static com.appsforlife.mynotes.Support.*;
 import static com.appsforlife.mynotes.App.*;
 import static com.appsforlife.mynotes.constants.Constants.*;
 
-@SuppressLint("ResourceAsColor")
-public class NoteActivity extends AppCompatActivity implements ColorPaletteListener,
+@SuppressLint("ResourceAsColor,SetTextI18n")
+public class DetailActivity extends AppCompatActivity implements ColorPaletteListener,
         DialogDeleteImageListener, DialogReplaceImageListener, DialogDeleteNoteListener,
         DialogClickLinkListener, DialogCreateLinkListener {
 
@@ -104,7 +100,7 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
 
 
     public static void start(Activity caller, Note note, RelativeLayout noteLayout) {
-        Intent intent = new Intent(caller, NoteActivity.class);
+        Intent intent = new Intent(caller, DetailActivity.class);
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(caller, noteLayout, noteLayout.getTransitionName());
         if (note != null) {
             intent.putExtra(NOTE, note);
@@ -113,14 +109,26 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
     }
 
     public static void start(Activity caller, Note note) {
-        Intent intent = new Intent(caller, NoteActivity.class);
+        Intent intent = new Intent(caller, DetailActivity.class);
         if (note != null) {
             intent.putExtra(NOTE, note);
         }
         caller.startActivity(intent);
     }
 
-    @SuppressLint("SetTextI18n")
+    ActivityResultLauncher<Intent> getSpeechResult = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    Intent intent = result.getData();
+                    if (intent != null) {
+                        ArrayList<String> text = intent.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                        detailBinding.etInputText.setText(detailBinding.etInputText.getText().toString().trim()
+                                + " " + text.get(0) + ".");
+                    }
+                }
+            });
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -250,11 +258,13 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
             Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
             intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, Locale.getDefault().getLanguage());
             try {
-                startActivityForResult(intent, REQUEST_CODE_SPEECH);
+                getSpeechResult.launch(intent);
             } catch (Exception e) {
                 getToast(this, R.string.speech_message);
             }
         });
+
+        setBackgroundNoteColor(detailBinding.rlDetail, note.getColor());
     }
 
     private void copy() {
@@ -304,6 +314,7 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
                         previewBinding.ivSiteImage, previewBinding.tvSiteName, previewBinding.tvSiteDescription);
                 previewBinding.clPreviewLink.setVisibility(View.VISIBLE);
                 previewBinding.tvSiteUrl.setVisibility(View.VISIBLE);
+                note.setWebLink(sharedText);
             } else {
                 detailBinding.etInputText.setText(sharedText);
             }
@@ -339,7 +350,6 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
                 !note.getWebLink().trim().isEmpty());
     }
 
-    @SuppressLint({"SetTextI18n", "ClickableViewAccessibility"})
     private void getPreviousNote() {
         detailBinding.etInputTitle.setText(note.getTitle());
         detailBinding.etInputText.setText(note.getText());
@@ -598,7 +608,6 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
         }
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -616,12 +625,6 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
             setPhoto(imagePath);
             startViewAnimation(detailBinding.ivShowPhoto, this, R.anim.appearance);
             startViewAnimation(detailBinding.ivDeleteImage, this, R.anim.appearance);
-        } else if (requestCode == REQUEST_CODE_SPEECH) {
-            if (resultCode == RESULT_OK && data != null) {
-                ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                detailBinding.etInputText.setText(detailBinding.etInputText.getText().toString().trim()
-                        + " " + text.get(0) + ".");
-            }
         }
     }
 
@@ -679,6 +682,7 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
         imageViewColor.setVisibility(View.VISIBLE);
         setColorIndicator(colorPicker, paletteBinding.ivColorIndicator, this);
         colorDetailPaletteAdapter.notifyDataSetChanged();
+        setBackgroundNoteColor(detailBinding.rlDetail, colorPicker);
     }
 
     private void setNoteTextSize() {
@@ -765,11 +769,13 @@ public class NoteActivity extends AppCompatActivity implements ColorPaletteListe
 
     @Override
     public void onShareLink(boolean isShare) {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, note.getWebLink());
-        Intent chosenIntent = Intent.createChooser(intent, "");
-        startActivity(chosenIntent);
+        if (isShare){
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_TEXT, note.getWebLink());
+            Intent chosenIntent = Intent.createChooser(intent, "");
+            startActivity(chosenIntent);
+        }
     }
 
     @Override

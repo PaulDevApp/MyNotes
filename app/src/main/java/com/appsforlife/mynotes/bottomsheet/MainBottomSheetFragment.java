@@ -1,7 +1,6 @@
 package com.appsforlife.mynotes.bottomsheet;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.appsforlife.mynotes.App;
 import com.appsforlife.mynotes.R;
-import com.appsforlife.mynotes.activities.SettingsActivity;
 import com.appsforlife.mynotes.adapters.ColorMainPaletteAdapter;
 import com.appsforlife.mynotes.databinding.LayoutBottomMenuBinding;
 import com.appsforlife.mynotes.entities.PaletteColor;
@@ -32,6 +29,7 @@ public class MainBottomSheetFragment extends BottomSheetDialogFragment implement
     private LayoutBottomMenuBinding binding;
     private BottomSheetSetSortingListener bottomSheetSetSortingListener;
     private BottomSheetSetViewListener bottomSheetSetViewListener;
+    private BottomSheetSettingsListener bottomSheetSettingsListener;
 
     public interface BottomSheetSetSortingListener {
         void onOnClick(boolean isClick);
@@ -41,10 +39,15 @@ public class MainBottomSheetFragment extends BottomSheetDialogFragment implement
         void onChangeView(boolean isChange);
     }
 
+    public interface BottomSheetSettingsListener{
+        void onClickSettings(boolean isClick);
+    }
+
     @Override
     public void onAttach(@NonNull Context context) {
         bottomSheetSetSortingListener = (BottomSheetSetSortingListener) context;
         bottomSheetSetViewListener = (BottomSheetSetViewListener) context;
+        bottomSheetSettingsListener = (BottomSheetSettingsListener) context;
         super.onAttach(context);
     }
 
@@ -117,8 +120,9 @@ public class MainBottomSheetFragment extends BottomSheetDialogFragment implement
         }));
 
         binding.tvSettings.setOnClickListener(v -> {
-            startActivity(new Intent(getContext(), SettingsActivity.class));
-            requireActivity().overridePendingTransition(R.anim.activity_slide_from_bottom, R.anim.activity_slide_to_top);
+            if (bottomSheetSettingsListener != null){
+                bottomSheetSettingsListener.onClickSettings(true);
+            }
         });
 
 

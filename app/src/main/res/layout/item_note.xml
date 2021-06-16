@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_background"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/_2sdp"
-    android:background="@drawable/background_note">
+    android:background="@drawable/background_note"
+    tools:background="@color/colorDefault">
 
     <RelativeLayout
         android:id="@+id/rl_note"
@@ -28,7 +30,7 @@
             android:fontFamily="@font/title_note_font"
             android:includeFontPadding="false"
             android:singleLine="true"
-            android:textColor="?attr/color"
+            android:textColor="@color/colorTextNight"
             android:textSize="@dimen/_14ssp"
             android:transitionName="title"
             tools:text="Title" />
@@ -45,7 +47,7 @@
             android:fontFamily="@font/text_note_font"
             android:includeFontPadding="false"
             android:maxLines="10"
-            android:textColor="?attr/color"
+            android:textColor="@color/colorTextNight"
             android:textSize="@dimen/_13ssp"
             android:transitionName="text"
             tools:text="Text note" />
@@ -84,7 +86,7 @@
             android:fontFamily="@font/time_date_font"
             android:gravity="end"
             android:includeFontPadding="false"
-            android:textColor="?attr/color"
+            android:textColor="@color/colorTextNight"
             android:textSize="@dimen/_9ssp"
             android:transitionName="dateTime"
             tools:text="28 октября 2020" />
@@ -100,6 +102,7 @@
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_image"
             android:visibility="gone"
+            app:tint="@color/colorPrimaryDay"
             tools:visibility="visible" />
 
         <ImageView
@@ -114,6 +117,7 @@
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_link"
             android:visibility="gone"
+            app:tint="@color/colorPrimaryDay"
             tools:visibility="visible" />
 
         <ImageView
@@ -126,6 +130,7 @@
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_lock_close"
             android:visibility="gone"
+            app:tint="@color/colorPrimaryDay"
             tools:visibility="visible" />
     </RelativeLayout>
 

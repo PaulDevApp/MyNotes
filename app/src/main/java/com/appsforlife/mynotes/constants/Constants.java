@@ -2,13 +2,11 @@ package com.appsforlife.mynotes.constants;
 
 public final class Constants {
 
-    public static final int REQUEST_CODE_ADD_NOTE = 1;
     public static final int REQUEST_CODE_STORAGE_PERMISSION = 2;
     public static final int REQUEST_CODE_CAMERA_PERMISSION = 3;
     public static final int REQUEST_CAMERA = 4;
     public static final int REQUEST_CODE_SHARE_CREATE_STORAGE_PERMISSION = 5;
     public static final int REQUEST_CODE_SELECT_IMAGE = 6;
-    public static final int REQUEST_CODE_SPEECH = 7;
 
     public static final String PICTURE_PATH = "picture_path";
 
@@ -53,21 +51,20 @@ public final class Constants {
     public static final String ACTION_SPEECH = "speech";
     public static final String SPEECH_STRING = "speech";
 
+    // Note colors
     public static final String All_COLORS = "all_colors";
-    public static final String COLOR_DEFAULT = "#bda58f";
-    public static final String COLOR_YELLOW = "#efad0a";
-    public static final String COLOR_KARINA = "#b05a6e";
-    public static final String COLOR_ORANGE = "#ba7338";
-    public static final String COLOR_BLUE = "#4776b9";
-    public static final String COLOR_RED = "#cc4953";
-    public static final String COLOR_GREEN = "#79860f";
-    public static final String COLOR_TURQUOISE = "#96aab7";
-    public static final String COLOR_GREEN_GREY = "#57898a";
-    public static final String COLOR_LIGHT_PINK = "#bea6d0";
-    public static final String COLOR_LIGHT_GREEN = "#579573";
-    public static final String COLOR_LIGHT_BLUE = "#6d7bab";
-    public static final String COLOR_GREY = "#798486";
-    public static final String COLOR_LIGHT_YELLOW = "#a69e70";
+    public static final String COLOR_DEFAULT = "#a1887f";
+    public static final String COLOR_YELLOW = "#af861f";
+    public static final String COLOR_ORANGE = "#ab5600";
+    public static final String COLOR_RED = "#db5858";
+    public static final String COLOR_KARINA = "#ce467b";
+    public static final String COLOR_PURPLE = "#954bb4";
+    public static final String COLOR_TEAl = "#339388";
+    public static final String COLOR_BLUE = "#4791db";
+    public static final String COLOR_CYAN = "#33abb8";
+    public static final String COLOR_INDIGO = "#5965b2";
+    public static final String COLOR_GREEN = "#5fa463";
+    public static final String COLOR_BLUE_GREY = "#607d8b";
 
     public static final String META = "meta";
     public static final String PROPERTY = "property";

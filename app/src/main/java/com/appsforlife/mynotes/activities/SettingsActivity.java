@@ -70,16 +70,19 @@ public class SettingsActivity extends AppCompatActivity implements DialogDeleteN
                     getInstance().setIsNightModeEnabled(AUTO_MODE);
                     finish();
                     startActivity(intent);
+                    overridePendingTransition(0,0);
                     break;
                 case R.id.rb_light:
                     getInstance().setIsNightModeEnabled(LIGHT_MODE);
                     finish();
                     startActivity(intent);
+                    overridePendingTransition(0,0);
                     break;
                 case R.id.rb_dark:
                     getInstance().setIsNightModeEnabled(NIGHT_MODE);
                     finish();
                     startActivity(intent);
+                    overridePendingTransition(0,0);
                     break;
             }
         });

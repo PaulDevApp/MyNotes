@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_32sdp">
+    android:layout_height="@dimen/_30sdp">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/sv_search"
@@ -30,7 +30,7 @@
 
         <ImageView
             android:id="@+id/iv_toolbar_close"
-            android:layout_width="@dimen/_25sdp"
+            android:layout_width="@dimen/_20sdp"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/_8sdp"
             android:background="?android:attr/selectableItemBackground"
@@ -49,7 +49,8 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:textColor="?attr/color"
-            android:textSize="@dimen/_17ssp"
+            android:textSize="@dimen/_15ssp"
+            android:layout_marginStart="@dimen/_2sdp"
             android:textStyle="normal"
             app:layout_constraintStart_toEndOf="@+id/iv_toolbar_close"
             app:layout_constraintTop_toTopOf="@id/iv_toolbar_close"
@@ -58,7 +59,7 @@
 
         <ImageView
             android:id="@+id/iv_toolbar_delete"
-            android:layout_width="@dimen/_25sdp"
+            android:layout_width="@dimen/_20sdp"
             android:layout_height="0dp"
             android:layout_marginEnd="@dimen/_8sdp"
             android:background="?android:attr/selectableItemBackground"
@@ -72,7 +73,7 @@
 
         <ImageView
             android:id="@+id/iv_selected_all"
-            android:layout_width="@dimen/_25sdp"
+            android:layout_width="@dimen/_20sdp"
             android:layout_height="0dp"
             android:layout_marginEnd="@dimen/_34sdp"
             android:background="?android:attr/selectableItemBackground"
@@ -93,8 +94,8 @@
             android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/app_name"
             android:foreground="?android:attr/selectableItemBackground"
-            android:paddingTop="@dimen/_2sdp"
-            android:paddingBottom="@dimen/_2sdp"
+            android:paddingTop="@dimen/_7sdp"
+            android:paddingBottom="@dimen/_7sdp"
             android:src="@drawable/ic_lock_close"
             app:layout_constraintBottom_toBottomOf="@+id/iv_toolbar_close"
             app:layout_constraintEnd_toStartOf="@+id/iv_selected_all"
@@ -110,8 +111,8 @@
             android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/app_name"
             android:foreground="?android:attr/selectableItemBackground"
-            android:paddingTop="@dimen/_2sdp"
-            android:paddingBottom="@dimen/_2sdp"
+            android:paddingTop="@dimen/_7sdp"
+            android:paddingBottom="@dimen/_7sdp"
             android:src="@drawable/ic_lock_open"
             app:layout_constraintBottom_toBottomOf="@+id/iv_toolbar_close"
             app:layout_constraintEnd_toStartOf="@+id/iv_main_favorite_on"
@@ -127,8 +128,8 @@
             android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/app_name"
             android:foreground="?android:attr/selectableItemBackground"
-            android:paddingTop="@dimen/_2sdp"
-            android:paddingBottom="@dimen/_2sdp"
+            android:paddingTop="@dimen/_7sdp"
+            android:paddingBottom="@dimen/_7sdp"
             android:src="@drawable/ic_color_note"
             app:layout_constraintBottom_toBottomOf="@+id/iv_toolbar_close"
             app:layout_constraintEnd_toStartOf="@+id/iv_main_favorite_off"

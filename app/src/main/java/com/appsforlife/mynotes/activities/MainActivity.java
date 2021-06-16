@@ -1,5 +1,7 @@
 package com.appsforlife.mynotes.activities;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.AnimRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Canvas;
@@ -61,7 +64,8 @@ import static com.appsforlife.mynotes.constants.Constants.*;
 
 public class MainActivity extends AppCompatActivity implements NoteListener, NoteSelectListener,
         NoteLongListener, DialogDeleteNoteListener, MainBottomSheetFragment.BottomSheetSetSortingListener,
-        MainBottomSheetFragment.BottomSheetSetViewListener, DialogPaletteListener, DialogCreateLinkListener {
+        MainBottomSheetFragment.BottomSheetSetViewListener, DialogPaletteListener, DialogCreateLinkListener,
+        MainBottomSheetFragment.BottomSheetSettingsListener {
 
     private NotesAdapter notesAdapter;
     private ArrayList<Note> notesFromDB;
@@ -69,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
     private ActivityMainBinding mainBinding;
     private LayoutMultiplyBinding multiplyBinding;
     private StaggeredGridLayoutManager staggeredGridLayoutManager;
-
 
     private ImagePickerDialog imagePickerDialog;
     private UrlDialog urlDialog;
@@ -81,6 +84,23 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
     private boolean isAnim;
     private boolean isSelectedAll;
     public static int countSelected;
+
+    ActivityResultLauncher<Intent> getSpeechResult = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    Intent intent = result.getData();
+                    if (intent != null) {
+                        ArrayList<String> text = intent.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                        Intent detailIntent = new Intent(getApplicationContext(), DetailActivity.class);
+                        detailIntent.putExtra(IS_FROM_QUICK_ACTIONS, true);
+                        detailIntent.putExtra(QUICK_ACTIONS_TYPE, ACTION_SPEECH);
+                        detailIntent.putExtra(SPEECH_STRING, text.get(0) + ".");
+                        startActivity(detailIntent);
+                        overridePendingTransition(R.anim.zoom_in, R.anim.activity_static_animation);
+                        throwOff(400);
+                    }
+                }
+            });
 
     @SuppressLint("SupportAnnotationUsage")
     @AnimRes
@@ -109,14 +129,8 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(
                 App.getInstance().isChangeView() ? 1 : 2, StaggeredGridLayoutManager.VERTICAL);
 
-        if (App.getInstance().isChangeView()) {
-            mainBinding.rvNotes.setLayoutManager(staggeredGridLayoutManager);
-            startItemAnimation(this, mainBinding.rvNotes, R.anim.slide_from_bottom_layout);
-        } else {
-            mainBinding.rvNotes.setLayoutManager(staggeredGridLayoutManager);
-            startItemAnimation(this, mainBinding.rvNotes, R.anim.fall_dawn_layout);
-        }
 
+        mainBinding.rvNotes.setLayoutManager(staggeredGridLayoutManager);
         mainBinding.rvNotes.setAdapter(notesAdapter);
 
         new ItemTouchHelper(simpleCallback).attachToRecyclerView(mainBinding.rvNotes);
@@ -132,12 +146,18 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
             sorting();
         });
 
+        if (App.getInstance().isChangeView()) {
+            startItemAnimation(this, mainBinding.rvNotes, R.anim.slide_from_bottom_layout);
+        } else {
+            startItemAnimation(this, mainBinding.rvNotes, R.anim.fall_dawn_layout);
+        }
+
         setSupportActionBar(mainBinding.bottomAppbar);
 
         startViewAnimation(mainBinding.fab, this, R.anim.fab_bounce);
         mainBinding.fab.setOnClickListener(v -> {
             if (!isClick) {
-                NoteActivity.start(MainActivity.this, null);
+                DetailActivity.start(MainActivity.this, null);
                 overridePendingTransition(R.anim.zoom_in, R.anim.activity_static_animation);
                 isClick = true;
                 throwOff(400);
@@ -261,6 +281,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
             MainBottomSheetFragment blankFragment = new MainBottomSheetFragment();
             blankFragment.show(getSupportFragmentManager(), blankFragment.getTag());
         });
+
     }
 
     private void findNote(String keyword) {
@@ -354,13 +375,12 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
                 break;
             case R.id.appbar_add_link:
                 urlDialog.createMainUrlDialog();
-                throwOff(0);
                 break;
-            case R.id.appbar_add_note:
+            case R.id.appbar_add_note_speech:
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, Locale.getDefault().getLanguage());
                 try {
-                    startActivityForResult(intent, REQUEST_CODE_SPEECH);
+                    getSpeechResult.launch(intent);
                 } catch (Exception e) {
                     getToast(this, R.string.speech_message);
                 }
@@ -377,11 +397,11 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
                 Uri selectedImageUri = data.getData();
                 if (selectedImageUri != null) {
                     try {
-                        Intent intent = new Intent(getApplicationContext(), NoteActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
                         intent.putExtra(IS_FROM_QUICK_ACTIONS, true);
                         intent.putExtra(QUICK_ACTIONS_TYPE, ACTION_IMAGE);
                         intent.putExtra(IMAGE_PATH, selectedImageUri.toString());
-                        startActivityForResult(intent, REQUEST_CODE_ADD_NOTE);
+                        startActivity(intent);
                         overridePendingTransition(R.anim.zoom_in, R.anim.activity_static_animation);
                         throwOff(400);
                     } catch (Exception e) {
@@ -390,24 +410,13 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
                 }
             }
         } else if (requestCode == REQUEST_CAMERA && resultCode == RESULT_OK) {
-            Intent intent = new Intent(getApplicationContext(), NoteActivity.class);
+            Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
             intent.putExtra(IS_FROM_QUICK_ACTIONS, true);
             intent.putExtra(QUICK_ACTIONS_TYPE, ACTION_CAMERA);
             intent.putExtra(CAMERA_PATH, imagePickerDialog.getPhotoPath());
-            startActivityForResult(intent, REQUEST_CODE_ADD_NOTE);
+            startActivity(intent);
             overridePendingTransition(R.anim.zoom_in, R.anim.activity_static_animation);
             throwOff(400);
-        } else if (requestCode == REQUEST_CODE_SPEECH) {
-            if (resultCode == RESULT_OK && data != null) {
-                ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                Intent intent = new Intent(getApplicationContext(), NoteActivity.class);
-                intent.putExtra(IS_FROM_QUICK_ACTIONS, true);
-                intent.putExtra(QUICK_ACTIONS_TYPE, ACTION_SPEECH);
-                intent.putExtra(SPEECH_STRING, text.get(0) + ".");
-                startActivityForResult(intent, REQUEST_CODE_ADD_NOTE);
-                overridePendingTransition(R.anim.zoom_in, R.anim.activity_static_animation);
-                throwOff(400);
-            }
         }
     }
 
@@ -535,7 +544,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
     @Override
     public void onNoteClicked(Note note, RelativeLayout noteLayout) {
         if (!isClick) {
-            NoteActivity.start(this, note, noteLayout);
+            DetailActivity.start(this, note, noteLayout);
             isClick = true;
         }
     }
@@ -653,11 +662,21 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
 
     @Override
     public void onCreateLink(String link) {
-        Intent intent = new Intent(this, NoteActivity.class);
+        Intent intent = new Intent(this, DetailActivity.class);
         intent.putExtra(IS_FROM_QUICK_ACTIONS, true);
         intent.putExtra(QUICK_ACTIONS_TYPE, ACTION_URL);
         intent.putExtra(ACTION_URL, link);
-        startActivityForResult(intent, REQUEST_CODE_ADD_NOTE);
+        startActivity(intent);
         overridePendingTransition(R.anim.zoom_in, R.anim.activity_static_animation);
+        throwOff(0);
+    }
+
+    @Override
+    public void onClickSettings(boolean isClick) {
+        if (isClick) {
+            startActivity(new Intent(this, SettingsActivity.class));
+            overridePendingTransition(R.anim.activity_slide_from_bottom, R.anim.activity_slide_to_top);
+            throwOff(400);
+        }
     }
 }

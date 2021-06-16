@@ -44,21 +44,9 @@ public class PaletteDialog  {
                 paletteDialog.cancel();
             }
         });
-        view.findViewById(R.id.v_karina).setOnClickListener(v -> {
-            if (dialogPaletteListener != null){
-                dialogPaletteListener.onSelectColor(COLOR_KARINA);
-                paletteDialog.cancel();
-            }
-        });
-        view.findViewById(R.id.v_orange).setOnClickListener(v -> {
+        view.findViewById(R.id.v_yellow_orange).setOnClickListener(v -> {
             if (dialogPaletteListener != null){
                 dialogPaletteListener.onSelectColor(COLOR_ORANGE);
-                paletteDialog.cancel();
-            }
-        });
-        view.findViewById(R.id.v_blue).setOnClickListener(v -> {
-            if (dialogPaletteListener != null){
-                dialogPaletteListener.onSelectColor(COLOR_BLUE);
                 paletteDialog.cancel();
             }
         });
@@ -68,54 +56,55 @@ public class PaletteDialog  {
                 paletteDialog.cancel();
             }
         });
+        view.findViewById(R.id.v_karina).setOnClickListener(v -> {
+            if (dialogPaletteListener != null){
+                dialogPaletteListener.onSelectColor(COLOR_KARINA);
+                paletteDialog.cancel();
+            }
+        });
+        view.findViewById(R.id.v_purple).setOnClickListener(v -> {
+            if (dialogPaletteListener != null){
+                dialogPaletteListener.onSelectColor(COLOR_PURPLE);
+                paletteDialog.cancel();
+            }
+        });
+        view.findViewById(R.id.v_red_teal).setOnClickListener(v -> {
+            if (dialogPaletteListener != null){
+                dialogPaletteListener.onSelectColor(COLOR_TEAl);
+                paletteDialog.cancel();
+            }
+        });
+        view.findViewById(R.id.v_blue).setOnClickListener(v -> {
+            if (dialogPaletteListener != null){
+                dialogPaletteListener.onSelectColor(COLOR_BLUE);
+                paletteDialog.cancel();
+            }
+        });
+        view.findViewById(R.id.v_cyan).setOnClickListener(v -> {
+            if (dialogPaletteListener != null){
+                dialogPaletteListener.onSelectColor(COLOR_CYAN);
+                paletteDialog.cancel();
+            }
+        });
+        view.findViewById(R.id.v_indigo).setOnClickListener(v -> {
+            if (dialogPaletteListener != null){
+                dialogPaletteListener.onSelectColor(COLOR_INDIGO);
+                paletteDialog.cancel();
+            }
+        });
         view.findViewById(R.id.v_green).setOnClickListener(v -> {
             if (dialogPaletteListener != null){
                 dialogPaletteListener.onSelectColor(COLOR_GREEN);
                 paletteDialog.cancel();
             }
         });
-        view.findViewById(R.id.v_turquoise).setOnClickListener(v -> {
+        view.findViewById(R.id.v_blue_grey).setOnClickListener(v -> {
             if (dialogPaletteListener != null){
-                dialogPaletteListener.onSelectColor(COLOR_TURQUOISE);
+                dialogPaletteListener.onSelectColor(COLOR_BLUE_GREY);
                 paletteDialog.cancel();
             }
         });
-        view.findViewById(R.id.v_green_grey).setOnClickListener(v -> {
-            if (dialogPaletteListener != null){
-                dialogPaletteListener.onSelectColor(COLOR_GREEN_GREY);
-                paletteDialog.cancel();
-            }
-        });
-        view.findViewById(R.id.v_light_pink).setOnClickListener(v -> {
-            if (dialogPaletteListener != null){
-                dialogPaletteListener.onSelectColor(COLOR_LIGHT_PINK);
-                paletteDialog.cancel();
-            }
-        });
-        view.findViewById(R.id.v_light_green).setOnClickListener(v -> {
-            if (dialogPaletteListener != null){
-                dialogPaletteListener.onSelectColor(COLOR_LIGHT_GREEN);
-                paletteDialog.cancel();
-            }
-        });
-        view.findViewById(R.id.v_light_blue).setOnClickListener(v -> {
-            if (dialogPaletteListener != null){
-                dialogPaletteListener.onSelectColor(COLOR_LIGHT_BLUE);
-                paletteDialog.cancel();
-            }
-        });
-        view.findViewById(R.id.v_grey).setOnClickListener(v -> {
-            if (dialogPaletteListener != null){
-                dialogPaletteListener.onSelectColor(COLOR_GREY);
-                paletteDialog.cancel();
-            }
-        });
-        view.findViewById(R.id.v_light_yellow).setOnClickListener(v -> {
-            if (dialogPaletteListener != null){
-                dialogPaletteListener.onSelectColor(COLOR_LIGHT_YELLOW);
-                paletteDialog.cancel();
-            }
-        });
+
         paletteDialog.show();
     }
 

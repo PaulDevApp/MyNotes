@@ -11,26 +11,28 @@
     <color name="colorAppBarNight">#54504C</color>
     <color name="colorSecondaryNight">#424242</color>
     <color name="colorSweepDone">#82b21e</color>
-    <color name="colorYellow">#efad0a</color>
-    <color name="colorKarina">#b05a6e</color>
-    <color name="colorGrey">#798486</color>
-    <color name="colorOrange">#ba7338</color>
-    <color name="colorBlue">#4776b9</color>
-    <color name="colorRed">#cc4953</color>
-    <color name="colorGreen">#79860f</color>
-    <color name="colorLightYellow">#a69e70</color>
-    <color name="colorDefault">#bda58f</color>
-    <color name="colorTurquoise">#96aab7</color>
-    <color name="colorGreenGrey">#57898a</color>
-    <color name="colorLightPink">#bea6d0</color>
-    <color name="colorLightGreen">#579573</color>
-    <color name="colorLightBlue">#6d7bab</color>
+
+    <!--Note colors-->
+    <color name="colorDefault">#a1887f</color>
+    <color name="colorYellow">#af861f</color>
+    <color name="colorOrange">#ab5600</color>
+    <color name="colorRed">#db5858</color>
+    <color name="colorKarina">#ce467b</color>
+    <color name="colorPurple">#954bb4</color>
+    <color name="colorTeal">#339388</color>
+    <color name="colorBlue">#4791db</color>
+    <color name="colorCyan">#33abb8</color>
+    <color name="colorIndigo">#5965b2</color>
+    <color name="colorGreen">#5fa463</color>
+    <color name="colorBlueGrey">#607d8b</color>
+
+    <color name="colorTextHint">#BDBDBD</color>
+
     <color name="colorDelete">#b71c1c</color>
     <color name="colorPrimaryDayTransparent">#80fafafa</color>
     <color name="colorPrimaryNightTransparent">#80282726</color>
     <color name="colorBackgroundDoneDay">#A6fafafa</color>
     <color name="colorBackgroundDoneNight">#A6282726</color>
     <color name="colorTransparent">#0000ffff</color>
-    <color name="backgroundLinkAccent">#1A7e57c2</color>
-    <color name="backgroundLinkAccentSecondary">#1AFFEB3B</color>
+    <color name="backgroundLink">#26fafafa</color>
 </resources>

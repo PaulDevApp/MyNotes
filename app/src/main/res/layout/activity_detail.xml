@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorPrimary"
-    tools:context=".activities.NoteActivity">
+    tools:context=".activities.DetailActivity">
 
     <RelativeLayout
         android:id="@+id/rl_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:transitionName="note">
+        android:background="@drawable/background_note"
+        android:transitionName="note"
+        tools:background="@color/colorDefault">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_toolbar"
@@ -30,6 +31,7 @@
                 android:src="@drawable/ic_back"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/colorPrimaryDay"
                 tools:ignore="UnusedAttribute" />
 
             <ImageView
@@ -45,6 +47,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/iv_back_to_main"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/iv_back_to_main"
+                app:tint="@color/colorPrimaryDay"
                 tools:ignore="UnusedAttribute"
                 tools:visibility="visible" />
 
@@ -60,6 +63,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/iv_back_to_main"
                 app:layout_constraintEnd_toStartOf="@+id/iv_delete_note"
                 app:layout_goneMarginEnd="@dimen/_8sdp"
+                app:tint="@color/colorPrimaryDay"
                 tools:ignore="UnusedAttribute" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -88,6 +92,7 @@
                     android:layout_marginBottom="@dimen/_4sdp"
                     android:background="@null"
                     android:ellipsize="end"
+                    android:textColorHint="@color/colorTextHint"
                     android:fontFamily="@font/title_note_font"
                     android:hint="@string/title"
                     android:importantForAutofill="no"
@@ -95,7 +100,7 @@
                     android:inputType="text|textCapSentences"
                     android:padding="@dimen/_6sdp"
                     android:singleLine="true"
-                    android:textColor="?attr/color"
+                    android:textColor="@color/colorTextNight"
                     android:textSize="23sp"
                     android:transitionName="title" />
 
@@ -107,6 +112,7 @@
                     android:layout_marginStart="@dimen/_4sdp"
                     android:layout_marginEnd="@dimen/_4sdp"
                     android:layout_marginBottom="@dimen/_6sdp"
+                    android:textColorHint="@color/colorTextHint"
                     android:autoLink="web"
                     android:background="@null"
                     android:fontFamily="@font/text_note_font"
@@ -116,6 +122,7 @@
                     android:includeFontPadding="false"
                     android:inputType="textMultiLine|textCapSentences"
                     android:linksClickable="true"
+                    android:textColor="@color/colorTextNight"
                     android:textSize="19sp"
                     android:transitionName="text" />
 
@@ -143,8 +150,9 @@
                     android:background="?android:attr/selectableItemBackground"
                     android:contentDescription="@string/app_name"
                     android:foreground="?android:attr/selectableItemBackground"
-                    android:src="@drawable/ic_background_delete"
+                    android:src="@drawable/ic_close"
                     android:visibility="gone"
+                    app:tint="@color/colorPrimaryDay"
                     tools:visibility="visible" />
 
                 <include
@@ -169,7 +177,7 @@
                     android:fontFamily="@font/time_date_font"
                     android:includeFontPadding="false"
                     android:padding="@dimen/_1sdp"
-                    android:textColor="?attr/color"
+                    android:textColor="@color/colorTextNight"
                     android:textSize="12sp"
                     android:transitionName="date"
                     android:visibility="visible"
@@ -186,7 +194,7 @@
                     android:layout_toStartOf="@+id/tv_text_date_time_created"
                     android:fontFamily="@font/time_date_font"
                     android:text="@string/created_date"
-                    android:textColor="?attr/color"
+                    android:textColor="@color/colorTextNight"
                     android:textSize="12sp"
                     android:visibility="gone"
                     tools:visibility="visible" />
@@ -201,7 +209,7 @@
                     android:layout_toStartOf="@+id/tv_text_date_time_edited"
                     android:fontFamily="@font/time_date_font"
                     android:text="@string/updated_date"
-                    android:textColor="?attr/color"
+                    android:textColor="@color/colorTextNight"
                     android:textSize="12sp"
                     android:visibility="gone"
                     tools:visibility="visible" />
@@ -218,7 +226,7 @@
                     android:fontFamily="@font/time_date_font"
                     android:includeFontPadding="false"
                     android:padding="@dimen/_1sdp"
-                    android:textColor="?attr/color"
+                    android:textColor="@color/colorTextNight"
                     android:textSize="12sp"
                     android:visibility="gone"
                     tools:ignore="RelativeOverlap"

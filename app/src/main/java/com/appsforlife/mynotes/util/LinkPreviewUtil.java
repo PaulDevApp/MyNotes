@@ -32,7 +32,7 @@ public class LinkPreviewUtil {
             try {
                 return Jsoup.connect(url).timeout(0).get();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                return null;
             }
         });
     }
@@ -68,9 +68,15 @@ public class LinkPreviewUtil {
                                             break;
                                     }
                                 }
+                            } else {
+                                compositeDisposable.dispose();
                             }
                         },
-                        Throwable::printStackTrace);
+                        throwable -> {
+                            tvSiteDescription.setVisibility(View.GONE);
+                            tvSiteName.setVisibility(View.GONE);
+                            ivSiteImage.setVisibility(View.GONE);
+                        });
         compositeDisposable.add(disposable);
     }
 

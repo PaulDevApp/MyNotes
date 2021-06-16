@@ -1,8 +1,7 @@
 package com.appsforlife.mynotes.adapters;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +21,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.List;
-
 import static com.appsforlife.mynotes.util.LinkPreviewUtil.setPreviewLink;
 import static com.appsforlife.mynotes.Support.*;
-import static com.appsforlife.mynotes.constants.Constants.*;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHolder> {
 
@@ -127,19 +124,19 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
             this.itemNoteBinding = itemNoteBinding;
             previewBinding = itemNoteBinding.previewLink;
 
-//            itemView.setOnClickListener(v -> {
-//                if (isSelect) {
-//                    noteSelectListener.onNoteSelectListener(sortedList.get(getAbsoluteAdapterPosition()),
-//                            itemNoteBinding.vColorSelected);
-//                } else {
-//                    noteListener.onNoteClicked(sortedList.get(getAbsoluteAdapterPosition()), itemNoteBinding.rlNote);
-//                }
-//            });
-//
-//            itemView.setOnLongClickListener(v -> {
-//                noteLongListener.onNoteLongListener(sortedList.get(getAbsoluteAdapterPosition()), itemNoteBinding.vColorSelected);
-//                return true;
-//            });
+            itemView.setOnClickListener(v -> {
+                if (isSelect) {
+                    noteSelectListener.onNoteSelectListener(sortedList.get(getAbsoluteAdapterPosition()),
+                            itemNoteBinding.vColorSelected);
+                } else {
+                    noteListener.onNoteClicked(sortedList.get(getAbsoluteAdapterPosition()), itemNoteBinding.rlNote);
+                }
+            });
+
+            itemView.setOnLongClickListener(v -> {
+                noteLongListener.onNoteLongListener(sortedList.get(getAbsoluteAdapterPosition()), itemNoteBinding.vColorSelected);
+                return true;
+            });
 
         }
 
@@ -185,59 +182,36 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
 
             itemNoteBinding.tvItemDateTime.setText(note.getDateTime());
 
-            if (note.getImagePath() != null && !note.getImagePath().trim().isEmpty() && !App.getInstance().isVisible()) {
-                itemNoteBinding.ivItemImage.setVisibility(View.VISIBLE);
-                Glide.with(holder.itemNoteBinding.ivItemImage.getContext())
-                        .load(note.getImagePath())
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(itemNoteBinding.ivItemImage);
-            } else {
-                itemNoteBinding.ivItemImage.setVisibility(View.GONE);
-            }
-
-            if (note.getImagePath() != null && !note.getImagePath().trim().isEmpty()) {
-                itemNoteBinding.ivCheckImage.setVisibility(View.VISIBLE);
-            } else {
+            if (TextUtils.isEmpty(note.getImagePath())){
                 itemNoteBinding.ivCheckImage.setVisibility(View.GONE);
+                itemNoteBinding.ivItemImage.setVisibility(View.GONE);
+            }else {
+                itemNoteBinding.ivCheckImage.setVisibility(View.VISIBLE);
+                if (!App.getInstance().isVisible()){
+                    itemNoteBinding.ivItemImage.setVisibility(View.VISIBLE);
+                    Glide.with(holder.itemNoteBinding.ivItemImage.getContext())
+                            .load(note.getImagePath())
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(itemNoteBinding.ivItemImage);
+                }
             }
 
-            if (note.getWebLink() != null && !note.getWebLink().trim().isEmpty()) {
-                itemNoteBinding.ivCheckLink.setVisibility(View.VISIBLE);
-                previewBinding.tvSiteUrl.setVisibility(View.VISIBLE);
-                previewBinding.clPreviewLink.setVisibility(View.VISIBLE);
-                previewBinding.tvSiteUrl.setText(note.getWebLink());
+            if (TextUtils.isEmpty(note.getWebLink())){
+                itemNoteBinding.ivCheckLink.setVisibility(View.GONE);
+                previewBinding.clPreviewLink.setVisibility(View.GONE);
+            }else {
                 if (!App.getInstance().isPreview()) {
                     setPreviewLink(holder.itemView.getContext(), note.getWebLink(), previewBinding.ivSiteImage,
                             previewBinding.tvSiteName, previewBinding.tvSiteDescription);
                 }
-            } else {
-                itemNoteBinding.ivCheckLink.setVisibility(View.GONE);
-                previewBinding.clPreviewLink.setVisibility(View.GONE);
-
+                itemNoteBinding.ivCheckLink.setVisibility(View.VISIBLE);
+                previewBinding.tvSiteUrl.setVisibility(View.VISIBLE);
+                previewBinding.clPreviewLink.setVisibility(View.VISIBLE);
+                previewBinding.tvSiteUrl.setText(note.getWebLink());
             }
 
-            GradientDrawable gradientDrawable = (GradientDrawable) itemNoteBinding.itemBackground.getBackground();
-            if (note.getColor() != null) {
-                gradientDrawable.setColor(Color.parseColor(note.getColor()));
-            } else {
-                gradientDrawable.setColor(Color.parseColor(COLOR_DEFAULT));
-            }
 
-            holder.itemNoteBinding.rlNote.setTransitionName("note");
-
-            holder.itemView.setOnClickListener(v -> {
-                if (isSelect) {
-                    noteSelectListener.onNoteSelectListener(sortedList.get(getAbsoluteAdapterPosition()),
-                            itemNoteBinding.vColorSelected);
-                } else {
-                    noteListener.onNoteClicked(sortedList.get(getAbsoluteAdapterPosition()), itemNoteBinding.rlNote);
-                }
-            });
-
-            holder.itemView.setOnLongClickListener(v -> {
-                noteLongListener.onNoteLongListener(sortedList.get(getAbsoluteAdapterPosition()), itemNoteBinding.vColorSelected);
-                return true;
-            });
+            setBackgroundNoteColor(itemNoteBinding.itemBackground, note.getColor());
         }
     }
 }

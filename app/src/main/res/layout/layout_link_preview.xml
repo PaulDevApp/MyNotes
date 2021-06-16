@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/background_preview_link"
+    tools:background="@color/colorDefault"
     android:visibility="gone"
     tools:visibility="visible">
 
@@ -28,71 +29,70 @@
         tools:src="@tools:sample/avatars"
         tools:visibility="visible" />
 
-    <TextView
-        android:id="@+id/tv_site_name"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_2sdp"
-        android:layout_marginTop="@dimen/_2sdp"
-        android:layout_marginEnd="@dimen/_2sdp"
-        android:ellipsize="end"
-        android:includeFontPadding="false"
-        android:maxLines="1"
-        android:textColor="?attr/color"
-        android:textSize="@dimen/_11ssp"
-        android:textStyle="normal"
-        android:visibility="gone"
+        android:layout_margin="@dimen/_2sdp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv_site_image"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_goneMarginBottom="@dimen/_2sdp"
+        app:layout_goneMarginEnd="@dimen/_2sdp"
         app:layout_goneMarginStart="@dimen/_2sdp"
-        tools:text="Все в мире баскетбола"
-        tools:visibility="visible" />
+        app:layout_goneMarginTop="@dimen/_2sdp">
 
+        <TextView
+            android:id="@+id/tv_site_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/_2sdp"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@color/colorTextNight"
+            android:textSize="@dimen/_11ssp"
+            android:textStyle="normal"
+            android:visibility="gone"
+            tools:text="Все в мире баскетбола"
+            tools:visibility="visible" />
 
-    <TextView
-        android:id="@+id/tv_site_description"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_2sdp"
-        android:layout_marginTop="@dimen/_2sdp"
-        android:layout_marginEnd="@dimen/_2sdp"
-        android:ellipsize="end"
-        android:includeFontPadding="false"
-        android:maxLines="2"
-        android:textColor="?attr/color"
-        android:textSize="@dimen/_9ssp"
-        android:textStyle="italic"
-        android:visibility="gone"
-        app:layout_goneMarginTop="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/iv_site_image"
-        app:layout_constraintTop_toBottomOf="@+id/tv_site_name"
-        app:layout_goneMarginLeft="@dimen/_2sdp"
-        app:layout_goneMarginStart="@dimen/_2sdp"
-        tools:text="@tools:sample/lorem/random"
-        tools:visibility="visible" />
+        <TextView
+            android:id="@+id/tv_site_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:maxLines="2"
+            android:textColor="@color/colorTextNight"
+            android:textSize="@dimen/_9ssp"
+            android:textStyle="italic"
+            android:visibility="gone"
+            tools:text="@tools:sample/lorem/random"
+            tools:visibility="visible" />
 
-    <TextView
-        android:id="@+id/tv_site_url"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_2sdp"
-        android:layout_marginTop="@dimen/_2sdp"
-        android:layout_marginEnd="@dimen/_2sdp"
-        android:ellipsize="end"
-        android:includeFontPadding="false"
-        android:maxLines="1"
-        android:paddingBottom="@dimen/_2sdp"
-        android:textColor="?attr/color"
-        android:textSize="@dimen/_11ssp"
-        android:textStyle="bold"
-        android:visibility="gone"
-        app:layout_goneMarginTop="@dimen/_20sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/iv_site_image"
-        app:layout_constraintTop_toBottomOf="@id/tv_site_description"
-        app:layout_goneMarginStart="@dimen/_2sdp"
-        tools:text="https://allbasketball.org/"
-        tools:visibility="visible" />
+        <TextView
+            android:id="@+id/tv_site_url"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@color/colorTextNight"
+            android:textSize="@dimen/_11ssp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            tools:text="https://allbasketball.org/"
+            tools:visibility="visible" />
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
