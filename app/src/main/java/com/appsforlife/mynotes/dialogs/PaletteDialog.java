@@ -44,7 +44,7 @@ public class PaletteDialog  {
                 paletteDialog.cancel();
             }
         });
-        view.findViewById(R.id.v_yellow_orange).setOnClickListener(v -> {
+        view.findViewById(R.id.v_orange).setOnClickListener(v -> {
             if (dialogPaletteListener != null){
                 dialogPaletteListener.onSelectColor(COLOR_ORANGE);
                 paletteDialog.cancel();
@@ -68,7 +68,7 @@ public class PaletteDialog  {
                 paletteDialog.cancel();
             }
         });
-        view.findViewById(R.id.v_red_teal).setOnClickListener(v -> {
+        view.findViewById(R.id.v_teal).setOnClickListener(v -> {
             if (dialogPaletteListener != null){
                 dialogPaletteListener.onSelectColor(COLOR_TEAl);
                 paletteDialog.cancel();

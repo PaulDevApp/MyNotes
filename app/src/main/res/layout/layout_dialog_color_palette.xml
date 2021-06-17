@@ -35,7 +35,7 @@
             android:background="@drawable/back_color_yellow" />
 
         <View
-            android:id="@+id/v_yellow_orange"
+            android:id="@+id/v_orange"
             android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginStart="@dimen/_2sdp"
@@ -84,7 +84,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ll_first_palette">
 
         <View
-            android:id="@+id/v_red_teal"
+            android:id="@+id/v_teal"
             android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginStart="@dimen/_2sdp"
