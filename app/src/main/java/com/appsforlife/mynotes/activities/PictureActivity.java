@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.appsforlife.mynotes.R;
 import com.appsforlife.mynotes.Support;
 import com.appsforlife.mynotes.databinding.ActivityPictureBinding;
-import com.bumptech.glide.Glide;
 
 import static com.appsforlife.mynotes.constants.Constants.PICTURE_PATH;
 
@@ -34,7 +33,7 @@ public class PictureActivity extends AppCompatActivity {
 
         intent = getIntent();
         String picturePath = intent.getStringExtra(PICTURE_PATH);
-        Glide.with(this).load(picturePath).into(binding.ivPicture);
+        binding.ivPicture.setImageURI(Uri.parse(picturePath));
 
         binding.ivPicture.setOnClickListener(v -> {
             if (!isVisible) {

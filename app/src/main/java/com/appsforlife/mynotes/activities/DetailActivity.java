@@ -54,8 +54,6 @@ import com.appsforlife.mynotes.listeners.DialogDeleteImageListener;
 import com.appsforlife.mynotes.listeners.DialogDeleteNoteListener;
 import com.appsforlife.mynotes.listeners.DialogReplaceImageListener;
 import com.appsforlife.mynotes.util.LinkPreviewUtil;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
@@ -176,7 +174,7 @@ public class DetailActivity extends AppCompatActivity implements ColorPaletteLis
                     case ACTION_URL:
                         previewBinding.tvSiteUrl.setText(getIntent().getStringExtra(ACTION_URL));
                         note.setWebLink(getIntent().getStringExtra(ACTION_URL));
-                        setPreviewLink(this, getIntent().getStringExtra(ACTION_URL),
+                        setPreviewLink(getIntent().getStringExtra(ACTION_URL),
                                 previewBinding.ivSiteImage, previewBinding.tvSiteName, previewBinding.tvSiteDescription);
                         previewBinding.clPreviewLink.setVisibility(View.VISIBLE);
                         previewBinding.tvSiteUrl.setVisibility(View.VISIBLE);
@@ -310,7 +308,7 @@ public class DetailActivity extends AppCompatActivity implements ColorPaletteLis
         if (sharedText != null) {
             if (sharedText.startsWith("www") || sharedText.startsWith("https://")) {
                 previewBinding.tvSiteUrl.setText(sharedText);
-                setPreviewLink(this, getIntent().getStringExtra(ACTION_URL),
+                setPreviewLink(getIntent().getStringExtra(ACTION_URL),
                         previewBinding.ivSiteImage, previewBinding.tvSiteName, previewBinding.tvSiteDescription);
                 previewBinding.clPreviewLink.setVisibility(View.VISIBLE);
                 previewBinding.tvSiteUrl.setVisibility(View.VISIBLE);
@@ -332,7 +330,7 @@ public class DetailActivity extends AppCompatActivity implements ColorPaletteLis
     private void setPhoto(String imageUri) {
         detailBinding.ivShowPhoto.setVisibility(View.VISIBLE);
         detailBinding.ivDeleteImage.setVisibility(View.VISIBLE);
-        Glide.with(this).load(imageUri).diskCacheStrategy(DiskCacheStrategy.ALL).into(detailBinding.ivShowPhoto);
+        detailBinding.ivShowPhoto.setImageURI(Uri.parse(imageUri));
     }
 
     private void setCheckImageDone() {
@@ -350,6 +348,7 @@ public class DetailActivity extends AppCompatActivity implements ColorPaletteLis
                 !note.getWebLink().trim().isEmpty());
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void getPreviousNote() {
         detailBinding.etInputTitle.setText(note.getTitle());
         detailBinding.etInputText.setText(note.getText());
@@ -376,7 +375,7 @@ public class DetailActivity extends AppCompatActivity implements ColorPaletteLis
         if (note.getImagePath() != null && !note.getImagePath().trim().isEmpty()) {
             imagePath = note.getImagePath();
             if (checkFile(imagePath)) {
-                Glide.with(this).load(R.drawable.photo_error_icon).into(detailBinding.ivShowPhoto);
+                detailBinding.ivDeleteImage.setImageDrawable(getDrawable(R.drawable.photo_error_icon));
                 detailBinding.ivDeleteImage.setVisibility(View.VISIBLE);
                 detailBinding.ivShowPhoto.setVisibility(View.VISIBLE);
             } else {
@@ -394,7 +393,7 @@ public class DetailActivity extends AppCompatActivity implements ColorPaletteLis
 
         if (note.getWebLink() != null && !note.getWebLink().trim().isEmpty()) {
             previewBinding.tvSiteUrl.setText(note.getWebLink());
-            setPreviewLink(this, note.getWebLink(), previewBinding.ivSiteImage,
+            setPreviewLink(note.getWebLink(), previewBinding.ivSiteImage,
                     previewBinding.tvSiteName, previewBinding.tvSiteDescription);
             previewBinding.tvSiteUrl.setVisibility(View.VISIBLE);
             previewBinding.clPreviewLink.setVisibility(View.VISIBLE);
@@ -769,7 +768,7 @@ public class DetailActivity extends AppCompatActivity implements ColorPaletteLis
 
     @Override
     public void onShareLink(boolean isShare) {
-        if (isShare){
+        if (isShare) {
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("text/plain");
             intent.putExtra(Intent.EXTRA_TEXT, note.getWebLink());
@@ -809,7 +808,7 @@ public class DetailActivity extends AppCompatActivity implements ColorPaletteLis
     @Override
     public void onCreateLink(String link) {
         note.setWebLink(link);
-        setPreviewLink(this, link, previewBinding.ivSiteImage,
+        setPreviewLink(link, previewBinding.ivSiteImage,
                 previewBinding.tvSiteName, previewBinding.tvSiteDescription);
         previewBinding.tvSiteUrl.setText(link);
         previewBinding.tvSiteUrl.setVisibility(View.VISIBLE);

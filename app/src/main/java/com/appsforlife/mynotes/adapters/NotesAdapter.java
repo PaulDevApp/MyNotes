@@ -1,6 +1,7 @@
 package com.appsforlife.mynotes.adapters;
 
 import android.annotation.SuppressLint;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +18,9 @@ import com.appsforlife.mynotes.entities.Note;
 import com.appsforlife.mynotes.listeners.NoteListener;
 import com.appsforlife.mynotes.listeners.NoteLongListener;
 import com.appsforlife.mynotes.listeners.NoteSelectListener;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.List;
+
 import static com.appsforlife.mynotes.util.LinkPreviewUtil.setPreviewLink;
 import static com.appsforlife.mynotes.Support.*;
 
@@ -100,7 +100,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
 
     @Override
     public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
-        holder.setNote(sortedList.get(position), holder);
+        holder.setNote(sortedList.get(position));
 
     }
 
@@ -141,7 +141,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
         }
 
         @SuppressLint("ResourceAsColor")
-        void setNote(Note note, NoteViewHolder holder) {
+        void setNote(Note note) {
             this.note = note;
 
             itemNoteBinding.tvItemText.setMaxLines(App.getInstance().getCountLines());
@@ -182,26 +182,23 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
 
             itemNoteBinding.tvItemDateTime.setText(note.getDateTime());
 
-            if (TextUtils.isEmpty(note.getImagePath())){
+            if (TextUtils.isEmpty(note.getImagePath())) {
                 itemNoteBinding.ivCheckImage.setVisibility(View.GONE);
                 itemNoteBinding.ivItemImage.setVisibility(View.GONE);
-            }else {
+            } else {
                 itemNoteBinding.ivCheckImage.setVisibility(View.VISIBLE);
-                if (!App.getInstance().isVisible()){
+                if (!App.getInstance().isVisible()) {
                     itemNoteBinding.ivItemImage.setVisibility(View.VISIBLE);
-                    Glide.with(holder.itemNoteBinding.ivItemImage.getContext())
-                            .load(note.getImagePath())
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .into(itemNoteBinding.ivItemImage);
+                    itemNoteBinding.ivItemImage.setImageURI(Uri.parse(note.getImagePath()));
                 }
             }
 
-            if (TextUtils.isEmpty(note.getWebLink())){
+            if (TextUtils.isEmpty(note.getWebLink())) {
                 itemNoteBinding.ivCheckLink.setVisibility(View.GONE);
                 previewBinding.clPreviewLink.setVisibility(View.GONE);
-            }else {
+            } else {
                 if (!App.getInstance().isPreview()) {
-                    setPreviewLink(holder.itemView.getContext(), note.getWebLink(), previewBinding.ivSiteImage,
+                    setPreviewLink(note.getWebLink(), previewBinding.ivSiteImage,
                             previewBinding.tvSiteName, previewBinding.tvSiteDescription);
                 }
                 itemNoteBinding.ivCheckLink.setVisibility(View.VISIBLE);

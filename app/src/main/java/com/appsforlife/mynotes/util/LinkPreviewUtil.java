@@ -1,12 +1,10 @@
 package com.appsforlife.mynotes.util;
 
-import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -37,7 +35,7 @@ public class LinkPreviewUtil {
         });
     }
 
-    public static void setPreviewLink(Context context, String url, ImageView ivSiteImage,
+    public static void setPreviewLink(String url, ImageView ivSiteImage,
                                       TextView tvSiteName, TextView tvSiteDescription) {
         compositeDisposable = new CompositeDisposable();
         Disposable disposable = getJSOUPContent(url)
@@ -49,8 +47,7 @@ public class LinkPreviewUtil {
                                 for (Element element : metaTags) {
                                     switch (element.attr(PROPERTY)) {
                                         case META_SITE_IMAGE:
-                                            Glide.with(context).load(element.attr(CONTENT))
-                                                    .into(ivSiteImage);
+                                            Picasso.get().load(element.attr(CONTENT)).into(ivSiteImage);
                                             ivSiteImage.setVisibility(View.VISIBLE);
                                             break;
                                         case META_SITE_TITLE:
@@ -69,7 +66,9 @@ public class LinkPreviewUtil {
                                     }
                                 }
                             } else {
-                                compositeDisposable.dispose();
+                                tvSiteDescription.setVisibility(View.GONE);
+                                tvSiteName.setVisibility(View.GONE);
+                                ivSiteImage.setVisibility(View.GONE);
                             }
                         },
                         throwable -> {

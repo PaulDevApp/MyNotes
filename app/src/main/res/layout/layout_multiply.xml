@@ -47,10 +47,10 @@
             android:id="@+id/tv_toolbar_count"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/_2sdp"
             android:gravity="center_vertical"
             android:textColor="?attr/color"
             android:textSize="@dimen/_15ssp"
-            android:layout_marginStart="@dimen/_2sdp"
             android:textStyle="normal"
             app:layout_constraintStart_toEndOf="@+id/iv_toolbar_close"
             app:layout_constraintTop_toTopOf="@id/iv_toolbar_close"
@@ -69,6 +69,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/iv_toolbar_close"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/iv_toolbar_close"
+            app:tint="@color/colorDelete"
             tools:ignore="UnusedAttribute" />
 
         <ImageView

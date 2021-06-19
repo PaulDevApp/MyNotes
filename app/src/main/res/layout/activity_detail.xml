@@ -152,7 +152,7 @@
                     android:foreground="?android:attr/selectableItemBackground"
                     android:src="@drawable/ic_close"
                     android:visibility="gone"
-                    app:tint="@color/colorPrimaryDay"
+                    app:tint="@color/colorDelete"
                     tools:visibility="visible" />
 
                 <include
