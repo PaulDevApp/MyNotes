@@ -102,43 +102,43 @@ public final class Support {
         }
     }
 
-    public static void setColorIndicator(String color, ImageView indicator, Activity activity) {
+    public static void setColorIndicator(String color, ImageView indicator) {
         switch (color) {
             case COLOR_DEFAULT:
-                indicator.setColorFilter(ContextCompat.getColor(activity, R.color.colorDefault));
+                indicator.setColorFilter(ContextCompat.getColor(indicator.getContext(), R.color.colorDefault));
                 break;
             case COLOR_YELLOW:
-                indicator.setColorFilter(ContextCompat.getColor(activity, R.color.colorYellow));
+                indicator.setColorFilter(ContextCompat.getColor(indicator.getContext(), R.color.colorYellow));
                 break;
             case COLOR_ORANGE:
-                indicator.setColorFilter(ContextCompat.getColor(activity, R.color.colorOrange));
+                indicator.setColorFilter(ContextCompat.getColor(indicator.getContext(), R.color.colorOrange));
                 break;
             case COLOR_RED:
-                indicator.setColorFilter(ContextCompat.getColor(activity, R.color.colorRed));
+                indicator.setColorFilter(ContextCompat.getColor(indicator.getContext(), R.color.colorRed));
                 break;
             case COLOR_KARINA:
-                indicator.setColorFilter(ContextCompat.getColor(activity, R.color.colorKarina));
+                indicator.setColorFilter(ContextCompat.getColor(indicator.getContext(), R.color.colorKarina));
                 break;
             case COLOR_PURPLE:
-                indicator.setColorFilter(ContextCompat.getColor(activity, R.color.colorPurple));
+                indicator.setColorFilter(ContextCompat.getColor(indicator.getContext(), R.color.colorPurple));
                 break;
             case COLOR_TEAl:
-                indicator.setColorFilter(ContextCompat.getColor(activity, R.color.colorTeal));
+                indicator.setColorFilter(ContextCompat.getColor(indicator.getContext(), R.color.colorTeal));
                 break;
             case COLOR_BLUE:
-                indicator.setColorFilter(ContextCompat.getColor(activity, R.color.colorBlue));
+                indicator.setColorFilter(ContextCompat.getColor(indicator.getContext(), R.color.colorBlue));
                 break;
             case COLOR_CYAN:
-                indicator.setColorFilter(ContextCompat.getColor(activity, R.color.colorCyan));
+                indicator.setColorFilter(ContextCompat.getColor(indicator.getContext(), R.color.colorCyan));
                 break;
             case COLOR_INDIGO:
-                indicator.setColorFilter(ContextCompat.getColor(activity, R.color.colorIndigo));
+                indicator.setColorFilter(ContextCompat.getColor(indicator.getContext(), R.color.colorIndigo));
                 break;
             case COLOR_GREEN:
-                indicator.setColorFilter(ContextCompat.getColor(activity, R.color.colorGreen));
+                indicator.setColorFilter(ContextCompat.getColor(indicator.getContext(), R.color.colorGreen));
                 break;
             case COLOR_BLUE_GREY:
-                indicator.setColorFilter(ContextCompat.getColor(activity, R.color.colorBlueGrey));
+                indicator.setColorFilter(ContextCompat.getColor(indicator.getContext(), R.color.colorBlueGrey));
                 break;
         }
     }

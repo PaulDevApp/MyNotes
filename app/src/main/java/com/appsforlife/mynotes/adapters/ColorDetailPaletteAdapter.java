@@ -5,18 +5,16 @@ import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appsforlife.mynotes.R;
 import com.appsforlife.mynotes.Support;
+import com.appsforlife.mynotes.databinding.ItemDetailColorPaletteBinding;
+import com.appsforlife.mynotes.entities.Note;
 import com.appsforlife.mynotes.entities.PaletteColor;
 import com.appsforlife.mynotes.listeners.ColorPaletteListener;
-
-import static com.appsforlife.mynotes.App.*;
 
 import java.util.List;
 
@@ -24,26 +22,32 @@ public class ColorDetailPaletteAdapter extends RecyclerView.Adapter<ColorDetailP
 
     private List<PaletteColor> paletteColors;
     private final ColorPaletteListener colorPaletteListener;
+    private final Note note;
     private int lastPosition = -1;
 
 
-    public ColorDetailPaletteAdapter(List<PaletteColor> paletteColors, ColorPaletteListener colorPaletteListener) {
+    public ColorDetailPaletteAdapter(List<PaletteColor> paletteColors, ColorPaletteListener colorPaletteListener,
+                                     Note note) {
         this.paletteColors = paletteColors;
         this.colorPaletteListener = colorPaletteListener;
+        this.note = note;
     }
 
     @NonNull
     @Override
     public ColorPaletteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ColorPaletteViewHolder(LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.item_detail_color_palette, parent, false));
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        ItemDetailColorPaletteBinding binding = ItemDetailColorPaletteBinding.inflate(layoutInflater, parent, false);
+        return new ColorPaletteViewHolder(binding);
+
+
     }
 
     @Override
     public void onBindViewHolder(@NonNull ColorPaletteViewHolder holder, int position) {
         holder.setViewBackground(paletteColors.get(position));
-        if (position > lastPosition){
-            Support.startViewAnimation(holder.viewBackground, holder.itemView.getContext(), R.anim.zoom_in);
+        if (position > lastPosition) {
+            Support.startViewAnimation(holder.binding.vItemDetailColor, holder.itemView.getContext(), R.anim.zoom_in);
             lastPosition = position;
         }
     }
@@ -59,27 +63,24 @@ public class ColorDetailPaletteAdapter extends RecyclerView.Adapter<ColorDetailP
 
     public class ColorPaletteViewHolder extends RecyclerView.ViewHolder {
 
-        private final FrameLayout viewBackground;
-        private final ImageView imageViewColor;
+        private final ItemDetailColorPaletteBinding binding;
 
-        ColorPaletteViewHolder(@NonNull View itemView) {
-            super(itemView);
+        ColorPaletteViewHolder(ItemDetailColorPaletteBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
 
-            viewBackground = itemView.findViewById(R.id.v_item_detail_color);
-            imageViewColor = itemView.findViewById(R.id.iv_item_detail_color);
-
-            itemView.setOnClickListener(v -> colorPaletteListener.onColorPaletteClickListener(paletteColors.get(getAbsoluteAdapterPosition()), imageViewColor));
+            itemView.setOnClickListener(v -> colorPaletteListener.onColorPaletteClickListener(paletteColors.get(getAbsoluteAdapterPosition()), binding.ivItemDetailColor));
 
         }
 
         void setViewBackground(PaletteColor paletteColor) {
-            GradientDrawable gradientDrawable = (GradientDrawable) viewBackground.getBackground();
+            GradientDrawable gradientDrawable = (GradientDrawable) binding.vItemDetailColor.getBackground();
             gradientDrawable.setColor(Color.parseColor(paletteColor.getColor()));
 
-            if (colorPicker.equals(paletteColor.getColor())){
-                imageViewColor.setVisibility(View.VISIBLE);
-            }else {
-                imageViewColor.setVisibility(View.GONE);
+            if (note.getColor().equals(paletteColor.getColor())) {
+                binding.ivItemDetailColor.setVisibility(View.VISIBLE);
+            } else {
+                binding.ivItemDetailColor.setVisibility(View.GONE);
             }
         }
     }

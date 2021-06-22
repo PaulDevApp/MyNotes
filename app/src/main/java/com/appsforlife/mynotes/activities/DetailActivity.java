@@ -65,7 +65,6 @@ import java.util.Locale;
 
 import static com.appsforlife.mynotes.util.LinkPreviewUtil.setPreviewLink;
 import static com.appsforlife.mynotes.Support.*;
-import static com.appsforlife.mynotes.App.*;
 import static com.appsforlife.mynotes.constants.Constants.*;
 
 @SuppressLint("ResourceAsColor,SetTextI18n")
@@ -149,10 +148,9 @@ public class DetailActivity extends AppCompatActivity implements ColorPaletteLis
         if (getIntent().hasExtra(NOTE)) {
             note = getIntent().getParcelableExtra(NOTE);
             getPreviousNote();
-            colorPicker = note.getColor();
         } else {
             note = new Note();
-            colorPicker = COLOR_DEFAULT;
+            note.setColor(COLOR_DEFAULT);
             detailBinding.tvTextDateTimeCreated.setText(getDate());
             detailBinding.etInputTitle.setFocusableInTouchMode(true);
             detailBinding.etInputTitle.requestFocus();
@@ -273,7 +271,7 @@ public class DetailActivity extends AppCompatActivity implements ColorPaletteLis
         note.setDone(isCheck);
         note.setFavorite(isFavorite);
         note.setDateTime(getDate());
-        note.setColor(colorPicker);
+        note.setColor(note.getColor());
         note.setImagePath(imagePath);
 
         if (imagePath != null && !imagePath.trim().isEmpty()) {
@@ -417,14 +415,13 @@ public class DetailActivity extends AppCompatActivity implements ColorPaletteLis
         note.setTitle(detailBinding.etInputTitle.getText().toString().trim());
         note.setText(detailBinding.etInputText.getText().toString().trim());
         note.setDateTime(detailBinding.tvTextDateTimeCreated.getText().toString().trim());
-        note.setColor(colorPicker);
         note.setImagePath(imagePath);
     }
 
     private void initPalette() {
         bottomSheetBehavior = BottomSheetBehavior.from(paletteBinding.llPalette);
 
-        colorDetailPaletteAdapter = new ColorDetailPaletteAdapter(paletteColors, this);
+        colorDetailPaletteAdapter = new ColorDetailPaletteAdapter(paletteColors, this, note);
         paletteBinding.rvColorPalette.setAdapter(colorDetailPaletteAdapter);
         colorDetailPaletteAdapter.setPaletteColors(getColors(paletteColors));
 
@@ -556,7 +553,7 @@ public class DetailActivity extends AppCompatActivity implements ColorPaletteLis
         });
 
 
-        setColorIndicator(colorPicker, paletteBinding.ivColorIndicator, this);
+        setColorIndicator(note.getColor(), paletteBinding.ivColorIndicator);
     }
 
     @Override
@@ -677,11 +674,11 @@ public class DetailActivity extends AppCompatActivity implements ColorPaletteLis
 
     @Override
     public void onColorPaletteClickListener(PaletteColor paletteColor, ImageView imageViewColor) {
-        colorPicker = paletteColor.getColor();
         imageViewColor.setVisibility(View.VISIBLE);
-        setColorIndicator(colorPicker, paletteBinding.ivColorIndicator, this);
+        setColorIndicator(paletteColor.getColor(), paletteBinding.ivColorIndicator);
         colorDetailPaletteAdapter.notifyDataSetChanged();
-        setBackgroundNoteColor(detailBinding.rlDetail, colorPicker);
+        setBackgroundNoteColor(detailBinding.rlDetail, paletteColor.getColor());
+        note.setColor(paletteColor.getColor());
     }
 
     private void setNoteTextSize() {

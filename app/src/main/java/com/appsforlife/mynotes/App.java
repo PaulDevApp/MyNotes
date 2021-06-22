@@ -33,9 +33,6 @@ public class App extends Application {
     private int textSize;
     private int countLines;
 
-    public static String colorPicker;
-
-
     private static App instance = null;
 
     public static App getInstance() {

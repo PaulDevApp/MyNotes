@@ -5,8 +5,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.appsforlife.mynotes.App;
 import com.appsforlife.mynotes.R;
 import com.appsforlife.mynotes.Support;
+import com.appsforlife.mynotes.databinding.ItemMainColorPaletteBinding;
 import com.appsforlife.mynotes.entities.PaletteColor;
 import com.appsforlife.mynotes.listeners.ColorPaletteListener;
 
@@ -34,15 +33,16 @@ public class ColorMainPaletteAdapter extends RecyclerView.Adapter<ColorMainPalet
     @NonNull
     @Override
     public ColorMainPaletteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ColorMainPaletteViewHolder(LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.item_main_color_palette, parent, false));
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        ItemMainColorPaletteBinding binding = ItemMainColorPaletteBinding.inflate(layoutInflater, parent, false);
+        return new ColorMainPaletteViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ColorMainPaletteViewHolder holder, int position) {
         holder.setViewBackground(paletteColors.get(position));
         if (position > lastPosition) {
-            Support.startViewAnimation(holder.viewBackground, holder.imageViewColor.getContext(), R.anim.zoom_in);
+            Support.startViewAnimation(holder.binding.vItemMainColor, holder.binding.ivItemMainColor.getContext(), R.anim.zoom_in);
             lastPosition = position;
         }
     }
@@ -58,27 +58,25 @@ public class ColorMainPaletteAdapter extends RecyclerView.Adapter<ColorMainPalet
 
     public class ColorMainPaletteViewHolder extends RecyclerView.ViewHolder {
 
-        private final FrameLayout viewBackground;
-        private final ImageView imageViewColor;
+        private final ItemMainColorPaletteBinding binding;
 
-        ColorMainPaletteViewHolder(@NonNull View itemView) {
-            super(itemView);
+        ColorMainPaletteViewHolder(ItemMainColorPaletteBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
 
-            viewBackground = itemView.findViewById(R.id.v_item_main_color);
-            imageViewColor = itemView.findViewById(R.id.iv_item_main_color);
-
-            itemView.setOnClickListener(v -> colorPaletteListener.onColorPaletteClickListener(paletteColors.get(getAbsoluteAdapterPosition()), imageViewColor));
+            itemView.setOnClickListener(v -> colorPaletteListener.onColorPaletteClickListener(paletteColors.get(getAbsoluteAdapterPosition()),
+                    binding.ivItemMainColor));
 
         }
 
         void setViewBackground(PaletteColor paletteColor) {
-            GradientDrawable gradientDrawable = (GradientDrawable) viewBackground.getBackground();
+            GradientDrawable gradientDrawable = (GradientDrawable) binding.vItemMainColor.getBackground();
             gradientDrawable.setColor(Color.parseColor(paletteColor.getColor()));
 
             if (App.getInstance().getSelectedColor().equals(paletteColor.getColor())) {
-                imageViewColor.setVisibility(View.VISIBLE);
+                binding.ivItemMainColor.setVisibility(View.VISIBLE);
             } else {
-                imageViewColor.setVisibility(View.GONE);
+                binding.ivItemMainColor.setVisibility(View.GONE);
             }
         }
     }
