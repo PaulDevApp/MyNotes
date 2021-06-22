@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
     private boolean isClick;
     private boolean isAnim;
     private boolean isSelectedAll;
-    public static int countSelected;
+    private int countSelected;
 
     ActivityResultLauncher<Intent> getSpeechResult = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), result -> {
