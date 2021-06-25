@@ -86,4 +86,5 @@
     <string name="show_notes_with_images">छवियों के साथ नोट दिखाएं</string>
     <string name="empty_note_deleted">खाली नोट हटाया गया</string>
     <string name="note_deleted">नोट हटा दिया गया!</string>
+    <string name="set_default_note_color">डिफ़ॉल्ट नोट रंग सेट करें</string>
 </resources>

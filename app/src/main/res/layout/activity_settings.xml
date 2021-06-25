@@ -6,6 +6,9 @@
     android:layout_height="match_parent"
     android:background="?attr/colorPrimary"
     android:clipToPadding="false"
+    android:scrollbars="vertical"
+    android:scrollbarThumbVertical="?attr/colorAccent"
+    android:scrollbarSize="@dimen/_1sdp"
     tools:context=".activities.SettingsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,8 +26,7 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:src="@drawable/ic_back"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="UnusedAttribute" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -105,8 +107,7 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:text="@string/auto"
-                android:textSize="@dimen/_11ssp"
-                tools:ignore="UnusedAttribute" />
+                android:textSize="@dimen/_11ssp" />
 
             <RadioButton
                 android:id="@+id/rb_light"
@@ -115,8 +116,7 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:text="@string/light"
-                android:textSize="@dimen/_11ssp"
-                tools:ignore="UnusedAttribute" />
+                android:textSize="@dimen/_11ssp" />
 
             <RadioButton
                 android:id="@+id/rb_dark"
@@ -125,8 +125,7 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:text="@string/dark"
-                android:textSize="@dimen/_11ssp"
-                tools:ignore="UnusedAttribute" />
+                android:textSize="@dimen/_11ssp" />
         </RadioGroup>
 
         <androidx.appcompat.widget.SwitchCompat
@@ -143,8 +142,7 @@
             android:theme="@style/MySwitchStyle"
             app:layout_constraintEnd_toStartOf="@id/guideline_end"
             app:layout_constraintStart_toEndOf="@id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@+id/tv_theme"
-            tools:ignore="UnusedAttribute" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_theme" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_image_visible"
@@ -159,8 +157,7 @@
             android:theme="@style/MySwitchStyle"
             app:layout_constraintEnd_toStartOf="@id/guideline_end"
             app:layout_constraintStart_toEndOf="@id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@+id/switch_anim"
-            tools:ignore="UnusedAttribute" />
+            app:layout_constraintTop_toBottomOf="@+id/switch_anim" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_hide_preview_link"
@@ -175,16 +172,15 @@
             android:theme="@style/MySwitchStyle"
             app:layout_constraintEnd_toStartOf="@id/guideline_end"
             app:layout_constraintStart_toEndOf="@id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@+id/switch_image_visible"
-            tools:ignore="UnusedAttribute" />
+            app:layout_constraintTop_toBottomOf="@+id/switch_image_visible" />
 
         <TextView
             android:id="@+id/tv_increase_font"
             android:layout_width="0dp"
             android:layout_height="@dimen/_35sdp"
-            android:gravity="center_vertical"
             android:background="?android:attr/selectableItemBackground"
             android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
             android:text="@string/set_text_size"
             android:textColor="?attr/color"
             android:textSize="@dimen/_14ssp"
@@ -192,16 +188,15 @@
             app:drawableEndCompat="@drawable/ic_increase_font"
             app:layout_constraintEnd_toStartOf="@+id/guideline_end"
             app:layout_constraintStart_toEndOf="@+id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@+id/switch_hide_preview_link"
-            tools:ignore="UnusedAttribute" />
+            app:layout_constraintTop_toBottomOf="@+id/switch_hide_preview_link" />
 
         <TextView
             android:id="@+id/tv_preview_count_line"
             android:layout_width="0dp"
             android:layout_height="@dimen/_35sdp"
-            android:gravity="center_vertical"
             android:background="?android:attr/selectableItemBackground"
             android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
             android:text="@string/preview_count"
             android:textColor="?attr/color"
             android:textSize="@dimen/_14ssp"
@@ -209,8 +204,35 @@
             app:drawableEndCompat="@drawable/ic_preview"
             app:layout_constraintEnd_toStartOf="@+id/guideline_end"
             app:layout_constraintStart_toEndOf="@+id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@+id/tv_increase_font"
-            tools:ignore="UnusedAttribute" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_increase_font" />
+
+        <TextView
+            android:id="@+id/tv_default_note_color"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_35sdp"
+            android:background="?android:attr/selectableItemBackground"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:text="@string/set_default_note_color"
+            android:textColor="?attr/color"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginEnd="@dimen/_25sdp"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+            app:layout_constraintStart_toEndOf="@+id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/tv_preview_count_line" />
+
+        <View
+            android:id="@+id/v_default_note_color"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:background="@drawable/background_selected_color"
+            app:layout_constraintBottom_toBottomOf="@id/tv_default_note_color"
+            app:layout_constraintEnd_toStartOf="@id/guideline_end"
+            app:layout_constraintTop_toBottomOf="@id/tv_preview_count_line"
+            app:layout_constraintTop_toTopOf="@id/tv_default_note_color" />
 
         <View
             android:id="@+id/support_line_other"
@@ -222,7 +244,7 @@
             android:background="?attr/colorAccent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_preview_count_line" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_default_note_color" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -236,16 +258,16 @@
             android:textColor="?attr/colorAccent"
             android:textSize="@dimen/_9ssp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_preview_count_line" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_default_note_color" />
 
         <TextView
             android:id="@+id/tv_delete_all_notes"
             android:layout_width="0dp"
             android:layout_height="@dimen/_35sdp"
             android:layout_marginTop="@dimen/_16sdp"
-            android:gravity="center_vertical"
             android:background="?android:attr/selectableItemBackground"
             android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
             android:text="@string/delete_all_notes"
             android:textColor="?attr/color"
             android:textSize="@dimen/_14ssp"
@@ -253,16 +275,15 @@
             app:drawableEndCompat="@drawable/ic_delete_forever"
             app:layout_constraintEnd_toStartOf="@id/guideline_end"
             app:layout_constraintStart_toEndOf="@id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@+id/support_line_other"
-            tools:ignore="UnusedAttribute" />
+            app:layout_constraintTop_toBottomOf="@+id/support_line_other" />
 
         <TextView
             android:id="@+id/tv_rate_app"
             android:layout_width="0dp"
             android:layout_height="@dimen/_35sdp"
-            android:gravity="center_vertical"
             android:background="?android:attr/selectableItemBackground"
             android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
             android:text="@string/rate_app"
             android:textColor="?attr/color"
             android:textSize="@dimen/_14ssp"
@@ -270,16 +291,15 @@
             app:drawableEndCompat="@drawable/ic_rate"
             app:layout_constraintEnd_toStartOf="@id/guideline_end"
             app:layout_constraintStart_toEndOf="@id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@+id/tv_delete_all_notes"
-            tools:ignore="UnusedAttribute" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_delete_all_notes" />
 
         <TextView
             android:id="@+id/tv_privacy"
             android:layout_width="0dp"
             android:layout_height="@dimen/_35sdp"
-            android:gravity="center_vertical"
             android:background="?android:attr/selectableItemBackground"
             android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
             android:text="@string/privacy_policy"
             android:textColor="?attr/color"
             android:textSize="@dimen/_14ssp"
@@ -287,16 +307,15 @@
             app:drawableEndCompat="@drawable/ic_privacy_policy"
             app:layout_constraintEnd_toStartOf="@id/guideline_end"
             app:layout_constraintStart_toEndOf="@id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@+id/tv_rate_app"
-            tools:ignore="UnusedAttribute" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_rate_app" />
 
         <TextView
             android:id="@+id/tv_feed_back"
             android:layout_width="0dp"
             android:layout_height="@dimen/_35sdp"
-            android:gravity="center_vertical"
             android:background="?android:attr/selectableItemBackground"
             android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
             android:text="@string/feedBack"
             android:textColor="?attr/color"
             android:textSize="@dimen/_14ssp"
@@ -304,16 +323,15 @@
             app:drawableEndCompat="@drawable/ic_feed_back"
             app:layout_constraintEnd_toStartOf="@id/guideline_end"
             app:layout_constraintStart_toEndOf="@id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@+id/tv_privacy"
-            tools:ignore="UnusedAttribute" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_privacy" />
 
         <TextView
             android:id="@+id/tv_share_app"
             android:layout_width="0dp"
             android:layout_height="@dimen/_35sdp"
-            android:gravity="center_vertical"
             android:background="?android:attr/selectableItemBackground"
             android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
             android:text="@string/share_app"
             android:textColor="?attr/color"
             android:textSize="@dimen/_14ssp"
@@ -321,16 +339,15 @@
             app:drawableEndCompat="@drawable/ic_share_app"
             app:layout_constraintEnd_toStartOf="@id/guideline_end"
             app:layout_constraintStart_toEndOf="@id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@+id/tv_feed_back"
-            tools:ignore="UnusedAttribute" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_feed_back" />
 
         <TextView
             android:id="@+id/tv_open_source"
             android:layout_width="0dp"
             android:layout_height="@dimen/_35sdp"
-            android:gravity="center_vertical"
             android:background="?android:attr/selectableItemBackground"
             android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
             android:text="@string/open_source_libraries"
             android:textColor="?attr/color"
             android:textSize="@dimen/_14ssp"
@@ -338,8 +355,7 @@
             app:drawableEndCompat="@drawable/ic_open_source"
             app:layout_constraintEnd_toStartOf="@id/guideline_end"
             app:layout_constraintStart_toEndOf="@id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@+id/tv_share_app"
-            tools:ignore="UnusedAttribute" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_share_app" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

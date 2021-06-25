@@ -150,7 +150,7 @@ public class DetailActivity extends AppCompatActivity implements ColorPaletteLis
             getPreviousNote();
         } else {
             note = new Note();
-            note.setColor(COLOR_DEFAULT);
+            note.setColor(App.getInstance().getDefaultNoteColor());
             detailBinding.tvTextDateTimeCreated.setText(getDate());
             detailBinding.etInputTitle.setFocusableInTouchMode(true);
             detailBinding.etInputTitle.requestFocus();

@@ -30,6 +30,7 @@ public class App extends Application {
 
     private String themeMode;
     private String selectedColor;
+    private String defaultNoteColor;
     private int textSize;
     private int countLines;
 
@@ -49,7 +50,8 @@ public class App extends Application {
         this.changeView = mPrefs.getBoolean(Constants.VIEW, false);
         this.includeDone = mPrefs.getBoolean(INCLUDE_DONE, false);
         this.includePicture = mPrefs.getBoolean(INCLUDE_PICTURE, false);
-        this.selectedColor = mPrefs.getString(Constants.SELECTED_COLOR, All_COLORS);
+        this.selectedColor = mPrefs.getString(SELECTED_COLOR, All_COLORS);
+        this.defaultNoteColor = mPrefs.getString(DEFAULT_NOTE_COLOR, COLOR_DEFAULT);
         this.themeMode = mPrefs.getString(THEME_MODE, AUTO_MODE);
         this.switchAnim = mPrefs.getBoolean(SWITCH_ANIM, false);
         this.isVisible = mPrefs.getBoolean(VISIBLE_IMAGES, false);
@@ -76,6 +78,15 @@ public class App extends Application {
         editor = preferences.edit();
         editor.putString(SELECTED_COLOR, selectedColor);
         editor.apply();
+    }
+
+    public void setDefaultNoteColor(String defaultNoteColor) {
+        this.defaultNoteColor = defaultNoteColor;
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = preferences.edit();
+        editor.putString(DEFAULT_NOTE_COLOR, defaultNoteColor);
+        editor.apply();
+
     }
 
     public void setIsNightModeEnabled(String themeMode) {
@@ -187,6 +198,10 @@ public class App extends Application {
 
     public String getSelectedColor() {
         return selectedColor;
+    }
+
+    public String getDefaultNoteColor() {
+        return defaultNoteColor;
     }
 
     public int getTextSize() {

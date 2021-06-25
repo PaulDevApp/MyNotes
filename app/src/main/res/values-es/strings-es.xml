@@ -86,4 +86,5 @@
     <string name="show_notes_with_images">Mostrar notas con imágenes</string>
     <string name="empty_note_deleted">Nota vacía eliminada</string>
     <string name="note_deleted">¡Nota eliminada!</string>
+    <string name="set_default_note_color">Establecer el color de nota predeterminado</string>
 </resources>

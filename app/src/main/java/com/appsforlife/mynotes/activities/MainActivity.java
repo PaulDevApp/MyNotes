@@ -129,7 +129,6 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(
                 App.getInstance().isChangeView() ? 1 : 2, StaggeredGridLayoutManager.VERTICAL);
 
-
         mainBinding.rvNotes.setLayoutManager(staggeredGridLayoutManager);
         mainBinding.rvNotes.setAdapter(notesAdapter);
 

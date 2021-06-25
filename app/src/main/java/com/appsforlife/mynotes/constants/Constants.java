@@ -31,6 +31,7 @@ public final class Constants {
     public static final String SWITCH_ANIM = "switch_anim";
     public static final String VISIBLE_IMAGES = "visible_images";
     public static final String SELECTED_COLOR = "selected_color";
+    public static final String DEFAULT_NOTE_COLOR = "default_color";
     public static final String PREVIEW_LINK = "preview_link";
     public static final String VIEW = "view";
     public static final String THEME_MODE = "theme_mode";

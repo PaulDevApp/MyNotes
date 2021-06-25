@@ -16,9 +16,11 @@ import com.appsforlife.mynotes.databinding.ActivitySettingsBinding;
 import com.appsforlife.mynotes.dialogs.DeleteDialog;
 import com.appsforlife.mynotes.dialogs.NoteTextSizeDialog;
 import com.appsforlife.mynotes.dialogs.OpenSourceDialog;
+import com.appsforlife.mynotes.dialogs.PaletteDialog;
 import com.appsforlife.mynotes.dialogs.PreviewNumberLinesDialog;
 import com.appsforlife.mynotes.entities.Note;
 import com.appsforlife.mynotes.listeners.DialogDeleteNoteListener;
+import com.appsforlife.mynotes.listeners.DialogPaletteListener;
 import com.appsforlife.mynotes.model.MainViewModel;
 
 import java.util.ArrayList;
@@ -27,13 +29,15 @@ import static com.appsforlife.mynotes.Support.*;
 import static com.appsforlife.mynotes.App.*;
 import static com.appsforlife.mynotes.constants.Constants.*;
 
-public class SettingsActivity extends AppCompatActivity implements DialogDeleteNoteListener {
+public class SettingsActivity extends AppCompatActivity implements DialogDeleteNoteListener, DialogPaletteListener {
 
     private DeleteDialog deleteDialog;
     private NoteTextSizeDialog noteTextSizeDialog;
     private PreviewNumberLinesDialog previewNumberLinesDialog;
     private OpenSourceDialog openSourceDialog;
     private ArrayList<Note> notesFromDB;
+    private PaletteDialog paletteDialog;
+    private ActivitySettingsBinding settingsBinding;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -41,7 +45,7 @@ public class SettingsActivity extends AppCompatActivity implements DialogDeleteN
         super.onCreate(savedInstanceState);
         Support.setTheme();
 
-        com.appsforlife.mynotes.databinding.ActivitySettingsBinding settingsBinding = ActivitySettingsBinding.inflate(getLayoutInflater());
+        settingsBinding = ActivitySettingsBinding.inflate(getLayoutInflater());
         setContentView(settingsBinding.getRoot());
 
         MainViewModel viewModel = new ViewModelProvider(this).get(MainViewModel.class);
@@ -52,6 +56,9 @@ public class SettingsActivity extends AppCompatActivity implements DialogDeleteN
         noteTextSizeDialog = new NoteTextSizeDialog(this);
         previewNumberLinesDialog = new PreviewNumberLinesDialog(this);
         openSourceDialog = new OpenSourceDialog(this);
+        paletteDialog = new PaletteDialog(this, this);
+
+        setBackgroundNoteColor(settingsBinding.vDefaultNoteColor, App.getInstance().getDefaultNoteColor());
 
         settingsBinding.ivClose.setOnClickListener(v -> onBackPressed());
 
@@ -70,19 +77,19 @@ public class SettingsActivity extends AppCompatActivity implements DialogDeleteN
                     getInstance().setIsNightModeEnabled(AUTO_MODE);
                     finish();
                     startActivity(intent);
-                    overridePendingTransition(0,0);
+                    overridePendingTransition(0, 0);
                     break;
                 case R.id.rb_light:
                     getInstance().setIsNightModeEnabled(LIGHT_MODE);
                     finish();
                     startActivity(intent);
-                    overridePendingTransition(0,0);
+                    overridePendingTransition(0, 0);
                     break;
                 case R.id.rb_dark:
                     getInstance().setIsNightModeEnabled(NIGHT_MODE);
                     finish();
                     startActivity(intent);
-                    overridePendingTransition(0,0);
+                    overridePendingTransition(0, 0);
                     break;
             }
         });
@@ -131,6 +138,8 @@ public class SettingsActivity extends AppCompatActivity implements DialogDeleteN
 
         settingsBinding.tvShareApp.setOnClickListener(v -> shareApp());
 
+        settingsBinding.tvDefaultNoteColor.setOnClickListener(v -> paletteDialog.createPaletteDialog());
+
 
     }
 
@@ -160,5 +169,11 @@ public class SettingsActivity extends AppCompatActivity implements DialogDeleteN
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onSelectColor(String color) {
+        App.getInstance().setDefaultNoteColor(color);
+        setBackgroundNoteColor(settingsBinding.vDefaultNoteColor, color);
     }
 }
