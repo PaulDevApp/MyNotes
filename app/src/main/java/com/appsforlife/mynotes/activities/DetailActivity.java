@@ -54,6 +54,7 @@ import com.appsforlife.mynotes.listeners.DialogDeleteImageListener;
 import com.appsforlife.mynotes.listeners.DialogDeleteNoteListener;
 import com.appsforlife.mynotes.listeners.DialogReplaceImageListener;
 import com.appsforlife.mynotes.util.LinkPreviewUtil;
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
@@ -217,6 +218,8 @@ public class DetailActivity extends AppCompatActivity implements ColorPaletteLis
             oldImagePath = imagePath;
         }
 
+        oldColor = note.getColor();
+
         initPalette();
 
         setCheckImageDone();
@@ -271,7 +274,7 @@ public class DetailActivity extends AppCompatActivity implements ColorPaletteLis
         note.setDone(isCheck);
         note.setFavorite(isFavorite);
         note.setDateTime(getDate());
-        note.setColor(note.getColor());
+        note.setColor(oldColor);
         note.setImagePath(imagePath);
 
         if (imagePath != null && !imagePath.trim().isEmpty()) {
@@ -328,7 +331,7 @@ public class DetailActivity extends AppCompatActivity implements ColorPaletteLis
     private void setPhoto(String imageUri) {
         detailBinding.ivShowPhoto.setVisibility(View.VISIBLE);
         detailBinding.ivDeleteImage.setVisibility(View.VISIBLE);
-        detailBinding.ivShowPhoto.setImageURI(Uri.parse(imageUri));
+        Glide.with(this).load(imageUri).into(detailBinding.ivShowPhoto);
     }
 
     private void setCheckImageDone() {
@@ -679,6 +682,7 @@ public class DetailActivity extends AppCompatActivity implements ColorPaletteLis
         colorDetailPaletteAdapter.notifyDataSetChanged();
         setBackgroundNoteColor(detailBinding.rlDetail, paletteColor.getColor());
         note.setColor(paletteColor.getColor());
+        oldColor = paletteColor.getColor();
     }
 
     private void setNoteTextSize() {

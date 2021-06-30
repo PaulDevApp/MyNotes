@@ -1,7 +1,6 @@
 package com.appsforlife.mynotes.adapters;
 
 import android.annotation.SuppressLint;
-import android.net.Uri;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,7 @@ import com.appsforlife.mynotes.entities.Note;
 import com.appsforlife.mynotes.listeners.NoteListener;
 import com.appsforlife.mynotes.listeners.NoteLongListener;
 import com.appsforlife.mynotes.listeners.NoteSelectListener;
-
+import com.bumptech.glide.Glide;
 import java.util.List;
 
 import static com.appsforlife.mynotes.util.LinkPreviewUtil.setPreviewLink;
@@ -189,7 +188,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
                 itemNoteBinding.ivCheckImage.setVisibility(View.VISIBLE);
                 if (!App.getInstance().isVisible()) {
                     itemNoteBinding.ivItemImage.setVisibility(View.VISIBLE);
-                    itemNoteBinding.ivItemImage.setImageURI(Uri.parse(note.getImagePath()));
+                    Glide.with(itemNoteBinding.ivItemImage.getContext()).load(note.getImagePath()).into(itemNoteBinding.ivItemImage);
                 }
             }
 

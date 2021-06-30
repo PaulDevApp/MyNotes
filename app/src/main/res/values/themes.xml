@@ -41,7 +41,7 @@
     </style>
 
     <style name="TooltipTextAppearance">
-        <item name="android:textColor">?attr/colorAccent</item>
+        <item name="android:textColor">@color/colorPrimaryDay</item>
         <item name="android:textSize">@dimen/_12ssp</item>
         <item name="android:textStyle">normal</item>
     </style>

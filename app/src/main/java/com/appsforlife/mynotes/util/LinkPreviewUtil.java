@@ -4,7 +4,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.squareup.picasso.Picasso;
+
+import com.bumptech.glide.Glide;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -47,7 +48,7 @@ public class LinkPreviewUtil {
                                 for (Element element : metaTags) {
                                     switch (element.attr(PROPERTY)) {
                                         case META_SITE_IMAGE:
-                                            Picasso.get().load(element.attr(CONTENT)).into(ivSiteImage);
+                                            Glide.with(ivSiteImage.getContext()).load(element.attr(CONTENT)).into(ivSiteImage);
                                             ivSiteImage.setVisibility(View.VISIBLE);
                                             break;
                                         case META_SITE_TITLE:

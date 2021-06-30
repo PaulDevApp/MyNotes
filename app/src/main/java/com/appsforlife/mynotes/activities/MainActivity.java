@@ -23,6 +23,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.speech.RecognizerIntent;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -217,10 +218,18 @@ public class MainActivity extends AppCompatActivity implements NoteListener, Not
             if (!isSelectedAll) {
                 isSelectedAll = true;
                 for (Note note : notesFromDB) {
-                    if (!note.isSelected()) {
-                        note.setSelected(true);
-                        countSelected++;
+                    if (App.getInstance().isIncludePicture()) {
+                        if (!note.isSelected() && !TextUtils.isEmpty(note.getImagePath())) {
+                            note.setSelected(true);
+                            countSelected++;
+                        }
+                    } else {
+                        if (!note.isSelected()) {
+                            note.setSelected(true);
+                            countSelected++;
+                        }
                     }
+
                 }
                 if (multiplyBinding.ivToolbarDelete.getVisibility() == View.GONE) {
                     multiplyBinding.ivToolbarDelete.setVisibility(View.VISIBLE);
