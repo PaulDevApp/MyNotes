@@ -82,7 +82,7 @@ public class DetailActivity extends AppCompatActivity implements ColorPaletteLis
     private BottomSheetBehavior<LinearLayout> bottomSheetBehavior;
 
     private String oldTitle, oldText, oldWebLink, oldColor, oldImagePath;
-    private String imagePath;
+    private String imagePath, color;
 
     private final ArrayList<PaletteColor> paletteColors = new ArrayList<>();
     private ColorDetailPaletteAdapter colorDetailPaletteAdapter;
@@ -218,7 +218,7 @@ public class DetailActivity extends AppCompatActivity implements ColorPaletteLis
             oldImagePath = imagePath;
         }
 
-        oldColor = note.getColor();
+        color = note.getColor();
 
         initPalette();
 
@@ -274,7 +274,7 @@ public class DetailActivity extends AppCompatActivity implements ColorPaletteLis
         note.setDone(isCheck);
         note.setFavorite(isFavorite);
         note.setDateTime(getDate());
-        note.setColor(oldColor);
+        note.setColor(color);
         note.setImagePath(imagePath);
 
         if (imagePath != null && !imagePath.trim().isEmpty()) {
@@ -401,8 +401,8 @@ public class DetailActivity extends AppCompatActivity implements ColorPaletteLis
         } else {
             note.setWebLink("");
         }
-        oldWebLink = note.getWebLink();
 
+        oldWebLink = note.getWebLink();
         oldTitle = note.getTitle();
         oldText = note.getText();
         oldImagePath = imagePath;
@@ -631,7 +631,7 @@ public class DetailActivity extends AppCompatActivity implements ColorPaletteLis
         return !oldTitle.equals(note.getTitle().trim())
                 || !oldText.equals(note.getText())
                 || !oldImagePath.equals(imagePath)
-                || !oldColor.equals(note.getColor().trim())
+                || !oldColor.equals(note.getColor())
                 || !oldWebLink.equals(note.getWebLink())
                 || prevDone != note.isDone()
                 || prevFavorite != note.isFavorite();
@@ -682,7 +682,7 @@ public class DetailActivity extends AppCompatActivity implements ColorPaletteLis
         colorDetailPaletteAdapter.notifyDataSetChanged();
         setBackgroundNoteColor(detailBinding.rlDetail, paletteColor.getColor());
         note.setColor(paletteColor.getColor());
-        oldColor = paletteColor.getColor();
+        color = paletteColor.getColor();
     }
 
     private void setNoteTextSize() {

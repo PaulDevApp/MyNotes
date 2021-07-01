@@ -20,7 +20,6 @@
         android:adjustViewBounds="true"
         android:contentDescription="@string/app_name"
         android:maxWidth="@dimen/_50sdp"
-        android:scaleType="centerCrop"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
