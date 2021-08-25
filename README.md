@@ -37,8 +37,6 @@ https://play.google.com/store/apps/details?id=com.appsforlife.mynotes&hl=ru&gl=U
 ![Alt-текст](https://user-images.githubusercontent.com/62378496/130843220-7b87028b-b486-4728-a770-c0bf545e5b1b.jpg)
 ![Alt-текст](https://user-images.githubusercontent.com/62378496/130843216-ff077d7c-2d0d-417e-8001-0fdbf5682d2d.jpg)
 ![Alt-текст](https://user-images.githubusercontent.com/62378496/130843213-6ac65f91-a710-4ecc-897f-f0d98dfe617b.jpg)
-![Alt-текст](https://user-images.githubusercontent.com/62378496/130843213-6ac65f91-a710-4ecc-897f-f0d98dfe617b.jpg)
 ![Alt-текст](https://user-images.githubusercontent.com/62378496/130843210-e6176399-e399-4050-bb51-23656076fedc.jpg)
 ![Alt-текст](https://user-images.githubusercontent.com/62378496/130843205-55d878e1-607d-4107-94bb-b68fc30e4bc7.jpg)
-![Alt-текст](https://user-images.githubusercontent.com/62378496/130843213-6ac65f91-a710-4ecc-897f-f0d98dfe617b.jpg)
 
