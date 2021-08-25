@@ -27,7 +27,7 @@ store and share photos and images_
     def lifecycle_version = "2.2.0"  
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"  
     //noinspection LifecycleAnnotationProcessorWithJava8  
-    annotationProcessor "androidx.lifecycle:lifecycle-compiler:2.3.1"  
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:2.3.1"
     #### Screen list
 ![Alt-текст](https://user-images.githubusercontent.com/62378496/130843417-407b2b45-30ef-4657-b4be-cb61585a1eab.jpg)
 ![Alt-текст](https://user-images.githubusercontent.com/62378496/130843223-896aa84a-2384-4b64-a752-978c6f92a226.jpg)
